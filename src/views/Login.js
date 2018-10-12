@@ -15,7 +15,6 @@ class Login extends Component {
             passwordValid: false,
             formValid: false           
           }
-          console.log(this.state);
 
         this.handleSubmit = this.handleSubmit.bind(this);
     }    
@@ -28,15 +27,14 @@ class Login extends Component {
             if(response.errors){
               that.setState({responseError: response.errors[0]});
             }  
-            if(response.status == "SUCCESS"){
-              that.props.onSuccess();
+            if(response.status === "SUCCESS"){
+              // that.props.onSuccess();
             }          
           });
         }
     }
 
     handleUserInput = (e) => {
-        console.log(e);
         const name = e.target.name;
         const value = e.target.value;
         this.setState({[name]: value},
@@ -81,71 +79,71 @@ class Login extends Component {
       }
         return(  
           <div className="app flex-row align-items-center">  
-          <div className="container">       
-            <div className="row justify-content-center">
-              <div className="col-md-8">
-                <div className="card-group">
-                  <div className="card p-4">
-                    <div className="card-body">
-                    {errorResp}
-                    <form onSubmit={this.handleSubmit}>
-                      <h1>Login</h1>                      
-                      <p className="text-muted">Sign In to your community</p>
-                      <div className="input-group mb-3">
-                        <div className="input-group-prepend">
-                          <span className="input-group-text">
-                            <i className="icon-user"></i>
-                          </span>
+            <div className="container">       
+              <div className="row justify-content-center">
+                <div className="col-md-8">
+                  <div className="card-group">
+                    <div className="card p-4">
+                      <div className="card-body">
+                      {errorResp}
+                      <form onSubmit={this.handleSubmit}>
+                        <h1>Login</h1>                      
+                        <p className="text-muted">Sign In to your community</p>
+                        <div className="input-group mb-3">
+                          <div className="input-group-prepend">
+                            <span className="input-group-text">
+                              <i className="icon-user"></i>
+                            </span>
+                          </div>
+                          <input className={`form-control  ${this.errorClass(this.state.formErrors.email)}`}
+                              type="email"
+                              placeholder="Email" 
+                              name="email"
+                              value={this.state.email}
+                              onChange={this.handleUserInput} />
+                              <em className="error invalid-feedback">{this.state.formErrors.email}</em>
+                              
                         </div>
-                        <input className={`form-control  ${this.errorClass(this.state.formErrors.email)}`}
-                            type="email"
-                            placeholder="Email" 
-                            name="email"
-                            value={this.state.email}
-                            onChange={this.handleUserInput} />
-                            <em className="error invalid-feedback">{this.state.formErrors.email}</em>
-                            
+                        <div className="input-group mb-4">
+                          <div className="input-group-prepend">
+                            <span className="input-group-text">
+                              <i className="icon-lock"></i>
+                            </span>
+                          </div>
+                          <input className={`form-control  ${this.errorClass(this.state.formErrors.password)}`}
+                           type="password"
+                           placeholder="Password"  
+                           name="password"
+                           value={this.state.password}
+                           onChange={this.handleUserInput} />
+                           <em className="error invalid-feedback">{this.state.formErrors.password}</em>                         
+                        </div>
+                        <div className="row">
+                          <div className="col-6">
+                            <button className="btn btn-primary px-4" type="submit"
+                              disabled={!this.state.formValid}
+                            >Login</button>
+                          </div>
+                          <div className="col-6 text-right">
+                            <button className="btn btn-link px-0" type="button">Forgot password?</button>
+                          </div>
+                        </div>
+                        </form>
                       </div>
-                      <div className="input-group mb-4">
-                        <div className="input-group-prepend">
-                          <span className="input-group-text">
-                            <i className="icon-lock"></i>
-                          </span>
-                        </div>
-                        <input className={`form-control  ${this.errorClass(this.state.formErrors.password)}`}
-                         type="password"
-                         placeholder="Password"  
-                         name="password"
-                         value={this.state.password}
-                         onChange={this.handleUserInput} />
-                         <em className="error invalid-feedback">{this.state.formErrors.password}</em>                         
-                      </div>
-                      <div className="row">
-                        <div className="col-6">
-                          <button className="btn btn-primary px-4" type="submit"
-                            disabled={!this.state.formValid}
-                          >Login</button>
-                        </div>
-                        <div className="col-6 text-right">
-                          <button className="btn btn-link px-0" type="button">Forgot password?</button>
-                        </div>
-                      </div>
-                      </form>
                     </div>
-                  </div>
-                  <div className="card text-white bg-primary py-5 d-md-down-none" >
-                    <div className="card-body text-center">
-                      <div>
-                        <h2>Sign up</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                        <button className="btn btn-primary active mt-3" type="button">Register Community!</button>
+                    <div className="card text-white bg-primary py-5 d-md-down-none" >
+                      <div className="card-body text-center">
+                        <div>
+                          <h2>Sign up</h2>
+                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                          <button className="btn btn-primary active mt-3" type="button">Register Community!</button>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-         </div>
+           </div>
          </div>
         )
     }

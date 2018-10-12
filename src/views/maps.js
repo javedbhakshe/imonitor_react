@@ -3,6 +3,14 @@ import { Card, CardBody,CardHeader } from 'reactstrap';
 import Map from '../components/maps/map';
 class Maps extends Component{
 
+  	/*componentDidMount() {
+  		console.log('sscomponentWillUnmount');
+  	}
+
+  	componentWillUnmount() {
+  		console.log('componentWillUnmount');
+  	}*/
+
 	render(){
 		return(
 			<div className='container-fluid my-4'>

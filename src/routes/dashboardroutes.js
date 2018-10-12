@@ -8,8 +8,7 @@ const dashboardRoutes = [
 	    path: "/dashboard",
 	    name: "Dashboard",
 	    icon: "cui-dashboard",
-	    /*component: Dashboard*/
-	    component: Charts
+	    component: Dashboard
   	},
   	{
 	    path: "/inbox",

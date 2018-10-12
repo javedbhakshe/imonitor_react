@@ -1,8 +1,10 @@
 import React,{Component} from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import DashBoard from './layouts/dashboard/dashboard';
-import Login from './views/Login';
+import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
+/*import DashBoard from './layouts/dashboard/dashboard';*/
+/*import Login from './views/Login';*/
+import indexRoutes from './routes/indexroutes';
+import loginRoutes from './routes/loginroutes';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -21,21 +23,32 @@ class App extends Component{
 		super(props);
 		this.onLoginSuccess  = this.onLoginSuccess.bind(this);
 		this.state = {loggedIn : false};
+
+		/*  */
+		this.aIndexRoutes = indexRoutes.map((prop, key) => {
+       	 	return <Route to={prop.path} component={prop.component} key={key} />;
+		});
+
+		this.aLoginRoutes = loginRoutes.map((prop, key) => {
+			
+			if(prop.redirect){
+				return <Redirect from={prop.path} to={prop.to}  key={key}/>;
+			}
+   	 		return <Route path={prop.path} component={prop.component} key={key}/>;
+		});
+
 	}
 
 	render(){
 		const community = localStorage.getItem('community');
-    	if (community) {
-			return (
-				<BrowserRouter>
-					<Switch>
-						<Route path='/' component={DashBoard} />
-					</Switch>
-				</BrowserRouter>
-			);
-		} else {
-			return  <Login onSuccess = {this.onLoginSuccess}/>;
-		}
+
+		return (
+			<BrowserRouter>
+				<Switch>
+					{community  ? this.aIndexRoutes : this.aLoginRoutes}
+				</Switch>
+			</BrowserRouter>
+		);
 		
 	}
 

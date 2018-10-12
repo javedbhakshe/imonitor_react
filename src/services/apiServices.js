@@ -17,7 +17,7 @@ function login(requestObject) {
         .then(handleResponse)
         .then(data => {
             // login successful if there's a jwt token in the response
-            if (data.status == 'SUCCESS') {
+            if (data.status === 'SUCCESS') {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('community', JSON.stringify(data));
             }
