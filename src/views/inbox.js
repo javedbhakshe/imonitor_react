@@ -3,7 +3,7 @@ import React,{Component} from 'react';
 class Inbox extends Component{
 
 	render(){
-		return(
+		return(			
 			<div className='container-fluid  my-4'>
 				<div id="ui-view">
 					<div><div className="animated fadeIn">
