@@ -9,15 +9,15 @@ class Inbox extends Component{
 					<div><div className="animated fadeIn">
 						<div className="email-app mb-4">
 							<nav>
-								<a className="btn btn-danger btn-block" href="page-inbox-compose.html">New Email</a>
-								<ul className="nav">
-									<li className="nav-item">
-										<a className="nav-link" href="#">
-											<i className="fa fa-inbox"></i> Inbox
-											<span className="badge badge-danger">4</span>
-										</a>
-									</li>
-								</ul>
+							   	<a href="#/apps/email/compose" className="btn btn-danger btn-block">New Email</a>
+							   	<ul className="nav">
+							      	<li className="nav-item"><a href="#/apps/email/inbox" className="nav-link"><i className="fa fa-inbox"></i> Inbox <span className="badge badge-danger">4</span></a></li>
+							      	<li className="nav-item"><a href="#" className="nav-link"><i className="fa fa-star"></i> Stared</a></li>
+							      	<li className="nav-item"><a href="#" className="nav-link"><i className="fa fa-rocket"></i> Sent</a></li>
+							      	<li className="nav-item"><a href="#" className="nav-link"><i className="fa fa-trash-o"></i> Trash</a></li>
+							      	<li className="nav-item"><a href="#" className="nav-link"><i className="fa fa-bookmark"></i> Important<span className="badge badge-info">5</span></a></li>
+							      	<li className="nav-item"><a href="#" className="nav-link"><i className="fa fa-exclamation-circle"></i> Spam <span className="badge badge-danger">4</span></a></li>
+							   	</ul>
 							</nav>
 							<main className="inbox">
 							   <div className="toolbar">

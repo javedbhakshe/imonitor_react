@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-// import { connect } from 'react-redux';
 import { apiServices } from '../services/apiServices';
+import {NavLink} from 'react-router-dom';
 
 class Login extends Component {
     constructor(props){
@@ -28,7 +28,7 @@ class Login extends Component {
               that.setState({responseError: response.errors[0]});
             }  
             if(response.status === "SUCCESS"){
-              // that.props.onSuccess();
+              that.props.onSuccess();
             }          
           });
         }
@@ -136,7 +136,7 @@ class Login extends Component {
                         <div>
                           <h2>Sign up</h2>
                           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                          <button className="btn btn-primary active mt-3" type="button">Register Community!</button>
+                          <NavLink to={`/register`} className="btn btn-primary active mt-3">Register Community!</NavLink>
                         </div>
                       </div>
                     </div>

@@ -2,6 +2,7 @@ import Dashboard from '../views/dashboard';
 import Inbox from '../views/inbox';
 import Charts from '../views/charts';
 import Maps from '../views/maps';
+import SmartSetUp from '../views/smartsetup';
 
 const dashboardRoutes = [
 	{
@@ -27,6 +28,12 @@ const dashboardRoutes = [
 	    name: "maps",
 	    icon: "icon-map",
 	    component: Maps
+  	},
+  	{
+	    path: "/smartsetup",
+	    name: "Setup",
+	    icon: "fa fa-cog",
+	    component: SmartSetUp
   	},
   	{ 
 		redirect: true, 

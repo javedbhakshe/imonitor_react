@@ -223,3 +223,80 @@
 .map-holder{
 	height: 450px;
 }
+
+/*  Tab component */
+.nav-tabs .ssup.active{
+    background: #20a8d8 !important;
+    color: #fff;
+}
+
+.sstab > li.active a {
+    background-color: #20a8d8;
+}
+
+.sstab > li:first-child {
+    border-left: 0;
+}
+.sstab > li {
+    position: relative;
+    overflow: visible;
+    border-right: 10px solid #fff;
+    border-left: 10px solid #fff;
+}
+
+.sstab > li.active a {
+    background-color: #20a8d8;
+    border-radius: 0;
+}
+.sstab > li:first-child a {
+    border-radius: 5px 0 0 5px;
+}
+
+
+
+.sstab > li .nav-arrow {
+    position: absolute;
+    top: 0px;
+    right: -20px;
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 20px 0 17px 20px;
+    border-color: transparent transparent transparent #eee;
+    z-index: 150;
+}
+
+.sstab > li.active .nav-arrow {
+    border-color: transparent transparent transparent #20a8d8;
+}
+
+.sstab > li.active .nav-wedge {
+    border-color: #20a8d8 #20a8d8 #20a8d8 transparent;
+}
+
+.sstab > li .nav-wedge {
+    position: absolute;
+    top: 0px;
+    left: -20px;
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 20px 0 17px 20px;
+    border-color: #eee #eee #eee transparent;
+    z-index: 150;
+}
+
+.nav-tabs .nav-link {
+    color: #73818f;
+    background: #eee;
+}
+
+.sstab .nav-item a{
+    border:none !important;
+}
+
+.sstab>li+li {
+    margin-left: 2px;
+}
+
+/*  */

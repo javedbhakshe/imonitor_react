@@ -2,11 +2,12 @@ import React,{Component} from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
 /*import DashBoard from './layouts/dashboard/dashboard';*/
-/*import Login from './views/Login';*/
+import Login from './views/Login';
 import indexRoutes from './routes/indexroutes';
 import loginRoutes from './routes/loginroutes';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/js/src/tab';
 
 import '@coreui/coreui/dist/css/coreui.min.css';
 import '@coreui/icons/css/coreui-icons.min.css';
@@ -33,6 +34,9 @@ class App extends Component{
 			
 			if(prop.redirect){
 				return <Redirect from={prop.path} to={prop.to}  key={key}/>;
+			}
+			if(prop.loggedIn){
+				return <Route path={prop.path} render={e => <Login onSuccess = {this.onLoginSuccess} />} key={key}/>;
 			}
    	 		return <Route path={prop.path} component={prop.component} key={key}/>;
 		});
