@@ -31,7 +31,8 @@ class CommunitySetUp extends Component{
 				<Col xs="12">
 		            <Card>
 		              	<CardBody>
-			                <Col sm='12'>
+										<FormGroup row className="my-0">
+			                <Col sm='6'>
 				                <FormGroup>
 			                  		<Label htmlFor="community">Community Name</Label>
 			                  		<Input type="text" id="community" placeholder="Enter your community name" />
@@ -47,12 +48,13 @@ class CommunitySetUp extends Component{
 			                      	</Input>
 			                    </FormGroup>
 			                </Col>
+											<Col sm='6'>
 			                <FormGroup>
 	                  			<Label htmlFor="street">Street</Label>
 		                  		<Input type="text" id="street" placeholder="Enter street name" />
 			                </FormGroup>
-			                <FormGroup row className="my-0">
-			                  <Col xs="8">
+											</Col>			                
+			                  <Col xs="6">
 			                    <FormGroup>
 		                      		<Label htmlFor="city">City</Label>
 		                      		<Input type="text" id="city" placeholder="Enter your city" />
@@ -64,11 +66,13 @@ class CommunitySetUp extends Component{
 		                      		<Input type="text" id="postal-code" placeholder="Postal Code" />
 			                    </FormGroup>
 			                  </Col>
-			                </FormGroup>
+												<Col xs="4">
 			                <FormGroup>
 			                  	<Label htmlFor="country">Country</Label>
 		                 	 	<Input type="text" id="country" placeholder="Country name" />
 			                </FormGroup>
+											</Col>
+											</FormGroup>
 	              		</CardBody>
 		            </Card>
 	          	</Col>

@@ -240,8 +240,8 @@
 .sstab > li {
     position: relative;
     overflow: visible;
-    border-right: 10px solid #fff;
-    border-left: 10px solid #fff;
+    border-right: 12px solid #fff;
+    border-left: 12px solid #fff;
 }
 
 .sstab > li.active a {
@@ -296,7 +296,11 @@
 }
 
 .sstab>li+li {
-    margin-left: 2px;
+    margin-left: 0;
 }
 
 /*  */
+
+ul li.nav-item:last-child {
+    border-right: 0;
+}
