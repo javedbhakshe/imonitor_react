@@ -1,5 +1,7 @@
 import React,{Component} from 'react';
 import CommunitySetUp from './forms/communitysetup'
+import AppConfig from './forms/appconfig'
+import GetKnowlegeable from './forms/getknowlegeable'
 
 import classnames from 'classnames';
 class SmartSetup extends Component{
@@ -37,30 +39,44 @@ class SmartSetup extends Component{
 							    </a>
 					  		 	<div className="nav-arrow"></div>
 						  	</li>
-						  	<li className={`nav-item ${classnames({ active: this.state.activeTab === 'profile-tab' })}`}>
+						  	<li className={`nav-item ${classnames({ active: this.state.activeTab === 'appconfig-tab' })}`}>
 						     	<div className="nav-wedge"></div>
 							    <a className="nav-link ssup" 
-						    		id="profile-tab" data-toggle="tab" 
-						    		href="#profile" role="tab" 
-						    		aria-controls="profile" 
+						    		id="appconfig-tab" data-toggle="tab" 
+						    		href="#appconfig" role="tab" 
+						    		aria-controls="appconfig" 
 						    		aria-selected="false"
-						    		onClick={() => { this.toggle('profile-tab')}}
+						    		onClick={() => { this.toggle('appconfig-tab')}}
 						    	>
-						    	Profile
+						    	Dashboard Config
 						    	</a>
 						  		<div className="nav-arrow"></div>
 						  	</li>
-						  	<li className={`nav-item ${classnames({ active: this.state.activeTab === 'contact-tab' })}`}>
+						  	<li className={`nav-item ${classnames({ active: this.state.activeTab === 'getknowlegeable-tab' })}`}>
 						    	<div className="nav-wedge"></div>
 						    	<a className="nav-link ssup" 
-							    	id="contact-tab" 
+							    	id="getknowlegeable-tab" 
 							    	data-toggle="tab" 
-							    	href="#contact" 
+							    	href="#getknowlegeable" 
 							    	role="tab" 
-							    	aria-controls="contact" 
+							    	aria-controls="getknowlegeable" 
 							    	aria-selected="false"
-							    	onClick={() => { this.toggle('contact-tab')}}>
-							    	Contact
+							    	onClick={() => { this.toggle('getknowlegeable-tab')}}>
+							    	Get Knowlegeable
+						    	</a>
+						    	<div className="nav-arrow"></div>
+						  	</li>
+						  	<li className={`nav-item ${classnames({ active: this.state.activeTab === 'nearme-tab' })}`}>
+						    	<div className="nav-wedge"></div>
+						    	<a className="nav-link ssup" 
+							    	id="nearme-tab" 
+							    	data-toggle="tab" 
+							    	href="#nearme" 
+							    	role="tab" 
+							    	aria-controls="nearme" 
+							    	aria-selected="false"
+							    	onClick={() => { this.toggle('nearme-tab')}}>
+							    	Nearme
 						    	</a>
 						  	</li>
 						</ul>
@@ -68,11 +84,14 @@ class SmartSetup extends Component{
 						  	<div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 						  		<CommunitySetUp />
 						  	</div>
-						  	<div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-						  		Get Know
+						  	<div className="tab-pane fade" id="appconfig" role="tabpanel" aria-labelledby="appconfig-tab">
+						  		<AppConfig />
 						  	</div>
-						  	<div className="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-						  		Survey
+						  	<div className="tab-pane fade" id="getknowlegeable" role="tabpanel" aria-labelledby="getknowlegeable-tab">
+						  		<GetKnowlegeable />
+						  	</div>
+						  	<div className="tab-pane fade" id="nearme" role="tabpanel" aria-labelledby="nearme-tab">
+						  		nearme
 						  	</div>
 						</div>
 		      		</div>
