@@ -2,6 +2,8 @@ import React,{Component} from 'react';
 import CommunitySetUp from './forms/communitysetup'
 import AppConfig from './forms/appconfig'
 import GetKnowlegeable from './forms/getknowlegeable'
+import Services from './forms/services'
+
 
 import classnames from 'classnames';
 class SmartSetup extends Component{
@@ -66,6 +68,19 @@ class SmartSetup extends Component{
 						    	</a>
 						    	<div className="nav-arrow"></div>
 						  	</li>
+							  <li className={`nav-item ${classnames({ active: this.state.activeTab === 'service-tab' })}`}>
+						     	<div className="nav-wedge"></div>
+							    <a className="nav-link ssup" 
+						    		id="service-tab" data-toggle="tab" 
+						    		href="#service" role="tab" 
+						    		aria-controls="service" 
+						    		aria-selected="false"
+						    		onClick={() => { this.toggle('service-tab')}}
+						    	>
+						    	Get Involved
+						    	</a>
+						  		<div className="nav-arrow"></div>
+						  	</li>
 						  	<li className={`nav-item ${classnames({ active: this.state.activeTab === 'nearme-tab' })}`}>
 						    	<div className="nav-wedge"></div>
 						    	<a className="nav-link ssup" 
@@ -89,6 +104,9 @@ class SmartSetup extends Component{
 						  	</div>
 						  	<div className="tab-pane fade" id="getknowlegeable" role="tabpanel" aria-labelledby="getknowlegeable-tab">
 						  		<GetKnowlegeable />
+						  	</div>
+							<div className="tab-pane fade" id="service" role="tabpanel" aria-labelledby="service-tab">
+							  <Services />
 						  	</div>
 						  	<div className="tab-pane fade" id="nearme" role="tabpanel" aria-labelledby="nearme-tab">
 						  		nearme
