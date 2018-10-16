@@ -2,6 +2,7 @@
   "name": "dashboard",
   "version": "0.1.0",
   "private": true,
+  "homepage" : "https://web.imonitorplus.com/dev_testing",
   "dependencies": {
     "@coreui/coreui": "^2.0.16",
     "@coreui/coreui-plugin-chartjs-custom-tooltips": "^1.2.0",

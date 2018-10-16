@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { apiServices } from '../services/apiServices';
 import {NavLink} from 'react-router-dom';
+import Loader from '../components/loaders/loader';
 
 class Login extends Component {
     constructor(props){
@@ -13,19 +14,21 @@ class Login extends Component {
             formErrors: {email: '', password: ''},
             emailValid: false,
             passwordValid: false,
-            formValid: false           
+            formValid: false,
+            isLoading:false           
           }
 
         this.handleSubmit = this.handleSubmit.bind(this);
     }    
     handleSubmit(e) {
         e.preventDefault();
-        var that = this;        
+        var that = this;  
+        this.setState({isLoading : true});      
         if(this.state.emailValid && this.state.passwordValid){
           let requestOptions = {email : this.state.email, password: this.state.password};
           apiServices.login(requestOptions).then(function(response){
             if(response.errors){
-              that.setState({responseError: response.errors[0]});
+              that.setState({responseError: response.errors[0],isLoading : false});
             }  
             if(response.status === "SUCCESS"){
               that.props.onSuccess();
@@ -79,6 +82,7 @@ class Login extends Component {
       }
         return(  
           <div className="app flex-row align-items-center">  
+            <Loader isLoading={this.state.isLoading}/>
             <div className="container">       
               <div className="row justify-content-center">
                 <div className="col-md-8">

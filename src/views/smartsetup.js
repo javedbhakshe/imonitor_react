@@ -1,11 +1,12 @@
 import React,{Component} from 'react';
-import CommunitySetUp from './forms/communitysetup'
-import AppConfig from './forms/appconfig'
-import GetKnowlegeable from './forms/getknowlegeable'
-import Services from './forms/services'
-
-
+import CommunitySetUp from './forms/communitysetup';
+import AppConfig from './forms/appconfig';
+import GetKnowlegeable from './forms/getknowlegeable';
+import Services from './forms/services';
+import SmartMap from './forms/smartmap';
+import Finish from './forms/finish';
 import classnames from 'classnames';
+
 class SmartSetup extends Component{
 	constructor(props) {
 	    super(props);
@@ -68,7 +69,7 @@ class SmartSetup extends Component{
 						    	</a>
 						    	<div className="nav-arrow"></div>
 						  	</li>
-							  <li className={`nav-item ${classnames({ active: this.state.activeTab === 'service-tab' })}`}>
+						  	<li className={`nav-item ${classnames({ active: this.state.activeTab === 'service-tab' })}`}>
 						     	<div className="nav-wedge"></div>
 							    <a className="nav-link ssup" 
 						    		id="service-tab" data-toggle="tab" 
@@ -93,6 +94,20 @@ class SmartSetup extends Component{
 							    	onClick={() => { this.toggle('nearme-tab')}}>
 							    	Nearme
 						    	</a>
+						    	<div className="nav-arrow"></div>
+						  	</li>
+						  	<li className={`nav-item ${classnames({ active: this.state.activeTab === 'finish-tab' })}`}>
+						     	<div className="nav-wedge"></div>
+							    <a className="nav-link ssup" 
+						    		id="finish-tab" data-toggle="tab" 
+						    		href="#finish" role="tab" 
+						    		aria-controls="finish" 
+						    		aria-selected="false"
+						    		onClick={() => { this.toggle('finish-tab')}}
+						    	>
+						    	Finish
+						    	</a>
+						  		<div className="nav-arrow"></div>
 						  	</li>
 						</ul>
 						<div className="tab-content" id="myTabContent">
@@ -109,7 +124,10 @@ class SmartSetup extends Component{
 							  <Services />
 						  	</div>
 						  	<div className="tab-pane fade" id="nearme" role="tabpanel" aria-labelledby="nearme-tab">
-						  		nearme
+						  		<SmartMap />
+						  	</div>
+						  	<div className="tab-pane fade" id="finish" role="tabpanel" aria-labelledby="finish-tab">
+						  		<Finish />
 						  	</div>
 						</div>
 		      		</div>

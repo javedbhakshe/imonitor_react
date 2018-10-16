@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import { Card, CardBody, CardFooter, CardHeader, CardTitle,Table,Progress } from 'reactstrap';
+import { Card, CardBody, CardHeader, CardTitle,Table,Progress } from 'reactstrap';
 
 class DashBoard extends Component{
 

@@ -60,13 +60,13 @@ class CommunitySetUp extends Component{
 			                      		<Input type="text" id="city" placeholder="Enter your city" />
 				                    </FormGroup>
 			                  	</Col>
-			                  	<Col xs="4">
+			                  	<Col xs="6">
 				                    <FormGroup>
 			                      		<Label htmlFor="postal-code">Postal Code</Label>
 			                      		<Input type="text" id="postal-code" placeholder="Postal Code" />
 				                    </FormGroup>
 			                  	</Col>
-								<Col xs="4">
+								<Col xs="6">
 					                <FormGroup>
 					                  	<Label htmlFor="country">Country</Label>
 				                 	 	<Input type="text" id="country" placeholder="Country name" />

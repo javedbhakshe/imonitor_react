@@ -56,7 +56,7 @@ class GetKnowlegeable extends Component{
 			                    	<Input type="text" id="input-content" name="input-normal" placeholder="Enter Content" />
 		                  		</Col>
 		                  	</FormGroup>
-		                  	<Col sm="4" md="2" xl className="mb-3 mb-xl-0">
+		                  	<Col sm="2" className="mb-3 mb-xl-0">
 				                <Button block color="info">Add</Button>
 			              	</Col>
 						</CardBody>

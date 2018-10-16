@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
+import {HashRouter, Route, Switch, Redirect} from 'react-router-dom';
 /*import DashBoard from './layouts/dashboard/dashboard';*/
 import Login from './views/Login';
 import indexRoutes from './routes/indexroutes';
@@ -47,11 +47,11 @@ class App extends Component{
 		const community = localStorage.getItem('community');
 
 		return (
-			<BrowserRouter>
+			<HashRouter>
 				<Switch>
 					{community  ? this.aIndexRoutes : this.aLoginRoutes}
 				</Switch>
-			</BrowserRouter>
+			</HashRouter>
 		);
 		
 	}
