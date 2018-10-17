@@ -16,8 +16,35 @@ class Header extends Component {
 	     	 	</a>
 
 		      	<button className="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
-			        <span className="navbar-toggler-icon"></span>
-		      	</button>
+				   <span className="navbar-toggler-icon"></span>
+				</button>
+
+				  
+					<ul className="nav navbar-nav ml-auto">
+						
+						<li className="nav-item dropdown">
+						<a className="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+						  <span className="navbar-toggler-icon"></span>
+						</a>
+						<div className="dropdown-menu dropdown-menu-right">
+							<div className="dropdown-header text-center">
+							<strong>Account</strong>
+							</div>
+							
+						
+							<a className="dropdown-item" href="#">
+							<i className="fa fa-user"></i> Profile</a>
+							<a className="dropdown-item" href="#">
+							<i className="fa fa-wrench"></i> Settings</a>
+							
+							<div className="divider"></div>
+							<a className="dropdown-item" href="#">
+							<i className="fa fa-shield"></i> Lock Account</a>
+							<a className="dropdown-item" href="#">
+							<i className="fa fa-lock"></i> Logout</a>
+						</div>
+						</li>
+					</ul>
 			</header>
         );
     }

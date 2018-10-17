@@ -1,4 +1,4 @@
-const apiUrl = 'https://api.imonitorplus.com/api/imonitor/';
+const apiUrl = 'https://api.imonitorplus.com/api/imonitor';
 
 export const apiServices = {
     login,
@@ -40,7 +40,11 @@ function register(requestObject) {
         body: JSON.stringify(requestObject)
     };
 
-    return fetch(`${apiUrl}/users/register`, requestOptions).then(handleResponse);
+    return fetch(`${apiUrl}/communities/signup.json`, requestOptions)
+    .then(handleResponse)
+    .then(data => {
+         return data;
+    });
 }
 
 
