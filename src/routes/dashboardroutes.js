@@ -3,6 +3,8 @@ import Inbox from '../views/inbox';
 import Charts from '../views/charts';
 import Maps from '../views/maps';
 import SmartSetUp from '../views/smartsetup';
+import Analytics from '../views/analytics';
+
 
 const dashboardRoutes = [
 	{
@@ -34,7 +36,13 @@ const dashboardRoutes = [
 	    name: "Setup",
 	    icon: "fa fa-cog",
 	    component: SmartSetUp
-  	},
+	},
+	{
+	    path: "/analytics",
+	    name: "Analytics",
+	    icon: "fa fa-pie-chart",
+	    component: Analytics
+  	},  
   	{ 
 		redirect: true, 
 		path: "/", 
