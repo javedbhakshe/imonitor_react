@@ -1,9 +1,21 @@
 import React, { Component } from 'react';
 import logo from '../../assets/images/logo.svg';
 import minimizedlogo from '../../assets/images/sygnet.svg';
+import { apiServices } from '../../services/apiServices';
+
 /*import { AppAsideToggler, AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';*/
 class Header extends Component {
 
+	constructor(props){
+		super(props);			
+		this.handleLogout = this.handleLogout.bind(this);       
+	}    
+	
+	handleLogout(e){
+		e.preventDefault();
+		apiServices.logout();		
+	}
+	
     render() {
         return (
             <header className="app-header navbar">
@@ -40,8 +52,8 @@ class Header extends Component {
 							<div className="divider"></div>
 							<a className="dropdown-item" href="#">
 							<i className="fa fa-shield"></i> Lock Account</a>
-							<a className="dropdown-item" href="#">
-							<i className="fa fa-lock"></i> Logout</a>
+							<a className="dropdown-item" onClick={this.handleLogout} >
+							<i className="fa fa-lock"  ></i> Logout</a>
 						</div>
 						</li>
 					</ul>

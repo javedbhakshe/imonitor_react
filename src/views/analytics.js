@@ -43,62 +43,108 @@ class Inbox extends Component{
 								<input id="startDate" width="276" /> <br />
 								<span>To Date:</span>  <br />
 								<input id="endDate" width="276" />							
-							</div>							
+							</div>
+
+							<div className="form-group">
+							<button className="btn btn-sm btn-primary" style={{marginRight: 5 + 'px'}} >Search</button>
+							<button className="btn btn-sm btn-default">Clear</button>
+							 </div>
+
 							</div>
 							</div>
 							<main className="inbox">
-							<table class="table table-responsive-sm">
-<thead>
-<tr>
-<th>Username</th>
-<th>Date registered</th>
-<th>Role</th>
-<th>Status</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Samppa Nori</td>
-<td>2012/01/01</td>
-<td>Member</td>
-<td>
-<span class="badge badge-success">Active</span>
-</td>
-</tr>
-<tr>
-<td>Estavan Lykos</td>
-<td>2012/02/01</td>
-<td>Staff</td>
-<td>
-<span class="badge badge-danger">Banned</span>
-</td>
-</tr>
-<tr>
-<td>Chetan Mohamed</td>
-<td>2012/02/01</td>
-<td>Admin</td>
-<td>
-<span class="badge badge-secondary">Inactive</span>
-</td>
-</tr>
-<tr>
-<td>Derick Maximinus</td>
-<td>2012/03/01</td>
-<td>Member</td>
-<td>
-<span class="badge badge-warning">Pending</span>
-</td>
-</tr>
-<tr>
-<td>Friderik Dávid</td>
-<td>2012/01/21</td>
-<td>Staff</td>
-<td>
-<span class="badge badge-success">Active</span>
-</td>
-</tr>
-</tbody>
-</table>
+							<table className="table table-responsive-sm table-bordered table-striped">
+							<thead>
+							<tr>
+							<th>Username</th>
+							<th>Date registered</th>
+							<th>Role</th>
+							<th>Status</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+							<td>Samppa Nori</td>
+							<td>2012/01/01</td>
+							<td>Member</td>
+							<td>
+							<span className="badge badge-success">Active</span>
+							</td>
+							</tr>
+							<tr>
+							<td>Estavan Lykos</td>
+							<td>2012/02/01</td>
+							<td>Staff</td>
+							<td>
+							<span className="badge badge-danger">Banned</span>
+							</td>
+							</tr>
+							<tr>
+							<td>Chetan Mohamed</td>
+							<td>2012/02/01</td>
+							<td>Admin</td>
+							<td>
+							<span className="badge badge-secondary">Inactive</span>
+							</td>
+							</tr>
+							<tr>
+							<td>Derick Maximinus</td>
+							<td>2012/03/01</td>
+							<td>Member</td>
+							<td>
+							<span className="badge badge-warning">Pending</span>
+							</td>
+							</tr>
+							<tr>
+							<td>Friderik Dávid</td>
+							<td>2012/01/21</td>
+							<td>Staff</td>
+							<td>
+							<span className="badge badge-success">Active</span>
+							</td>
+							</tr>
+							<tr>
+							<td>Samppa Nori</td>
+							<td>2012/01/01</td>
+							<td>Member</td>
+							<td>
+							<span className="badge badge-success">Active</span>
+							</td>
+							</tr>
+							<tr>
+							<td>Estavan Lykos</td>
+							<td>2012/02/01</td>
+							<td>Staff</td>
+							<td>
+							<span className="badge badge-danger">Banned</span>
+							</td>
+							</tr>
+							<tr>
+							<td>Chetan Mohamed</td>
+							<td>2012/02/01</td>
+							<td>Admin</td>
+							<td>
+							<span className="badge badge-secondary">Inactive</span>
+							</td>
+							</tr>
+							<tr>
+							<td>Derick Maximinus</td>
+							<td>2012/03/01</td>
+							<td>Member</td>
+							<td>
+							<span className="badge badge-warning">Pending</span>
+							</td>
+							</tr>
+							<tr>
+							<td>Friderik Dávid</td>
+							<td>2012/01/21</td>
+							<td>Staff</td>
+							<td>
+							<span className="badge badge-success">Active</span>
+							</td>
+							</tr>
+							</tbody>
+							</table>
 							</main>
 						</div>
 					</div>
