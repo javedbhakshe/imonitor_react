@@ -7,7 +7,7 @@ const line = {
   labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
   datasets: [
     {
-      label: 'My First dataset',
+      label: 'No Of Cases',
       fill: false,
       lineTension: 0.1,
       backgroundColor: 'rgba(75,192,192,0.4)',
@@ -31,7 +31,7 @@ const line = {
 };
 
 const bar = {
-  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+  labels: ['January', 'February', 'March', 'April', 'May'],
   datasets: [
     {
       label: 'My First dataset',
@@ -40,16 +40,16 @@ const bar = {
       borderWidth: 1,
       hoverBackgroundColor: 'rgba(255,99,132,0.4)',
       hoverBorderColor: 'rgba(255,99,132,1)',
-      data: [65, 59, 80, 81, 56, 55, 40],
+      data: [65, 59, 80, 81, 56],
     },
   ],
 };
 
 const doughnut = {
   labels: [
-    'Red',
-    'Green',
-    'Yellow',
+    'Male',
+    'Female',
+    'Others',
   ],
   datasets: [
     {
@@ -95,9 +95,9 @@ const radar = {
 
 const pie = {
   labels: [
-    'Red',
-    'Green',
-    'Yellow',
+    'Open',
+    'Invalid',
+    'Resolved',
   ],
   datasets: [
     {
@@ -160,7 +160,7 @@ class Charts extends Component {
             <CardColumns className="cols-2">
               <Card>
                 <CardHeader>
-                  Line Chart
+                  Month wise reported cases
                   
                 </CardHeader>
                 <CardBody>
@@ -171,7 +171,7 @@ class Charts extends Component {
               </Card>
               <Card>
                 <CardHeader>
-                  Bar Chart
+                  Category wise case distribution
                  
                 </CardHeader>
                 <CardBody>
@@ -182,7 +182,7 @@ class Charts extends Component {
               </Card>
               <Card>
                 <CardHeader>
-                  Doughnut Chart
+                  Gender wise case distribution
                   
                 </CardHeader>
                 <CardBody>
@@ -191,20 +191,10 @@ class Charts extends Component {
                   </div>
                 </CardBody>
               </Card>
+              
               <Card>
                 <CardHeader>
-                  Radar Chart
-                  
-                </CardHeader>
-                <CardBody>
-                  <div className="chart-wrapper">
-                    <Radar data={radar} />
-                  </div>
-                </CardBody>
-              </Card>
-              <Card>
-                <CardHeader>
-                  Pie Chart
+                  Case Summary
                   
                 </CardHeader>
                 <CardBody>
@@ -213,17 +203,7 @@ class Charts extends Component {
                   </div>
                 </CardBody>
               </Card>
-              <Card>
-                <CardHeader>
-                  Polar Area Chart
-                 
-                </CardHeader>
-                <CardBody>
-                  <div className="chart-wrapper">
-                    <Polar data={polar} options={options}/>
-                  </div>
-                </CardBody>
-              </Card>
+              
             </CardColumns>
           </div>
       </div>
