@@ -1,72 +1,73 @@
 import React, { Component } from 'react';
-import {Col, Row, Card, CardBody, CardFooter, FormGroup, Button,Label, Input } from 'reactstrap';
+
 class GetKnowlegeable extends Component{
 	render(){
 		return(
-			<Row>
-				<Col sm='12'>
-					<Card>	
-						<CardBody>
-							<FormGroup row>
-			                    <Col xs="2">
-		                      		<Label htmlFor="selectSm">Enter Heading</Label>
-			                    </Col>
-			                    <Col xs="4" >
-			                      	<Input type="select" name="selectSm" id="SelectLm" bsSize="sm" disabled>
-				                       
-				                        <option value="1">Text</option>
-				                        <option value="2">Image</option>
-				                        <option value="3">Video</option>
-			                      	</Input>
-			                    </Col>
-			                    <Col xs="4">
-			                    	<Input type="text" id="input-normal" name="input-normal" placeholder="Enter Heading" />
-		                  		</Col>
-		                  	</FormGroup>
-		                  	<FormGroup row>
-			                    <Col xs="2">
-		                      		<Label htmlFor="selectSm1">Enter Subtitle</Label>
-			                    </Col>
-			                    <Col xs="4" >
-			                      	<Input type="select" name="selectSm1" id="SelectLm1" bsSize="sm" disabled>
-				                       
-				                        <option value="1">Text</option>
-				                        <option value="2">Image</option>
-				                        <option value="3">Video</option>
-			                      	</Input>
-			                    </Col>
-			                    <Col xs="4">
-			                    	<Input type="text" id="input-heading" name="input-normal" placeholder="Enter Subtitle" />
-		                  		</Col>
-		                  	</FormGroup>
-		                  	<FormGroup row>
-			                    <Col xs="2">
-		                      		<Label htmlFor="selectSm2">Enter Content</Label>
-			                    </Col>
-			                    <Col xs="4" >
-			                      	<Input type="select" name="selectSm2" id="SelectLm2" bsSize="sm">
-				                       
-				                        <option value="0">Please select</option>
-				                        <option value="1">Text</option>
-				                        <option value="2">Image</option>
-				                        <option value="3">Video</option>
-			                      	</Input>
-			                    </Col>
-			                    <Col xs="4">
-			                    	<Input type="text" id="input-content" name="input-normal" placeholder="Enter Content" />
-		                  		</Col>
-		                  	</FormGroup>
-		                  	<Col sm="2" className="mb-3 mb-xl-0">
-				                <Button block color="info">Add</Button>
-			              	</Col>
-						</CardBody>
-						<CardFooter className='text-center'>
-			                <Button className='mr-3' type="submit" size="sm" color="primary"><i className="fa fa-dot-circle-o"></i> Save and Continue</Button>
-			                <Button type="reset" size="sm" color="danger"><i className="fa fa-ban "></i> Reset</Button>
-		              	</CardFooter>
-					</Card>	
-				</Col>
-			</Row>
+			<div class="card">
+			<div className="card-body">
+			<div className="row">
+			<div className="col-lg-4">
+			<div class="card">
+			<div className="card-body">
+				<div className="form-group">
+				<label className="control-label" for="title">Title</label>
+				<input className="form-control" id="title" type="text" placeholder="Enter a title ..." />
+				</div>
+				<div className="form-group">
+				<label className="control-label" for="message">Message</label>
+				<textarea className="form-control" id="message" rows="6" placeholder="Enter a message ..."></textarea>
+				</div>	
+			</div>
+			<div class="text-center card-footer">
+			<button type="submit" class="mr-3 btn btn-primary btn-sm"><i class="fa fa-plus"></i> Add </button>
+			<button type="reset" class="btn btn-danger btn-sm"><i class="fa fa-ban "></i> Reset</button>
+			</div>
+			</div>
+			</div>
+			<div className="col-lg-8">
+			<table className="table table-responsive-sm table-bordered table-striped">
+				<thead>
+					<tr>
+						<th>Title</th>
+						<th>Description</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>How can TB be prevented from transmitting? </td>
+						<td>The best way to prevent TB from transmitting to other people is to start treatment early. After 2 weeks of treatment TB bacteria can no longer be transmitted to others.</td>
+						<td>
+						    <span className="badge badge-success">Edit</span>
+							<span className="badge badge-danger">Delete</span>
+						</td>
+					</tr>
+					<tr>
+						<td>Why do some patients die even if they are on treatment?</td>
+						<td>They might have started treatment too late. Due to the delay in treatment their body will be weak</td>
+						<td>
+						    <span className="badge badge-success">Edit</span>
+							<span className="badge badge-danger">Delete</span>
+						</td>
+					</tr>
+					<tr>
+						<td>When can I get back to my usual routine of work and daily activities?</td>
+						<td>When you feel strong enough you can go back to work and daily activities. Be careful at the beginning and start with very light work. Remember your body needs rest to recover.</td>
+						<td>
+						    <span className="badge badge-success">Edit</span>
+							<span className="badge badge-danger">Delete</span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			</div>
+			</div>
+			</div>
+			<div class="text-center card-footer">
+			<button type="submit" class="mr-3 btn btn-primary btn-sm"><i class="fa fa-dot-circle-o"></i> Save and Continue </button>
+			<button type="reset" class="btn btn-danger btn-sm"><i class="fa fa-ban "></i> Reset</button>
+			</div>
+			</div>		           
 		);
 	}
 }
