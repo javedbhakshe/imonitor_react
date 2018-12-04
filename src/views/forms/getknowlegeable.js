@@ -1,30 +1,51 @@
 import React, { Component } from 'react';
 
 class GetKnowlegeable extends Component{
+	
+	constructor(props){
+		super(props);
+		
+		this.state = {
+			data:{},				
+			isLoading:false			         
+		  }   
+		  
+		// this.handleSubmit = this.handleSubmit.bind(this);
+	}
+
 	render(){
 		return(
-			<div class="card">
+			<div className="card">
 			<div className="card-body">
-			<div className="row">
-			<div className="col-lg-4">
-			<div class="card">
-			<div className="card-body">
-				<div className="form-group">
-				<label className="control-label" for="title">Title</label>
-				<input className="form-control" id="title" type="text" placeholder="Enter a title ..." />
-				</div>
-				<div className="form-group">
-				<label className="control-label" for="message">Message</label>
-				<textarea className="form-control" id="message" rows="6" placeholder="Enter a message ..."></textarea>
-				</div>	
-			</div>
-			<div class="text-center card-footer">
-			<button type="submit" class="mr-3 btn btn-primary btn-sm"><i class="fa fa-plus"></i> Add </button>
-			<button type="reset" class="btn btn-danger btn-sm"><i class="fa fa-ban "></i> Reset</button>
-			</div>
-			</div>
-			</div>
-			<div className="col-lg-8">
+			<div className="row">			
+			<div className="col-lg-12">
+			<div className="btn-group ">
+                    <button className="btn btn-light" type="button" data-toggle="modal" data-target="#myModal">
+    		         		  <span className="fa fa-plus"></span> Add
+    	         	    </button>                    
+                  </div>
+				  <div className="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div className="modal-dialog" role="document">
+						<div className="modal-content">						
+						<div>						
+							<div className="card-body">							
+								<div className="form-group">
+								<label className="control-label">Title</label>
+								<input className="form-control" id="title" type="text" placeholder="Enter a title ..." />
+								</div>
+								<div className="form-group">
+								<label className="control-label" >Message</label>
+								<textarea className="form-control" id="message" rows="6" placeholder="Enter a message ..."></textarea>
+								</div>	
+							</div>
+							<div className="text-center card-footer">
+							<button type="submit" className="mr-3 btn btn-primary btn-sm"><i className="fa fa-plus"></i> Add </button>
+							<button type="button" className="btn btn-danger btn-sm" data-dismiss="modal" aria-label="Close"><i className="fa fa-close "></i> Close</button>
+							</div>
+							</div>
+						</div>
+						</div>
+					</div>
 			<table className="table table-responsive-sm table-bordered table-striped">
 				<thead>
 					<tr>
@@ -63,9 +84,9 @@ class GetKnowlegeable extends Component{
 			</div>
 			</div>
 			</div>
-			<div class="text-center card-footer">
-			<button type="submit" class="mr-3 btn btn-primary btn-sm"><i class="fa fa-dot-circle-o"></i> Save and Continue </button>
-			<button type="reset" class="btn btn-danger btn-sm"><i class="fa fa-ban "></i> Reset</button>
+			<div className="text-center card-footer">
+			<button type="submit" className="mr-3 btn btn-primary btn-sm"><i className="fa fa-dot-circle-o"></i> Save and Continue </button>
+			<button type="reset" className="btn btn-danger btn-sm"><i className="fa fa-ban "></i> Reset</button>
 			</div>
 			</div>		           
 		);

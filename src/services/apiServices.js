@@ -3,7 +3,9 @@ const apiUrl = 'https://api.imonitorplus.com/api/imonitor';
 export const apiServices = {
     login,
     logout,
-    register    
+    register,
+    createCommunity,
+    cloudinaryUpload    
 };
 
 function login(requestObject) {
@@ -29,6 +31,7 @@ function login(requestObject) {
 function logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('community');
+    window.location.reload(); 
 }
 
 
@@ -41,6 +44,51 @@ function register(requestObject) {
     };
 
     return fetch(`${apiUrl}/communities/signup.json`, requestOptions)
+    .then(handleResponse)
+    .then(data => {
+         return data;
+    });
+}
+
+function createCommunity(requestObject) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(requestObject)
+    };
+
+    return fetch(`${apiUrl}/communities/_save.json`, requestOptions)
+    .then(handleResponse)
+    .then(data => {
+        // login successful if there's a jwt token in the response
+        if (data.status === 'SUCCESS') {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            localStorage.setItem('community', JSON.stringify(data));
+        }
+
+        return data;
+    });
+}
+
+
+function cloudinaryUpload(file){
+
+    let communityBO = localStorage.getItem('community');
+    let community = JSON.parse(communityBO).community;    
+    let cloundName = community.cloudinaryCloudName;
+    let cloundPreset = community.cloudinaryPreset;
+
+    const dataForm = new FormData();
+        dataForm.append('upload_preset', cloundPreset);
+        dataForm.append('file', file);
+
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+        body: dataForm
+    };
+
+    return fetch(`https://api.cloudinary.com/v1_1/${cloundName}/upload`, requestOptions)
     .then(handleResponse)
     .then(data => {
          return data;

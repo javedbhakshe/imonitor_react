@@ -429,3 +429,9 @@ ul li.nav-item:last-child {
     transform: rotate(360deg);
   }
 }
+
+.noImage {
+    max-height: 100px;
+    max-width: 100%;
+}
+
