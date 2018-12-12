@@ -1,8 +1,33 @@
 import React,{Component} from 'react';
+import {DataTable} from 'react-data-components';
 
-class Inbox extends Component{
+class Analytics extends Component{
+
+	
 
 	render(){
+		let aColumns = [
+			{ title: 'Name', prop: 'name'  },
+	 	 	{ title: 'City', prop: 'city' },
+		  	{ title: 'Address', prop: 'address' },
+		  	{ title: 'Phone', prop: 'phone' }
+	  	],
+	  	aData = [
+			{ name: 'name value', city: 'city value', address: 'address value', phone: 'phone value' },	  	
+			{ name: 'name value', city: 'city value', address: 'address value', phone: 'phone value' },	  	
+			{ name: 'name value', city: 'city value', address: 'address value', phone: 'phone value' },	  	
+			{ name: 'name value', city: 'city value', address: 'address value', phone: 'phone value' },	  	
+			{ name: 'name value', city: 'city value', address: 'address value', phone: 'phone value' },	  	
+			{ name: 'name value', city: 'city value', address: 'address value', phone: 'phone value' },	  	
+			{ name: 'name value', city: 'city value', address: 'address value', phone: 'phone value' },	  	
+			{ name: 'name value', city: 'city value', address: 'address value', phone: 'phone value' },	  	
+			{ name: 'name value', city: 'city value', address: 'address value', phone: 'phone value' },	  	
+			{ name: 'name value', city: 'city value', address: 'address value', phone: 'phone value' },	  	
+			{ name: 'name value', city: 'city value', address: 'address value', phone: 'phone value' },	  	
+			{ name: 'name value', city: 'city value', address: 'address value', phone: 'phone value' }	  	
+	  	];
+
+
 		return(			
 			<div className='container-fluid  my-4'>
 				<div id="ui-view">
@@ -53,98 +78,11 @@ class Inbox extends Component{
 							</div>
 							</div>
 							<main className="inbox">
-							<table className="table table-responsive-sm table-bordered table-striped">
-							<thead>
-							<tr>
-							<th>Username</th>
-							<th>Date registered</th>
-							<th>Role</th>
-							<th>Status</th>
-							</tr>
-							</thead>
-							<tbody>
-							<tr>
-							<td>Samppa Nori</td>
-							<td>2012/01/01</td>
-							<td>Member</td>
-							<td>
-							<span className="badge badge-success">Active</span>
-							</td>
-							</tr>
-							<tr>
-							<td>Estavan Lykos</td>
-							<td>2012/02/01</td>
-							<td>Staff</td>
-							<td>
-							<span className="badge badge-danger">Banned</span>
-							</td>
-							</tr>
-							<tr>
-							<td>Chetan Mohamed</td>
-							<td>2012/02/01</td>
-							<td>Admin</td>
-							<td>
-							<span className="badge badge-secondary">Inactive</span>
-							</td>
-							</tr>
-							<tr>
-							<td>Derick Maximinus</td>
-							<td>2012/03/01</td>
-							<td>Member</td>
-							<td>
-							<span className="badge badge-warning">Pending</span>
-							</td>
-							</tr>
-							<tr>
-							<td>Friderik Dávid</td>
-							<td>2012/01/21</td>
-							<td>Staff</td>
-							<td>
-							<span className="badge badge-success">Active</span>
-							</td>
-							</tr>
-							<tr>
-							<td>Samppa Nori</td>
-							<td>2012/01/01</td>
-							<td>Member</td>
-							<td>
-							<span className="badge badge-success">Active</span>
-							</td>
-							</tr>
-							<tr>
-							<td>Estavan Lykos</td>
-							<td>2012/02/01</td>
-							<td>Staff</td>
-							<td>
-							<span className="badge badge-danger">Banned</span>
-							</td>
-							</tr>
-							<tr>
-							<td>Chetan Mohamed</td>
-							<td>2012/02/01</td>
-							<td>Admin</td>
-							<td>
-							<span className="badge badge-secondary">Inactive</span>
-							</td>
-							</tr>
-							<tr>
-							<td>Derick Maximinus</td>
-							<td>2012/03/01</td>
-							<td>Member</td>
-							<td>
-							<span className="badge badge-warning">Pending</span>
-							</td>
-							</tr>
-							<tr>
-							<td>Friderik Dávid</td>
-							<td>2012/01/21</td>
-							<td>Staff</td>
-							<td>
-							<span className="badge badge-success">Active</span>
-							</td>
-							</tr>
-							</tbody>
-							</table>
+						 	 	<DataTable
+							      	columns={aColumns}
+							      	initialData={aData}
+							      	initialPageLength={5}
+							    />
 							</main>
 						</div>
 					</div>
@@ -155,4 +93,4 @@ class Inbox extends Component{
 	}
 }
 
-export default Inbox;
+export default Analytics;
