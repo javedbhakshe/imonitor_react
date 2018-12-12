@@ -133,7 +133,7 @@ class CommunitySetUp extends Component{
 					<div className="col-lg-6">
 					    <div className="form-group">
 							<label className="control-label">Community Default Language</label>
-							<select className="form-control" name="defaultLocale" value={this.state.defaultLocale}>
+							<select className="form-control" name="defaultLocale" value={this.state.defaultLocale} onChange={this.handleUserInput}>
 								<option value="pl">Polish</option>
 								<option value="fi">Finnish</option>
 								<option value="da">Danish</option>
@@ -285,7 +285,7 @@ class CommunitySetUp extends Component{
 								<option value="ar_AE">Arabic (United Arab Emirates)</option>
 								<option value="en_GB">English (United Kingdom)</option>
 								<option value="es_US">Spanish (United States)</option>
-								<option value="en_US" selected="selected">English (United States)</option>
+								<option value="en_US" >English (United States)</option>
 								<option value="es_UY">Spanish (Uruguay)</option>
 								<option value="es_VE">Spanish (Venezuela)</option>
 								<option value="vi_VN">Vietnamese (Vietnam)</option>
@@ -296,8 +296,8 @@ class CommunitySetUp extends Component{
 					<div className="col-lg-6">
 					    <div className="form-group">
 							<label className="control-label">Default Map View</label>
-							<select className="form-control" name="defaultMapView" value={this.state.defaultMapView}>
-								<option value="" text="World" selected="selected">World</option>
+							<select className="form-control" name="defaultMapView" value={this.state.defaultMapView} onChange={this.handleUserInput}>
+								<option value="" text="World" >World</option>
 								<option value="Afghanistan">Afghanistan</option>
 								<option value="Albania">Albania</option>
 								<option value="Algeria">Algeria</option>

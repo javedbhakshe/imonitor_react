@@ -3,6 +3,7 @@ import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 
 export class MapContainer extends Component {
   
+ 
 
   render() {
     return (
@@ -18,9 +19,9 @@ export class MapContainer extends Component {
                 name={'Current location'} 
         />
  
-        <InfoWindow onClose={this.onInfoWindowClose}>
+        {/* <InfoWindow onClose={this.onInfoWindowClose}>
           
-        </InfoWindow>
+        </InfoWindow> */}
       </Map>
     );
   }
