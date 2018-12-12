@@ -10,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/js/src/tab';
 import 'bootstrap/js/src/dropdown';
 import 'bootstrap/js/src/modal';
+import 'bootstrap/js/src/collapse';
 
 import '@coreui/coreui/dist/css/coreui.min.css';
 import '@coreui/icons/css/coreui-icons.min.css';

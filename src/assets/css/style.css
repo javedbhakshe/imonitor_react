@@ -547,3 +547,24 @@ ul li.nav-item:last-child {
 /*   */
 
 
+.actionTab span{
+    margin: 2px;
+}
+.accordHeader span.accordTitle{
+    padding: 9px;
+    display: inline-block;
+    font-size: 14px;
+}
+.no-padding{
+    padding: 0;
+}
+.header-icon i{
+    padding: 0 5px;
+}
+
+.no-padding .list-group, .no-padding .tab-content .tab-pane{
+    padding: 3px;
+}
+.accordDiv{
+    padding: 5px;
+}
