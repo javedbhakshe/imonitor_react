@@ -61,7 +61,6 @@ class GetKnowlegeable extends Component{
 	}
 
 	addItems(e){
-		console.log(this.state.level);
 		e.preventDefault();		
 
 		let levelInx = this.state.level;
@@ -89,7 +88,6 @@ class GetKnowlegeable extends Component{
 	}
 
 	render(){		
-		console.log(this.state.content)
 		let that = this;		
 		return(
 			
