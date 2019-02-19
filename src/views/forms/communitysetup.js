@@ -8,9 +8,19 @@ class CommunitySetUp extends Component{
 	constructor(props){
 		super(props);
 		
-		let communityBO = localStorage.getItem('community');
-		let community = JSON.parse(communityBO).community;
-		
+		let communityBO = localStorage.getItem('community'),
+			community = JSON.parse(communityBO).community,
+			oLocales = JSON.parse(communityBO).uuidLocales,
+			aLocales = oLocales[community.uuid],
+			aLangs = [],sView = community.defaultMapView? community.defaultMapView: '',
+			oView = {value:sView === 'World' ? '' : sView , label:sView};
+
+
+		for(let i in aLocales){
+			let oTemp = {value:aLocales[i].locale,label: aLocales[i].displayName}
+			aLangs.push(oTemp);
+		}
+
         this.state = {
 			uuid:community.uuid,
             name: community.name,
@@ -25,9 +35,9 @@ class CommunitySetUp extends Component{
 			logo: community.logo ? community.logo : '',
 			featuredImage: community.featuredImage ? community.featuredImage : '',
 			isLoading:false	,
-			comView:null,
-			comType:null,
-			comLang:null		         
+			comType:{value:community.type,label:community.type},
+			comLang:aLangs,		         
+			comView:oView	         
 		  }   
 		  
 
@@ -88,6 +98,28 @@ class CommunitySetUp extends Component{
     handleChange = (selectedOption, e) => {
 	    let name = e.name;
 	    this.setState({ [name]:selectedOption });
+  	}
+
+  	handleLanguageChange = (selectedOption, e) => {
+
+  		console.log(e);
+	 	let name = e.name,
+	 		oRequestObject = {
+	 			"uuid":this.state.uuid,
+	 			"type":"COMMUNITY",
+	 			"field":"name",
+	 			"text":this.state.name,
+	 			"locale_lang":'en_Us',
+	 			"module":"IMONITOR"
+ 			};
+
+	    this.setState({ [name]:selectedOption });
+		if(e.action === 'select-option'){
+  			oRequestObject.locale_lang = e.option.value;
+	  		apiServices.updateCommunityLangs(oRequestObject).then((e) => {
+	  			console.log(e);
+	  		});
+		}
   	}
 	
 	render(){
@@ -159,7 +191,7 @@ class CommunitySetUp extends Component{
 						        isMulti= {true} 
 						        name="comLang"
 						        value={this.state.comLang}
-						        onChange={this.handleChange}
+						        onChange={this.handleLanguageChange}
 						        options={aCommunityLanguages}
 					      	/>
 						</div>

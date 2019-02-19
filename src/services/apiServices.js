@@ -1,12 +1,13 @@
-// const apiUrl = 'https://api.imonitorplus.com/api/imonitor';
-const apiUrl = 'https://uat.imonitorplus.com/service/api/imonitor';
+// const apiUrl= 'https://api.imonitorplus.com/api/imonitor';
+const apiUrl = 'https://uat.imonitorplus.com/service/api';
 
 export const apiServices = {
     login,
     logout,
     register,
     createCommunity,
-    cloudinaryUpload    
+    cloudinaryUpload,
+    updateCommunityLangs    
 };
 
 function login(requestObject) {
@@ -16,7 +17,7 @@ function login(requestObject) {
         body: JSON.stringify(requestObject)
     };
 
-    return fetch(`${apiUrl}/communities/authenticate.json`, requestOptions)
+    return fetch(`${apiUrl}/imonitor/communities/authenticate.json`, requestOptions)
         .then(handleResponse)
         .then(data => {
             // login successful if there's a jwt token in the response
@@ -44,7 +45,7 @@ function register(requestObject) {
         body: JSON.stringify(requestObject)
     };
 
-    return fetch(`${apiUrl}/communities/signup.json`, requestOptions)
+    return fetch(`${apiUrl}/imonitor/communities/signup.json`, requestOptions)
     .then(handleResponse)
     .then(data => {
          return data;
@@ -58,7 +59,7 @@ function createCommunity(requestObject) {
         body: JSON.stringify(requestObject)
     };
 
-    return fetch(`${apiUrl}/communities/_save.json`, requestOptions)
+    return fetch(`${apiUrl}/imonitor/communities/_save.json`, requestOptions)
     .then(handleResponse)
     .then(data => {
         // login successful if there's a jwt token in the response
@@ -74,6 +75,25 @@ function createCommunity(requestObject) {
     });
 }
 
+function updateCommunityLangs(requestObject){
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(requestObject)
+    };
+   
+    return fetch(`${apiUrl}/creative/translations/save.json`, requestOptions)
+    .then(handleResponse)
+    .then(data => {
+        // login successful if there's a jwt token in the response
+        if (data.status === 'SUCCESS') {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            console.log('Updated ');
+        }
+
+        return data;
+    });
+}
 
 function cloudinaryUpload(file){
 
