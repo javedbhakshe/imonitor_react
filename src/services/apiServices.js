@@ -1,4 +1,5 @@
-const apiUrl = 'https://api.imonitorplus.com/api/imonitor';
+// const apiUrl = 'https://api.imonitorplus.com/api/imonitor';
+const apiUrl = 'https://uat.imonitorplus.com/service/api/imonitor';
 
 export const apiServices = {
     login,
