@@ -4,6 +4,7 @@ import AppConfig from './forms/appconfig';
 import GetKnowlegeable from './forms/getknowlegeable';
 import Services from './forms/services';
 import SmartMap from './forms/smartmap';
+import Nearme from './forms/nearme';
 import Finish from './forms/finish';
 import classnames from 'classnames';
 
@@ -124,7 +125,7 @@ class SmartSetup extends Component{
 							  <Services />
 						  	</div>
 						  	<div className="tab-pane fade" id="nearme" role="tabpanel" aria-labelledby="nearme-tab">
-						  		<SmartMap />
+						  		<Nearme />
 						  	</div>
 						  	<div className="tab-pane fade" id="finish" role="tabpanel" aria-labelledby="finish-tab">
 						  		<Finish />

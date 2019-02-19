@@ -551,9 +551,9 @@ ul li.nav-item:last-child {
     margin: 2px;
 }
 .accordHeader span.accordTitle{
-    padding: 9px;
+    padding: 6px;
     display: inline-block;
-    font-size: 14px;
+    font-size: 13px;
 }
 .no-padding{
     padding: 0;
@@ -565,6 +565,52 @@ ul li.nav-item:last-child {
 .no-padding .list-group, .no-padding .tab-content .tab-pane{
     padding: 3px;
 }
+
 .accordDiv{
-    padding: 5px;
+    padding: 10px;
+    font-size: 12px;
+}
+.accordHeader {
+    border-bottom: 1px solid #ced2d4;
+}
+
+.swal-button{
+    color: #fff;
+    background-color: #20a8d8;
+    border-color: #20a8d8;
+    padding: 5px 15px;
+    /* padding: .25rem .5rem; */
+    font-size: .765625rem;
+    line-height: 1.5;
+    border-radius: .2rem;
+}
+.swal-button--danger{
+    color: #fff;
+    background-color: #f86c6b;
+    border-color: #f86c6b;
+}
+.btn-custom{
+    border-radius: 0;
+}
+.tab-pane.mapDetail {
+    height: 545px;
+    margin-bottom: 2%;
+    position: relative;
+    width: 98%;
+    left: 0;
+    padding: 1%;
+}
+.clear{
+    clear: both;
+}
+.nearmeTab {
+    border: 1px solid #dcd1d1;
+    float: right;
+}
+.no-padding .tab-content .tab-pane.questionTab{
+    padding: 1rem;
+}
+
+.hideQuestion{
+    display: none;
 }
