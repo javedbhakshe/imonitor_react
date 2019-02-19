@@ -14,7 +14,8 @@ class CommunitySetUp extends Component{
         this.state = {
 			uuid:community.uuid,
             name: community.name,
-            emaill: community.emaill,
+			emaill: community.emaill,
+			active:community.active,
             type: community.type,
             project: community.project,
             summary: community.summary,
@@ -66,11 +67,23 @@ class CommunitySetUp extends Component{
               that.setState({activeTab: 'appconfig-tab'});
             }  
             if(response.status === "SUCCESS"){
-            	console.log('call api');
+            	that.props.configTab('appconfig-tab');
             }          
           });
         }
-    }
+	}
+	
+	handleDeactivate = (e) => {
+		var that = this;  
+		// that.setState({active : "N"});   
+		that.state.active = 'N';
+		if(that.state.name && that.state.emaill){
+			let requestOptions = { community: that.state };
+			apiServices.createCommunity(requestOptions).then(function(response){
+			 apiServices.logout();
+			});
+		  }  
+	}
 
     handleChange = (selectedOption, e) => {
 	    let name = e.name;
@@ -204,7 +217,7 @@ class CommunitySetUp extends Component{
 				</div>
 				<div className="text-center card-footer">
 					<button type="submit" className="mr-3 btn btn-primary btn-sm"><i className="fa fa-dot-circle-o"></i> Save and Continue </button>
-					{/* <button type="reset" className="btn btn-danger btn-sm"><i className="fa fa-ban "></i> Reset</button> */}
+					<button className="btn btn-danger btn-sm" onClick={this.handleDeactivate}><i className="fa fa-ban"></i> Deactive</button>
 				</div>
 			</form>
 			</div>			

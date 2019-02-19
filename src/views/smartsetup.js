@@ -23,7 +23,11 @@ class SmartSetup extends Component{
 		        activeTab: tab
 	      	});
 	    }
-  	}
+	  }
+	  
+	toggleActive(tab){
+		document.getElementById(tab).click();
+	}
 
   	
   	render() {
@@ -113,7 +117,7 @@ class SmartSetup extends Component{
 						</ul>
 						<div className="tab-content" id="myTabContent">
 						  	<div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-						  		<CommunitySetUp />
+						  		<CommunitySetUp configTab={this.toggleActive} />
 						  	</div>
 						  	<div className="tab-pane fade" id="appconfig" role="tabpanel" aria-labelledby="appconfig-tab">
 						  		<AppConfig />

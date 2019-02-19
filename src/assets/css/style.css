@@ -614,3 +614,8 @@ ul li.nav-item:last-child {
 .hideQuestion{
     display: none;
 }
+.project-title {
+    padding-left: 8px;
+    font-size: 15px;
+    font-weight: 600;
+}

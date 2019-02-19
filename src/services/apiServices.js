@@ -65,6 +65,9 @@ function createCommunity(requestObject) {
         if (data.status === 'SUCCESS') {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('community', JSON.stringify(data));
+            let communityBO = JSON.parse(localStorage.getItem('community'));
+            communityBO.community = data.community;
+            localStorage.setItem('community', JSON.stringify(communityBO));
         }
 
         return data;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from '../../assets/images/logo.svg';
+import logo from '../../assets/images/logo.png';
 import minimizedlogo from '../../assets/images/sygnet.svg';
 import { apiServices } from '../../services/apiServices';
 
@@ -7,7 +7,13 @@ import { apiServices } from '../../services/apiServices';
 class Header extends Component {
 
 	constructor(props){
-		super(props);			
+		super(props);	
+		
+		let communityBO = localStorage.getItem('community');
+		let community = JSON.parse(communityBO).community;
+
+		this.logo = community.logo ? community.logo : logo;	
+		this.name = community.project ? community.project : 'iMonitor';	
 		this.handleLogout = this.handleLogout.bind(this);       
 	}    
 	
@@ -22,8 +28,9 @@ class Header extends Component {
 			 	<button className="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
 	    			<span className="navbar-toggler-icon"></span>
 	      		</button>
-		      	<a className="navbar-brand" href="https://web.imonitorplus.com">
-			        <img className="navbar-brand-full" src={logo} width="89" height="25" alt="CoreUI Logo" />
+		      	<a className="navbar-brand" href="javascript:void(0)">
+			        <img className="navbar-brand-full" src={this.logo} height="52" alt="CoreUI Logo" />
+					<span className="project-title">{this.name}</span>
 			        <img className="navbar-brand-minimized" src={minimizedlogo} width="30" height="30" alt="CoreUI Logo" />
 	     	 	</a>
 
