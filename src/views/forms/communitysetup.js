@@ -119,6 +119,12 @@ class CommunitySetUp extends Component{
 	  		apiServices.updateCommunityLangs(oRequestObject).then((e) => {
 	  			console.log(e);
 	  		});
+		}else if(e.action === 'remove-value'){
+			oRequestObject.locale_lang = e.removedValue.value;
+			oRequestObject.deleteFlag = true;
+			apiServices.updateCommunityLangs(oRequestObject).then((e) => {
+	  			console.log(e);
+	  		});
 		}
   	}
 	
