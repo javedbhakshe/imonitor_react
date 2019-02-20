@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Select from 'react-select';
 import { apiServices } from '../../services/apiServices';
 import Loader from '../../components/loaders/loader';
-import {aCommunityType, aCommunityLanguages, aCommCountries}  from '../../data/config';
+import {aCommunityType, aCommunityLanguages, aCommCountries, aCommunitySections}  from '../../data/config';
 
 class CommunitySetUp extends Component{
 	constructor(props){
@@ -13,7 +13,8 @@ class CommunitySetUp extends Component{
 			oLocales = JSON.parse(communityBO).uuidLocales,
 			aLocales = oLocales[community.uuid],
 			aLangs = [],sView = community.defaultMapView? community.defaultMapView: '',
-			oView = {value:sView === 'World' ? '' : sView , label:sView};
+			oView = {value:sView , label:sView === '' ? 'World' : sView},
+			oComType = community.type ? {value:community.type,label:community.type} : null;
 
 
 		for(let i in aLocales){
@@ -35,15 +36,17 @@ class CommunitySetUp extends Component{
 			logo: community.logo ? community.logo : '',
 			featuredImage: community.featuredImage ? community.featuredImage : '',
 			isLoading:false	,
-			comType:{value:community.type,label:community.type},
+			comType:oComType,
 			comLang:aLangs,		         
 			comView:oView	         
-		  }   
+	  	}
+
+	  	console.log(this.state)   
 		  
 
-	  	this.communityTypes = aCommunityType
+	  	/*this.communityTypes = aCommunityType
 	  	this.communityLanguages = aCommunityLanguages;
-	  	this.communityCountries = aCommCountries
+	  	this.communityCountries = aCommCountries*/
 
 	}
 	
@@ -179,6 +182,7 @@ class CommunitySetUp extends Component{
 							<label className="control-label">Community Type</label>
 							<Select
 						        name="comType"
+						        placeholder="Please Select comunity type"
 						        value={this.state.comType}
 						        onChange={this.handleChange}
 						        options={aCommunityType}
@@ -256,12 +260,24 @@ class CommunitySetUp extends Component{
 							onChange={this.fileChangedHandler} />
 						</div>
 					</div>
+					
 					<div className="col-lg-3 fIThumbnails text-right">
 						<img src={this.state.featuredImage} className="img-responsive noImage"
 						 onError={(e) => {
 							e.target.src = require("../../assets/images/no-image.png") // default image
 						 }}
 						  />
+					</div>
+					<div className="col-lg-12">
+					    <div className="form-group">
+							<label className="control-label">Choose sections</label>
+							<Select
+						        name="comSections"
+						        placeholder="Please Select comunity sections"
+						   		isMulti={true}
+						        options={aCommunitySections}
+					      	/>
+						</div>
 					</div>
 					</div>
 				</div>

@@ -379,9 +379,17 @@ const aCommCountries = [
 	{value:"Åland Islands",label:"Åland Islands"},
 ]
 
+const aCommunitySections = [
+	{value:"Inbox",label:"Inbox"},
+	{value:"Maps",label:"Maps"},
+	{value:"Analytics",label:"Analytics"},
+	{value:"Surveys",label:"Surveys"}
+];
+
 export {
   	aCommunityType,
   	aCommunityLanguages,
-  	aCommCountries
+  	aCommCountries,
+  	aCommunitySections
 };
 
