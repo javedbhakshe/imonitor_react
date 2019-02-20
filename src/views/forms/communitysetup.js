@@ -221,7 +221,17 @@ class CommunitySetUp extends Component{
 						</div>
 					</div>
 					<div className="col-lg-6">
-					
+					    <div className="form-group">
+							<label className="control-label">Community UUID</label>
+							<input className="form-control"
+							 type="text" 
+							 name="uuid" 
+							 placeholder="Enter Community UUID" 
+							 id='community_uuid'
+							 disabled
+							 value={this.state.uuid}
+							 onChange={this.handleUserInput} />
+						</div>
 					</div>
 					<div className="col-lg-3">
 						<div className="form-group">
