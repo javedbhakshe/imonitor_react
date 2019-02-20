@@ -267,7 +267,7 @@ class CommunitySetUp extends Component{
 				</div>
 				<div className="text-center card-footer">
 					<button type="submit" className="mr-3 btn btn-primary btn-sm"><i className="fa fa-dot-circle-o"></i> Save and Continue </button>
-					<button className="btn btn-danger btn-sm" onClick={this.handleDeactivate}><i className="fa fa-ban"></i> Deactive</button>
+					<button className="btn btn-danger btn-sm float-right" onClick={this.handleDeactivate}><i className="fa fa-ban"></i> Deactive</button>
 				</div>
 			</form>
 			</div>			

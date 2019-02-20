@@ -10,8 +10,7 @@ class GetKnowlegeable extends Component{
 		let communityBO = localStorage.getItem('community');
 		let community = JSON.parse(communityBO);
 		let uuid = community.community.uuid;
-		let languageList = [];
-		languageList = community.uuidLocales[uuid];
+		let languageList = community.uuidLocales[uuid] ? community.uuidLocales[uuid] : [];
 		
 		this.state = {				
 			content:[],

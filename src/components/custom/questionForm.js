@@ -19,7 +19,7 @@ class QuestionForm extends Component {
 
         const community = JSON.parse(localStorage.getItem('community')),
 	    	uuid = community.community.uuid,
-            aLanguageList = community.uuidLocales[uuid];
+            aLanguageList = community.uuidLocales[uuid] ? community.uuidLocales[uuid] : [];
             
         this.aLanguageList = aLanguageList;
     }

@@ -78,7 +78,7 @@ class Login extends Component {
     render(){
       let errorResp;
       if(this.state.responseError){
-        errorResp = <div className="alert alert-danger">{this.state.responseError}</div>;
+        errorResp = <div className="alert alert-danger" dangerouslySetInnerHTML={{__html: this.state.responseError}}></div>;
       }
         return(  
           <div className="app flex-row align-items-center">  
