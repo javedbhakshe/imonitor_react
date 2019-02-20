@@ -116,12 +116,14 @@ class CommunitySetUp extends Component{
 	    this.setState({ [name]:selectedOption });
 		if(e.action === 'select-option'){
   			oRequestObject.locale_lang = e.option.value;
+  			oRequestObject.domain = "";
 	  		apiServices.updateCommunityLangs(oRequestObject).then((e) => {
 	  			console.log(e);
 	  		});
 		}else if(e.action === 'remove-value'){
 			oRequestObject.locale_lang = e.removedValue.value;
-			oRequestObject.deleteFlag = true;
+			oRequestObject.deleteFlag = "true";
+			oRequestObject.domain = "";
 			apiServices.updateCommunityLangs(oRequestObject).then((e) => {
 	  			console.log(e);
 	  		});
