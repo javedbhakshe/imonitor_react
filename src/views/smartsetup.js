@@ -36,19 +36,8 @@ class SmartSetup extends Component{
 		      	<div className='row'>
 			      	<div className='col-sm-12'>
 			      		<ul className="nav nav-tabs sstab" id="myTab" role="tablist">
-						  	<li className={`nav-item ${classnames({ active: this.state.activeTab === 'home-tab' })}`}>
-							    <a className="nav-link ssup active" 
-							    	id="home-tab" data-toggle="tab" 
-							    	href="#home" role="tab" 
-							    	aria-controls="home" 
-							    	aria-selected="true"
-						    	 	onClick={() => { this.toggle('home-tab') }}>
-							    	Community SetUp
-							    </a>
-					  		 	<div className="nav-arrow"></div>
-						  	</li>
-						  	<li className={`nav-item ${classnames({ active: this.state.activeTab === 'appconfig-tab' })}`}>
-						     	<div className="nav-wedge"></div>
+						  <li className={`nav-item ${classnames({ active: this.state.activeTab === 'appconfig-tab' })}`}>
+						     	
 							    <a className="nav-link ssup" 
 						    		id="appconfig-tab" data-toggle="tab" 
 						    		href="#appconfig" role="tab" 
@@ -60,6 +49,18 @@ class SmartSetup extends Component{
 						    	</a>
 						  		<div className="nav-arrow"></div>
 						  	</li>
+						  	<li className={`nav-item ${classnames({ active: this.state.activeTab === 'home-tab' })}`}>
+							  <div className="nav-wedge"></div>
+							    <a className="nav-link ssup active" 
+							    	id="home-tab" data-toggle="tab" 
+							    	href="#home" role="tab" 
+							    	aria-controls="home" 
+							    	aria-selected="true"
+						    	 	onClick={() => { this.toggle('home-tab') }}>
+							    	Community SetUp
+							    </a>
+					  		 	<div className="nav-arrow"></div>
+						  	</li>						  	
 						  	<li className={`nav-item ${classnames({ active: this.state.activeTab === 'getknowlegeable-tab' })}`}>
 						    	<div className="nav-wedge"></div>
 						    	<a className="nav-link ssup" 
@@ -116,12 +117,12 @@ class SmartSetup extends Component{
 						  	</li>
 						</ul>
 						<div className="tab-content" id="myTabContent">
+							<div className="tab-pane fade" id="appconfig" role="tabpanel" aria-labelledby="appconfig-tab">
+						  		<AppConfig configTab={this.toggleActive} />
+						  	</div>
 						  	<div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 						  		<CommunitySetUp configTab={this.toggleActive} />
-						  	</div>
-						  	<div className="tab-pane fade" id="appconfig" role="tabpanel" aria-labelledby="appconfig-tab">
-						  		<AppConfig />
-						  	</div>
+						  	</div>						  	
 						  	<div className="tab-pane fade" id="getknowlegeable" role="tabpanel" aria-labelledby="getknowlegeable-tab">
 						  		<GetKnowlegeable />
 						  	</div>

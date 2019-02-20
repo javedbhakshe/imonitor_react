@@ -1,3 +1,5 @@
+import swal from 'sweetalert'
+
 // const apiUrl= 'https://api.imonitorplus.com/api/imonitor';
 const apiUrl = 'https://uat.imonitorplus.com/service/api';
 
@@ -113,9 +115,14 @@ function cloudinaryUpload(file){
     };
 
     return fetch(`https://api.cloudinary.com/v1_1/${cloundName}/upload`, requestOptions)
-    .then(handleResponse)
+    // .then(handleResponse)
     .then(data => {
-         return data;
+        if (data.status === 401) {
+            swal("Please update cloudinary key!", {
+                icon: "error",
+            });
+        }
+        return data;
     });
 }
 
