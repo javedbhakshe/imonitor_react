@@ -9,24 +9,18 @@ import Finish from './forms/finish';
 import classnames from 'classnames';
 
 class SmartSetup extends Component{
-	constructor(props) {
-	    super(props);
-	    this.toggle = this.toggle.bind(this);
-	    this.state = {
-	      activeTab: 'home-tab'
-	    };
-  	}
+	
+  	state = {activeTab: 'home-tab'};
 
-  	toggle(tab){
-  		if (this.state.activeTab !== tab) {
-	      	this.setState({
-		        activeTab: tab
-	      	});
-	    }
-	  }
+  	toggle = (activeTab) => {
+  		if (this.state.activeTab !== activeTab) {
+	      	this.setState({activeTab});
+	 	}
+  	}
 	  
-	toggleActive(tab){
-		document.getElementById(tab).click();
+	toggleActive = (activeTab) => {
+		document.getElementById(activeTab).click();
+		this.props.testFn()
 	}
 
   	
