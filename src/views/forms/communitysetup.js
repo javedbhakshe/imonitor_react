@@ -44,10 +44,10 @@ class CommunitySetUp extends Component{
 			isLoading:false	,
 			comType:oComType,
 			comLang:aLangs,		         
-			comView:oView	         
+			comView:oView,
+			comSections:[]
 	  	}
-
-	  	console.log(this.state)   
+ 
 		  
 
 	  	/*this.communityTypes = aCommunityType
@@ -77,6 +77,7 @@ class CommunitySetUp extends Component{
 	handleSubmit = (e) => {
         e.preventDefault();
         var that = this;  
+        console.log(this.state);
         this.setState({isLoading : true});          
         if(this.state.name && this.state.emaill){
           let requestOptions = { community: this.state };
@@ -271,6 +272,8 @@ class CommunitySetUp extends Component{
 							<Select
 						        name="comSections"
 						        placeholder="Please Select comunity sections"
+						        onChange={this.handleChange}
+						        value={this.state.comSections}
 						   		isMulti={true}
 						        options={aCommunitySections}
 					      	/>
