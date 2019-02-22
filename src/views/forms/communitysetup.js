@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
+import { connect } from 'react-redux';
 import { apiServices } from '../../services/apiServices';
 import Loader from '../../components/loaders/loader';
+import { community } from '../../actions';
 import {aCommunityType, aCommunityLanguages, aCommCountries, aCommunitySections}  from '../../data/config';
 
 class CommunitySetUp extends Component{
+
+
 	constructor(props){
 		super(props);
-		
-		let communityBO = localStorage.getItem('community'),
-			community = JSON.parse(communityBO).community,
-			oLocales = JSON.parse(communityBO).uuidLocales,
+		console.log(props);
+
+		let communityBO = JSON.parse(localStorage.getItem('community'));				
+
+		 let community = communityBO.community,
+			oLocales = communityBO.uuidLocales,
 			aLocales = oLocales[community.uuid],
 			aLangs = [],sView = community.defaultMapView? community.defaultMapView: '',
 			oView = {value:sView , label:sView === '' ? 'World' : sView},
@@ -80,7 +86,8 @@ class CommunitySetUp extends Component{
               that.setState({activeTab: 'getknowlegeable-tab'});
             }  
             if(response.status === "SUCCESS"){
-            	that.props.configTab('getknowlegeable-tab');
+				that.props.configTab('getknowlegeable-tab');
+				that.props.community(response.community);
             }          
           });
         }
@@ -122,6 +129,7 @@ class CommunitySetUp extends Component{
   	}
 	
 	render(){
+		console.log(this.props);
 		return(			
 			<div className="card">
 			<Loader isLoading={this.state.isLoading}/>
@@ -278,4 +286,9 @@ class CommunitySetUp extends Component{
 	}
 }
 
-export default CommunitySetUp;
+
+
+export default connect(
+	null,
+	{ community }
+  )(CommunitySetUp)

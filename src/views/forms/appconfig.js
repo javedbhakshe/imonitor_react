@@ -12,6 +12,7 @@ class AppConfig extends Component{
 			uuid:community.uuid,
 			name: community.name,
 			emaill: community.emaill,
+			active:community.active,
             cloudinaryCloudName: community.cloudinaryCloudName,
 			cloudinaryPreset: community.cloudinaryPreset,
 			mixpanelApiKey:community.mixpanelApiKey,
@@ -24,7 +25,8 @@ class AppConfig extends Component{
 			isLoading:false			      
 		  }   
 		
-
+		  this.handleUserInput = this.handleUserInput.bind(this);
+		  this.handleSubmit = this.handleSubmit.bind(this);
 	}
 	
 	handleUserInput = (e) => {
@@ -34,8 +36,8 @@ class AppConfig extends Component{
 	}	
 	
 	handleSubmit = (e) => {
-        e.preventDefault();
-        var that = this;  
+		e.preventDefault();
+		var that = this;  
         this.setState({isLoading : true});          
         if(this.state.name && this.state.emaill){
           let requestOptions = { community: this.state };
@@ -51,12 +53,10 @@ class AppConfig extends Component{
         }
 	}
 
-	handleDeactivate = (e) => {
-		var that = this;  
-		// that.setState({active : "N"});   
-		that.state.active = 'N';
-		if(that.state.name && that.state.emaill){
-			let requestOptions = { community: that.state };
+	handleDeactivate = (e) => {		
+		this.setState({active : "N"});   
+		if(this.state.name && this.state.emaill){
+			let requestOptions = { community: this.state };
 			apiServices.createCommunity(requestOptions).then(function(response){
 			 apiServices.logout();
 			});
@@ -81,10 +81,10 @@ class AppConfig extends Component{
 						<div className="form-group">
 							<label className="control-label">Cloudinary Cloud Name</label>
 							<input type="text"
-							 name="name"
+							 name="cloudinaryCloudName"
 							 placeholder="Enter Cloudinary Cloud Name"
 							 className="form-control"
-							 id="community_name"
+							 id="cloudinaryCloudName"
 							 value={this.state.cloudinaryCloudName}
 							 onChange={this.handleUserInput} />
 						</div>
@@ -93,10 +93,10 @@ class AppConfig extends Component{
 						<div className="form-group">
 							<label className="control-label">Cloudinary Preset</label>
 							<input type="text"
-							 name="name"
+							 name="cloudinaryPreset"
 							 placeholder="Enter Cloudinary Preset"
 							 className="form-control"
-							 id="community_name"
+							 id="cloudinaryPreset"
 							 value={this.state.cloudinaryPreset}
 							 onChange={this.handleUserInput} />
 						</div>
@@ -108,10 +108,10 @@ class AppConfig extends Component{
 						<div className="form-group">
 							<label className="control-label">Mixpanel Api Key</label>
 							<input type="text"
-							 name="name"
+							 name="mixpanelApiKey"
 							 placeholder="Enter Mixpanel Api Key"
 							 className="form-control"
-							 id="community_name"
+							 id="mixpanelApiKey"
 							 value={this.state.mixpanelApiKey}
 							 onChange={this.handleUserInput} />
 						</div>
@@ -120,10 +120,10 @@ class AppConfig extends Component{
 						<div className="form-group">
 							<label className="control-label">Mixpanel Api Secret</label>
 							<input type="text"
-							 name="name"
+							 name="mixpanelApiSecret"
 							 placeholder="Enter Mixpanel Api Secret"
 							 className="form-control"
-							 id="community_name"
+							 id="mixpanelApiSecret"
 							 value={this.state.mixpanelApiSecret}
 							 onChange={this.handleUserInput} />
 						</div>
@@ -132,10 +132,10 @@ class AppConfig extends Component{
 						<div className="form-group">
 							<label className="control-label">Mixpanel Token</label>
 							<input type="text"
-							 name="name"
+							 name="mixpanelToken"
 							 placeholder="Enter Mixpanel Token"
 							 className="form-control"
-							 id="community_name"
+							 id="mixpanelToken"
 							 value={this.state.mixpanelToken}
 							 onChange={this.handleUserInput} />
 						</div>
@@ -147,10 +147,10 @@ class AppConfig extends Component{
 						<div className="form-group">
 							<label className="control-label">onesignal appId</label>
 							<input type="text"
-							 name="name"
+							 name="onesignal_appId"
 							 placeholder="Enter onesignal appId"
 							 className="form-control"
-							 id="community_name"
+							 id="onesignal_appId"
 							 value={this.state.onesignal_appId}
 							 onChange={this.handleUserInput} />
 						</div>
@@ -159,10 +159,10 @@ class AppConfig extends Component{
 						<div className="form-group">
 							<label className="control-label">onesignal explorer appId</label>
 							<input type="text"
-							 name="name"
+							 name="onesignal_explorer_appId"
 							 placeholder="Enter onesignal explorer appId"
 							 className="form-control"
-							 id="community_name"
+							 id="onesignal_explorer_appId"
 							 value={this.state.onesignal_explorer_appId}
 							 onChange={this.handleUserInput} />
 						</div>
@@ -171,10 +171,10 @@ class AppConfig extends Component{
 						<div className="form-group">
 							<label className="control-label">onesignal explorer restApi</label>
 							<input type="text"
-							 name="name"
+							 name="onesignal_explorer_restApi"
 							 placeholder="Enter onesignal explorer restApi"
 							 className="form-control"
-							 id="community_name"
+							 id="onesignal_explorer_restApi"
 							 value={this.state.onesignal_explorer_restApi}
 							 onChange={this.handleUserInput} />
 						</div>
@@ -183,10 +183,10 @@ class AppConfig extends Component{
 						<div className="form-group">
 							<label className="control-label">onesignal restApi</label>
 							<input type="text"
-							 name="name"
+							 name="onesignal_restApi"
 							 placeholder="Enter onesignal restApi"
 							 className="form-control"
-							 id="community_name"
+							 id="onesignal_restApi 	"
 							 value={this.state.onesignal_restApi}
 							 onChange={this.handleUserInput} />
 						</div>

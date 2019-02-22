@@ -1,5 +1,8 @@
 import React,{Component} from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import rootReducer from './reducers'
 import {HashRouter, Route, Switch, Redirect} from 'react-router-dom';
 /*import DashBoard from './layouts/dashboard/dashboard';*/
 import Login from './views/Login';
@@ -21,6 +24,7 @@ import 'react-data-components/css/table-twbs.css';
 
 import './assets/css/style.css';
 // import './assets/css/email.css';
+const store = createStore(rootReducer)
 
 class App extends Component{
 
@@ -65,5 +69,10 @@ class App extends Component{
 	}
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+	<Provider store={store}>
+	  <App />
+	</Provider>,
+	document.getElementById('root')
+);
 
