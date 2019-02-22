@@ -1,21 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import logo from '../../assets/images/logo.png';
 import minimizedlogo from '../../assets/images/sygnet.svg';
 import { apiServices } from '../../services/apiServices';
 
 /*import { AppAsideToggler, AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';*/
 class Header extends Component {
-
-	constructor(props){
-		super(props);	
-		
-		let communityBO = localStorage.getItem('community');
-		let community = JSON.parse(communityBO).community;
-
-		this.logo = community.logo ? community.logo : logo;	
-		this.name = community.project ? community.project : 'iMonitor';	
-		this.handleLogout = this.handleLogout.bind(this);       
-	}    
+	
 	
 	handleLogout(e){
 		e.preventDefault();
@@ -23,6 +14,16 @@ class Header extends Component {
 	}
 	
     render() {
+
+		let community = this.props.community;
+		if(!this.props.community){
+			let communityBO = JSON.parse(localStorage.getItem('community'));
+			community = communityBO.community;
+		}	
+
+		this.logo = community.logo ? community.logo : logo;	
+		this.name = community.project ? community.project : 'iMonitor';	
+
         return (
             <header className="app-header navbar">
 			 	<button className="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
@@ -69,4 +70,10 @@ class Header extends Component {
     }
 }
 
-export default Header;
+const mapStateToProps = state => {		
+	return { community: state.community };
+}
+
+export default connect(
+	mapStateToProps
+  )(Header)

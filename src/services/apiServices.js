@@ -115,13 +115,14 @@ function cloudinaryUpload(file){
     };
 
     return fetch(`https://api.cloudinary.com/v1_1/${cloundName}/upload`, requestOptions)
-    // .then(handleResponse)
-    .then(data => {
-        if (data.status === 401) {
-            swal("Please update cloudinary key!", {
-                icon: "error",
-            });
-        }
+    .then(handleResponse)
+    .then(data => {       
+        return data;
+    })
+    .catch(data => {
+        swal("Cloudinary unauthorised key!", {
+            icon: "error",
+        });
         return data;
     });
 }
@@ -133,7 +134,7 @@ function handleResponse(response) {
         if (!response.ok) {
             if (response.status === 401) {
                 // auto logout if 401 response returned from api
-                logout();
+                // logout();
                 // location.reload(true);
             }
 
