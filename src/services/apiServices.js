@@ -70,6 +70,7 @@ function createCommunity(requestObject) {
             localStorage.setItem('community', JSON.stringify(data));
             let communityBO = JSON.parse(localStorage.getItem('community'));
             communityBO.community = data.community;
+            communityBO.uuidLocales = data.uuidLocales;
             localStorage.setItem('community', JSON.stringify(communityBO));
         }
 

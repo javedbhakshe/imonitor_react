@@ -86,8 +86,9 @@ class CommunitySetUp extends Component{
               that.setState({activeTab: 'getknowlegeable-tab'});
             }  
             if(response.status === "SUCCESS"){
-				that.props.configTab('getknowlegeable-tab');
 				that.props.community(response.community);
+				that.props.configTab('getknowlegeable-tab');
+				
             }          
           });
         }
