@@ -7,6 +7,7 @@ import SmartMap from './forms/smartmap';
 import Nearme from './forms/nearme';
 import Finish from './forms/finish';
 import classnames from 'classnames';
+import {connect} from 'react-redux';
 
 class SmartSetup extends Component{
 	
@@ -20,7 +21,18 @@ class SmartSetup extends Component{
 	  
 	toggleActive = (activeTab) => {
 		document.getElementById(activeTab).click();
-		this.props.testFn()
+
+		console.log(this.props.community.key_value_pairs);
+		if(this.props.community.key_value_pairs){
+			let oSections = JSON.parse(this.props.community.key_value_pairs),
+				aMenus = ['Setup'];
+
+			for(let i in oSections){
+				aMenus.push(oSections[i].value);
+			}
+			this.props.testFn(aMenus);
+		}
+
 	}
 
   	
@@ -137,4 +149,11 @@ class SmartSetup extends Component{
   	}
 }
 
-export default SmartSetup;
+
+const mapStateToProps = state => {		
+	return { community: state.community };
+}
+
+export default connect(
+	mapStateToProps
+  )(SmartSetup)

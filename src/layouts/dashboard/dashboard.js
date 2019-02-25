@@ -24,14 +24,21 @@ class DashBoard extends Component{
 	}
 
 	componentDidMount(){
-		// this.computeMenusList(['Setup']);
+		let communityBO = JSON.parse(localStorage.getItem('community')),
+			community = communityBO.community,oSections,aMenus = ['Setup'];
+		if(community.key_value_pairs){
+			oSections = JSON.parse(community.key_value_pairs);
+			for(let i in oSections){
+				aMenus.push(oSections[i].value);
+			}
+		}
+		this.computeMenusList(aMenus);
 	}
 
-	testFunc = () => {
-		console.log('testFn');
-		let aMenus = ['Inbox','Dashboard','Setup'];
-		// this.computeMenusList(aMenus);
-
+	testFunc = (aMenus) => {
+		console.log(aMenus);
+		
+		this.computeMenusList(aMenus);
 	}
 
 	computeMenusList = (aMenus) => {
@@ -47,16 +54,16 @@ class DashBoard extends Component{
 				break;
 			}
 		}
+
 		this.setState({menus : aFinalRoutes});
 	}
 
-	/* in place of DashboardRoutes use this.state.menus for menu setup*/
 	render(){
 		return(
 			<div className='app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show'>
 				<Header />
 				<div className='app-body' >
-					<SideBar menus={DashboardRoutes}/>
+					<SideBar menus={this.state.menus}/>
 					<main className='main'>
 						<Switch>
 							{this.aMenuRoutes}

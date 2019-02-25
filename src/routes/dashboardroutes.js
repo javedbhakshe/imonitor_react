@@ -21,13 +21,13 @@ const dashboardRoutes = [
   	},
   	{
 	    path: "/charts",
-	    name: "charts",
+	    name: "Charts",
 	    icon: "icon-pie-chart",
 	    component: Charts
   	},
   	{
 	    path: "/maps",
-	    name: "maps",
+	    name: "Maps",
 	    icon: "icon-map",
 	    component: Maps
   	},

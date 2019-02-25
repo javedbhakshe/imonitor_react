@@ -20,7 +20,7 @@ class Services extends Component{
 			language:languageList,			
       isLoading:false,	      	
       showSurvey:false         
-		  }
+	  }
 
     /* Events handlers */
     /*this.handleAddServiceEvent = this.handleAddServiceEvent.bind(this);*/

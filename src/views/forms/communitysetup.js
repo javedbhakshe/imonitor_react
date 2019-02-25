@@ -11,16 +11,16 @@ class CommunitySetUp extends Component{
 
 	constructor(props){
 		super(props);
-		console.log(props);
 
 		let communityBO = JSON.parse(localStorage.getItem('community'));				
 
-		 let community = communityBO.community,
+	 	let community = communityBO.community,
 			oLocales = communityBO.uuidLocales,
 			aLocales = oLocales[community.uuid],
 			aLangs = [],sView = community.defaultMapView? community.defaultMapView: '',
 			oView = {value:sView , label:sView === '' ? 'World' : sView},
-			oComType = community.type ? {value:community.type,label:community.type} : null;
+			oComType = community.type ? {value:community.type,label:community.type} : null,
+			oComSec = community.key_value_pairs ? JSON.parse(community.key_value_pairs) : [];
 
 
 		for(let i in aLocales){
@@ -45,14 +45,8 @@ class CommunitySetUp extends Component{
 			comType:oComType,
 			comLang:aLangs,		         
 			comView:oView,
-			comSections:[]
+			comSections:oComSec
 	  	}
- 
-		  
-
-	  	/*this.communityTypes = aCommunityType
-	  	this.communityLanguages = aCommunityLanguages;
-	  	this.communityCountries = aCommCountries*/
 
 	}
 	
@@ -80,7 +74,23 @@ class CommunitySetUp extends Component{
         console.log(this.state);
         this.setState({isLoading : true});          
         if(this.state.name && this.state.emaill){
-          let requestOptions = { community: this.state };
+    		let requestOptions =  {
+    			community:{
+					uuid:this.state.uuid,
+					name: this.state.name,
+					emaill: this.state.emaill,
+					active:this.state.active,
+					type: this.state.comType ? this.state.comType.value : null,
+					project: this.state.project,
+					summary: this.state.summary,
+					helpDeskNo: this.state.helpDeskNo,
+					defaultLocale: this.state.defaultLocale,
+					defaultMapView: this.state.comView ? this.state.comView.value : null,
+					logo: this.state.logo,
+					featuredImage: this.state.featuredImage,	
+					key_value_pairs:JSON.stringify(this.state.comSections)
+    			}
+			}
           apiServices.createCommunity(requestOptions).then(function(response){
 			that.setState({isLoading: false});
             if(response.errors){

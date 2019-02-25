@@ -20,6 +20,8 @@ class ServicesModal extends Component{
 
     	// this.aLanguageList = aLanguageList;
 		/*  */
+
+		console.log(aLanguageList);
 		
 		this.item = {};
 		this.toggle = this.toggle.bind(this);
@@ -83,7 +85,7 @@ class ServicesModal extends Component{
         switch(fieldID) {
             case 'name-en_US':
                 titleValid = value.length >= 1;
-                fieldValidationErrors.title = titleValid ? '' : 'English Title Should not empty';
+                fieldValidationErrors.title = titleValid ? '' : 'English Title Should not be empty';
                 break;
           
             default:
@@ -92,7 +94,7 @@ class ServicesModal extends Component{
         this.setState({formErrors: fieldValidationErrors,
 			titleValid: titleValid,
 			formValid: titleValid
-          });
+      	});
 	}
 	
 	errorClass(error) {
@@ -102,9 +104,9 @@ class ServicesModal extends Component{
 
   	handleSubmit(e){
 		e.preventDefault();	
-		  this.props.getFormData(this.item);
-		  this.item = {};	
-		  this.setState({ formValid: false});
+	  	this.props.getFormData(this.item);
+	  	this.item = {};	
+	  	this.setState({ formValid: false});
 		  
   	}
 
