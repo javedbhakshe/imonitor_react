@@ -30,34 +30,41 @@ class App extends Component{
 
 	constructor(props){
 		super(props);
+
+		const communityBO = JSON.parse(localStorage.getItem('community'));
+		let firstTimeLogin = true;
+		if(communityBO){
+			firstTimeLogin = communityBO.identityBO.users.firstTimeLogin;			
+		}
+		
 		this.onLoginSuccess  = this.onLoginSuccess.bind(this);
-		this.state = {loggedIn : false};
+		this.state = {loggedIn : false, firstTimeLogin: firstTimeLogin};
 
 		/*  */
 		this.aIndexRoutes = indexRoutes.map((prop, key) => {
        	 	return <Route to={prop.path} component={prop.component} key={key} />;
 		});
 
+		
 		this.aLoginRoutes = loginRoutes.map((prop, key) => {
 			
 			if(prop.redirect){
 				return <Redirect from={prop.path} to={prop.to}  key={key}/>;
 			}
 			if(prop.loggedIn){
-				return <Route path={prop.path} render={e => <Login onSuccess = {this.onLoginSuccess} />} key={key}/>;
+				return <Route path={prop.path} render={e => ( this.state.firstTimeLogin && this.state.loggedIn) ? <Redirect to="/firstTimeLogin" /> : <Login onSuccess = {this.onLoginSuccess} />} key={key}/>;
 			}
    	 		return <Route path={prop.path} component={prop.component} key={key}/>;
-		});
+		}, this);		
 
 	}
+	
 
-	render(){
-		const community = localStorage.getItem('community');
-
+	render(){		
 		return (
 			<HashRouter>
 				<Switch>
-					{community  ? this.aIndexRoutes : this.aLoginRoutes}
+					{!this.state.firstTimeLogin  ? this.aIndexRoutes : this.aLoginRoutes}
 				</Switch>
 			</HashRouter>
 		);
@@ -65,7 +72,12 @@ class App extends Component{
 	}
 
 	onLoginSuccess(){
-		this.setState({loggedIn:true});
+		const communityBO = JSON.parse(localStorage.getItem('community'));
+		let firstTimeLogin = true;
+		if(communityBO){
+			firstTimeLogin = communityBO.identityBO.users.firstTimeLogin;			
+		}
+		this.setState({loggedIn:true, firstTimeLogin:firstTimeLogin});
 	}
 }
 

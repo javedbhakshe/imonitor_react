@@ -27,6 +27,7 @@ class AppConfig extends Component{
 		
 		  this.handleUserInput = this.handleUserInput.bind(this);
 		  this.handleSubmit = this.handleSubmit.bind(this);
+		  this.handleDeactivate = this.handleDeactivate.bind(this);
 	}
 	
 	handleUserInput = (e) => {
@@ -54,7 +55,8 @@ class AppConfig extends Component{
 	}
 
 	handleDeactivate = (e) => {		
-		this.setState({active : "N"});   
+		this.setState({active : "N"});  
+		this.state.active = "N"; 
 		if(this.state.name && this.state.emaill){
 			let requestOptions = { community: this.state };
 			apiServices.createCommunity(requestOptions).then(function(response){

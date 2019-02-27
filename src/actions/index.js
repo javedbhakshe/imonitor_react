@@ -3,3 +3,7 @@ export const community = data => ({
     payload: data
 })
 
+export const knowledgeData = data => ({
+    type: 'KNOWLEDGE',
+    payload: data
+})

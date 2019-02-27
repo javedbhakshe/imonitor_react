@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 import { apiServices } from '../../services/apiServices';
-import Accordian from '../../components/custom/accordian'
+import Accordian from '../../components/custom/accordian';
+import swal from 'sweetalert';
+import Loader from '../../components/loaders/loader';
 
 class GetKnowlegeable extends Component{
 	
@@ -9,6 +12,7 @@ class GetKnowlegeable extends Component{
 
 		let communityBO = localStorage.getItem('community');
 		let community = JSON.parse(communityBO);
+		let communityFAQBOs = community.communityFAQBOs;		
 		let uuid = community.community.uuid;
 		let languageList = community.uuidLocales[uuid] ? community.uuidLocales[uuid] : [];
 		
@@ -25,6 +29,7 @@ class GetKnowlegeable extends Component{
 			level:''		         
 		  }
 	
+		this.uuid = uuid;
 		this.item = {};
 		this.languageList = languageList;
 		this.addItems = this.addItems.bind(this);
@@ -34,6 +39,18 @@ class GetKnowlegeable extends Component{
 		this.onContentDeleteAction  = this.onContentDeleteAction.bind(this);
 		this.onContentUpDownAction  = this.onContentUpDownAction.bind(this);
 		this.updateAccordian = this.updateAccordian.bind(this);
+		this.formSubmit = this.formSubmit.bind(this);		
+	}
+
+	componentDidMount(){
+		let communityBO = localStorage.getItem('community');
+		let community = JSON.parse(communityBO);
+		let communityFAQBOs = community.communityFAQBOs;		
+		if(!_.isEmpty(communityFAQBOs)){
+			let dataObj = JSON.parse(communityFAQBOs[0].communityPreferences.summary);
+			this.state.dataObj =dataObj;
+			this.updateAccordian();
+		}
 	}
 	
 	handleUserInput = (e) => {
@@ -277,17 +294,56 @@ class GetKnowlegeable extends Component{
 		this.setState({content:oAccord});
 	}
 
+	formSubmit(){
+		var that = this;  
+		if(this.state.dataObj.length > 0){
+			this.setState({isLoading : true});   
+			let communityBO = JSON.parse(localStorage.getItem('community'));
+			let requestOptions = {};
+			if(!_.isEmpty(communityBO.communityFAQBOs))  {
+				communityBO.communityFAQBOs[0]['communityPreferences']['summary'] = JSON.stringify(this.state.dataObj);
+				requestOptions = communityBO.communityFAQBOs[0];
+			}else{
+				requestOptions = { 
+					communityPreferences: {
+						type:"Faq",
+						code:"knowledge",
+						active:"Y",
+						summary:JSON.stringify(this.state.dataObj)
+					} 
+				};
+			}
+			
+			apiServices.createPreferences(this.uuid, requestOptions).then(function(response){
+			  that.setState({isLoading: false});
+			  if(response.errors){
+				// that.setState({activeTab: 'getknowlegeable-tab'});
+			  }  
+			  if(response.status === "SUCCESS"){
+				//   that.props.community(response.community);
+				  that.props.configTab('service-tab');
+				  
+			  }          
+			});
+		  }else{
+			swal("No Information Section!", {
+				icon: "error",
+			});
+		  }
+	}
+
 	render(){		
 		console.log(this.state.content)
 		let that = this;		
 		return(
 			
 			<div className="card">
+			<Loader isLoading={this.state.isLoading}/>
 				<button className="btn btn-light" type="button" data-toggle="modal" data-target="#myModal" onClick={ e => (this.onChildClickAction(''))} >
 						<span className="fa fa-plus"></span> Add Information
 				</button>
 				<div className="modal fade" id="myModal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-					<div className="modal-dialog modal-lg" role="document">
+					<div className="modal-dialog modal-lg" role="document">					
 					<div className="modal-content">
 					 	
 					   <form id="addItems" onSubmit={this.addItems}>						
@@ -297,7 +353,7 @@ class GetKnowlegeable extends Component{
 									this.languageList.map(function(item, index) {
 										return (
 										<li className="nav-item" key={index}>
-											<a className={"nav-link " + (index == 0 ? 'active' : '')} id={'tab-'+item.locale} data-toggle="tab" href={`#${item.locale}`} role="tab" aria-controls={item.locale}>{item.displayName}</a>
+											<a className={"nav-link " + (item.locale == 'en_US' ? 'active' : '')} id={'tab-'+item.locale} data-toggle="tab" href={`#${item.locale}`} role="tab" aria-controls={item.locale}>{item.displayName}</a>
 										</li>
 										)
 									})
@@ -307,7 +363,7 @@ class GetKnowlegeable extends Component{
 								{								
 								this.languageList.map(function(value, index) {
 									return (
-										<div className={"tab-pane " + (index == 0 ? 'active' : '')} key={index} id={value.locale} role="tabpanel">
+										<div className={"tab-pane " + (value.locale == 'en_US' ? 'active' : '')} key={index} id={value.locale} role="tabpanel">
 											<div className="form-group">
 												<label className="control-label">Title</label>
 												<input className={"form-control "+ (value.locale == 'en_US' ? that.errorClass(that.state.formErrors.title) : '')} name="title" id={'title-'+value.locale} type="text" data-lang={value.locale}											
@@ -362,10 +418,10 @@ class GetKnowlegeable extends Component{
 				</div>
 				
 				{this.state.content}
-				
+
 				<div className="text-center card-footer">
-					<button type="submit" className="mr-3 btn btn-primary btn-sm"><i className="fa fa-dot-circle-o"></i> Save and Continue </button>
-					<button type="reset" className="btn btn-danger btn-sm"><i className="fa fa-ban "></i> Reset</button>
+					<button type="Button" className="mr-3 btn btn-primary btn-sm" onClick={this.formSubmit}><i className="fa fa-dot-circle-o"></i> Save and Continue </button>
+					{/* <button type="reset" className="btn btn-danger btn-sm"><i className="fa fa-ban "></i> Reset</button> */}
 				</div>
 			</div>				
 		)

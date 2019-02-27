@@ -28,13 +28,17 @@ class Register extends Component {
         let requestOptions = {community: { name: this.state.name, emaill : this.state.email}};
         apiServices.register(requestOptions).then(function(response){
           if(response.errors){
-            that.setState({responseError: response.errors[0],isLoading : false});
+            that.setState({responseError: response.errors[0],isLoading : false, name:'', email:''});
           }  
           if(response.status === "SUCCESS"){
+            that.setState({isLoading : false, name:'', email:''});
             let successMsg = `<h3>Thanks for signing up!</h3>
             <h6>Community has been registered successfully.</h6>
             <p>Please click on the activation link that has been sent on registered email address.</p>`;
             that.setState({responseError: renderHTML(successMsg),isLoading : false});
+            setTimeout(function(){
+              that.props.history.push('/');
+            }, 3000)
             // that.props.onSuccess();
           }          
         });

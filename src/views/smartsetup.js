@@ -22,9 +22,15 @@ class SmartSetup extends Component{
 	toggleActive = (activeTab) => {
 		document.getElementById(activeTab).click();
 
-		console.log(this.props.community.key_value_pairs);
-		if(this.props.community.key_value_pairs){
-			let oSections = JSON.parse(this.props.community.key_value_pairs),
+		// console.log(this.props.community.key_value_pairs);
+		let community = this.props.community;
+		if(!this.props.community){
+			let communityBO = JSON.parse(localStorage.getItem('community'));
+			community = communityBO.community;
+		}	
+
+		if(community.key_value_pairs){
+			let oSections = JSON.parse(community.key_value_pairs),
 				aMenus = ['Setup'];
 
 			for(let i in oSections){
@@ -130,7 +136,7 @@ class SmartSetup extends Component{
 						  		<CommunitySetUp configTab={this.toggleActive} />
 						  	</div>						  	
 						  	<div className="tab-pane fade" id="getknowlegeable" role="tabpanel" aria-labelledby="getknowlegeable-tab">
-						  		<GetKnowlegeable />
+						  		<GetKnowlegeable configTab={this.toggleActive} />
 						  	</div>
 							<div className="tab-pane fade" id="service" role="tabpanel" aria-labelledby="service-tab">
 							  <Services />

@@ -1,13 +1,16 @@
 import swal from 'sweetalert'
+import _ from 'lodash';
 
 // const apiUrl= 'https://api.imonitorplus.com/api/imonitor';
 const apiUrl = 'https://uat.imonitorplus.com/service/api';
 
 export const apiServices = {
     login,
+    changePassword,
     logout,
     register,
     createCommunity,
+    createPreferences,
     cloudinaryUpload,
     updateCommunityLangs    
 };
@@ -26,6 +29,28 @@ function login(requestObject) {
             if (data.status === 'SUCCESS') {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('community', JSON.stringify(data));
+            }
+
+            return data;
+        });
+}
+
+function changePassword(requestObject) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(requestObject)
+    };
+
+    return fetch(`${apiUrl}/imonitor/communities/um/credentials.json`, requestOptions)
+        .then(handleResponse)
+        .then(data => {
+            // login successful if there's a jwt token in the response
+            if (data.status === 'SUCCESS') {
+                // store user details and jwt token in local storage to keep user logged in between page refreshes
+                let communityBO = JSON.parse(localStorage.getItem('community'));                
+                communityBO.identityBO.users.firstTimeLogin = false;
+                localStorage.setItem('community', JSON.stringify(communityBO));
             }
 
             return data;
@@ -77,6 +102,34 @@ function createCommunity(requestObject) {
         return data;
     });
 }
+
+function createPreferences(uuid,requestObject) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(requestObject)
+    };
+
+    return fetch(`${apiUrl}/imonitor/communities/${uuid}/preferences/_save.json`, requestOptions)
+    .then(handleResponse)
+    .then(data => {
+        // login successful if there's a jwt token in the response
+        if (data.status === 'SUCCESS') {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+           
+            let communityBO = JSON.parse(localStorage.getItem('community'));
+            if(_.isEmpty(communityBO.communityFAQBOs)){
+                communityBO.communityFAQBOs.push(data);
+            } else{
+                communityBO.communityFAQBOs[0] = data;
+            }
+            localStorage.setItem('community', JSON.stringify(communityBO));
+        }
+
+        return data;
+    });
+}
+
 
 function updateCommunityLangs(requestObject){
     const requestOptions = {
