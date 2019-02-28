@@ -387,10 +387,32 @@ const aCommunitySections = [
 	{value:"Charts",label:"Charts"}
 ];
 
+const nearmeType = [
+	{value:"hospital", label:"Hospital"},
+	{value:"blood_bank", label:"Blood Bank"},
+	{value:"ALLIANCE_ART", label:"ALLIANCE ART"},
+	{value:"Health_Facility", label:"Health Facility"},
+	{value:"dengue_centers", label:"Dengue Centers"},
+	{value:"police_stations", label:"Police Stations"},
+	{value:"fire_stations", label:"Fire Stations"},
+	{value:"bank", label:"Bank"},
+	{value:"NGO", label:"NGO"},
+	{value:"Businesses", label:"Businesses"},
+	{value:"wheel_chair_friendly_locations", label:"Wheel Chair Friendly Locations"},
+	{value:"Individuals_and_Families", label:"Individuals and Families"},	
+	{value:"insurance_agency", label:"Insurance Agency"},
+	{value:"jewelry_store", label:"Jewelry Store"},
+	{value:"laundry", label:"Laundry"},
+	{value:"lawyer", label:"Lawyer"},
+	{value:"library", label:"Library"},
+	{value:"others", label:"Others"},                                                    
+];
+
 export {
   	aCommunityType,
   	aCommunityLanguages,
   	aCommCountries,
-  	aCommunitySections
+	aCommunitySections,
+	nearmeType  
 };
 

@@ -1,15 +1,26 @@
 import React, { Component } from 'react';
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
 import { apiServices } from '../../services/apiServices';
 import Loader from '../../components/loaders/loader';
+import {nearmeType} from '../../data/config';
+import Select from 'react-select';
 
 export class addNearme extends Component {
 
+        	
+        
     constructor(props){
         super(props);  
+
+        let communityBO = localStorage.getItem('community');
+		let community = JSON.parse(communityBO);
+        let uuid = community.community.uuid;
+
         this.state = {
+            uuid:uuid,
             name:'',
             type: '',
+            selectedType: '',
             email: '',           
             contact: '',
             summary: '',
@@ -20,6 +31,7 @@ export class addNearme extends Component {
         };
         
         this.handleUserInput = this.handleUserInput.bind(this);
+        this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.geCurrenttLocation = this.geCurrenttLocation.bind(this);
         this.geCurrenttLocation();
@@ -30,6 +42,11 @@ export class addNearme extends Component {
         const value = e.target.value;
         this.setState({[name]: value});
     }
+
+    handleChange = (selectedOption, e) => {
+	    let name = e.name;
+	    this.setState({ [name]:selectedOption, type:selectedOption.value });
+  	}
     
     handleSubmit(e) {
         e.preventDefault();
@@ -82,16 +99,17 @@ export class addNearme extends Component {
         }     
         if(this.state.name && this.state.latitude &&  this.state.longitude){
           let requestOptions = {
-              "nearme":{"title":this.state.name,"code":this.state.name,"name":this.state.name,"latitude":this.state.latitude,"longitude":this.state.longitude,"type":this.state.type,"tags":this.state.type,"fontFamily":"fontawesome","fontType":this.state.type,"country":"India","state":"Maharashtra","city":"Thane","scope":"PUBLIC","active":true,"rate":0},
+              "nearme":{"uuid": this.state.uuid,"title":this.state.name,"code":this.state.name,"name":this.state.name,"latitude":this.state.latitude,"longitude":this.state.longitude,"type":this.state.type,"tags":this.state.type,"fontFamily":"fontawesome","fontType":this.state.type,"country":"India","state":"Maharashtra","city":"Thane","scope":"PUBLIC","active":true,"rate":0},
               "nearmeExtesionBOs":nearmeExtesionBOs
             };
-          apiServices.createCommunity(requestOptions).then(function(response){
+          apiServices.addNearme(requestOptions).then(function(response){
 			that.setState({isLoading: false});
             if(response.errors){
-              that.setState({activeTab: 'appconfig-tab'});
+              that.setState({activeTab: 'nearme-list'});
             }  
             if(response.status === "SUCCESS"){
-            //   that.props.configTab();
+              that.props.nearmeList.push(response);
+              that.props.toggle('nearme-list');
             }          
           });
         }
@@ -161,10 +179,13 @@ export class addNearme extends Component {
             <div className="form-group row">
                 <label className="col-md-3 col-form-label">Type</label>
                 <div className="col-md-9">
-                <select className="form-control" name="type" value={this.state.type} onChange={this.handleUserInput}>
-                    <option value="Hospital">Hospital</option>
-                    <option value="Blood Bank">Blood Bank</option>                            
-                </select>
+                <Select
+						        name="selectedType"
+						        placeholder="Please Select Nearme Type"
+						        value={this.state.selectedType}
+						        onChange={this.handleChange}
+						        options={nearmeType}
+					      	/>               
                 </div>
             </div>        
             <div className="form-group row">
@@ -248,11 +269,13 @@ export class addNearme extends Component {
             >
                 {this.state.markers.map((marker, index) => (
                 <Marker
+                    key={index}
                     position={marker.position}
                     draggable={true}
                     onDragend={(t, map, coord) => this.onMarkerDragEnd(coord, index)}
                     name={marker.name}
                 />
+                
                 ))}
             </Map> : null}
         </div>
@@ -265,5 +288,5 @@ export class addNearme extends Component {
 
 
 export default GoogleApiWrapper({
-    apiKey: ('AIzaSyBedTd_YjXAiOM8I34K2MRUzqso2wu0wlA')
+    apiKey: ('AIzaSyAQw9CocoHxqErBbM-GwMQxxFJ5AGLKpBQ')
   })(addNearme)
