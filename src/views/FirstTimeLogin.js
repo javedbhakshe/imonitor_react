@@ -40,7 +40,7 @@ class FirstTimeLogin extends Component {
               that.setState({responseError: response.errors[0],isLoading : false});
             }  
             if(response.status === "SUCCESS"){
-              document.location.href="/";
+              that.props.onSuccess();
             }          
           });
         }

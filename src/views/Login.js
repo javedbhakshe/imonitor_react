@@ -56,7 +56,7 @@ class Login extends Component {
                 break;
             case 'password':
                 passwordValid = value.length >= 6;
-                fieldValidationErrors.password = passwordValid ? '': 'Password is too short';
+                fieldValidationErrors.password = passwordValid ? '': 'Password is too short, atleast 6 character';
                 break;
             default:
                 break;

@@ -5,15 +5,11 @@ class NearmeMap extends Component{
     state = {        
         latitude:'',
         longitude:'',
-        isLoading:false,
-        isOpen: false,
-        markerObjects:[]       
+        isLoading:false         
     }
   
     onSelectedMarker = () => {
-        this.setState({
-            isOpen: !this.state.isOpen
-        });
+       
     }
 
     render() {
@@ -32,29 +28,17 @@ class NearmeMap extends Component{
                     }}  
                 >
             
-                {
-                    
-                    data.map(({nearme}, key) => {
-                       
-                        return (
-                            <Marker 
-                                key={key}
-                                title={nearme.name}
-                                name={nearme.name}
-                                onClick={this.onSelectedMarker}
-                                position={{ lat: nearme.latitude, lng: nearme.longitude }}
-                            >
-                            <InfoWindow  visible={this.state.isOpen} >
-                                <div>
-                                    <h4>{nearme.name}</h4>
-                                </div>
-                            </InfoWindow>  
-                            </Marker>
-                        )
-                    })
-                }
-
-                
+                {                   
+                    data.map(({nearme}, key) =>                        
+                        <Marker 
+                            key={key}
+                            title={nearme.name}
+                            name={nearme.name}
+                            onClick={this.onSelectedMarker}
+                            position={{ lat: nearme.latitude, lng: nearme.longitude }}
+                        />
+                    )                    
+                }                
 
                 </Map> 
                 : null }

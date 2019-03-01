@@ -5,6 +5,7 @@ import { createStore } from 'redux'
 import rootReducer from './reducers'
 import {HashRouter, Route, Switch, Redirect} from 'react-router-dom';
 /*import DashBoard from './layouts/dashboard/dashboard';*/
+import FirstTimeLogin from './views/FirstTimeLogin';
 import Login from './views/Login';
 import indexRoutes from './routes/indexroutes';
 import loginRoutes from './routes/loginroutes';
@@ -52,7 +53,7 @@ class App extends Component{
 				return <Redirect from={prop.path} to={prop.to}  key={key}/>;
 			}
 			if(prop.loggedIn){
-				return <Route path={prop.path} render={e => ( this.state.firstTimeLogin && this.state.loggedIn) ? <Redirect to="/firstTimeLogin" /> : <Login onSuccess = {this.onLoginSuccess} />} key={key}/>;
+				return <Route path={prop.path} render={e => ( this.state.firstTimeLogin && this.state.loggedIn) ? <FirstTimeLogin onSuccess = {this.onLoginSuccess} /> : <Login onSuccess = {this.onLoginSuccess} />} key={key}/>;
 			}
    	 		return <Route path={prop.path} component={prop.component} key={key}/>;
 		}, this);		

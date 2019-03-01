@@ -65,7 +65,7 @@ class Register extends Component {
                 break;
             case 'name':
                 nameValid = value.length >= 6;
-                fieldValidationErrors.name = nameValid ? '': 'name is too short';
+                fieldValidationErrors.name = nameValid ? '': 'name is too short, atleast 6 character';
                 break;
             default:
                 break;
