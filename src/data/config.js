@@ -387,6 +387,11 @@ const aCommunitySections = [
 	{value:"Charts",label:"Charts"}
 ];
 
+const aServiceType = [
+	{value:"Non-Linked",label:"Non-Linked"},
+	{value:"Linked",label:"Linked"}
+];
+
 const nearmeType = [
 	{value:"hospital", label:"Hospital"},
 	{value:"blood_bank", label:"Blood Bank"},
@@ -413,6 +418,7 @@ export {
   	aCommunityLanguages,
   	aCommCountries,
 	aCommunitySections,
+  	aServiceType,
 	nearmeType  
 };
 

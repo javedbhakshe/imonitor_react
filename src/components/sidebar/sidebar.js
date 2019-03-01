@@ -1,5 +1,5 @@
-import React,{Component} from 'react';
-import DashBoardRoutes from '../../routes/dashboardroutes';
+import React from 'react';
+// import DashBoardRoutes from '../../routes/dashboardroutes';
 import MenuItem from './menuitem';
 
 
