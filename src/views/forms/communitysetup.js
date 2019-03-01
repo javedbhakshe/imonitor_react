@@ -28,6 +28,10 @@ class CommunitySetUp extends Component{
 			aLangs.push(oTemp);
 		}
 
+		if(aLangs.length === 0){
+			aLangs.push({value:'en_US',label: 'English (United States)'});
+		}
+
         this.state = {
 			uuid:community.uuid,
             name: community.name,
