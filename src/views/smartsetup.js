@@ -130,7 +130,7 @@ class SmartSetup extends Component{
 						  		<CommunitySetUp configTab={this.toggleActive} />
 						  	</div>						  	
 						  	<div className="tab-pane fade" id="getknowlegeable" role="tabpanel" aria-labelledby="getknowlegeable-tab">
-						  		<GetKnowlegeable />
+						  		<GetKnowlegeable configTab={this.toggleActive} />
 						  	</div>
 							<div className="tab-pane fade" id="service" role="tabpanel" aria-labelledby="service-tab">
 							  <Services />

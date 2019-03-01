@@ -629,3 +629,7 @@ h4.title{
 .displayInfo {
     display: block;
 }
+
+.infoWindowBox{
+    width: 300px;
+}

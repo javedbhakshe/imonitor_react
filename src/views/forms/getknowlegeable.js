@@ -8,18 +8,12 @@ import Loader from '../../components/loaders/loader';
 class GetKnowlegeable extends Component{
 	
 	constructor(props){
-		super(props);
-
-		let communityBO = localStorage.getItem('community');
-		let community = JSON.parse(communityBO);
-		let communityFAQBOs = community.communityFAQBOs;		
-		let uuid = community.community.uuid;
-		let languageList = community.uuidLocales[uuid] ? community.uuidLocales[uuid] : [];
+		super(props);	
 		
 		this.state = {				
 			content:[],
 			dataObj:[],
-			language:languageList,			
+			language:[],			
 			isLoading:false,
 			reload:false,
 			formErrors: {title: '', description: ''},    
@@ -29,9 +23,9 @@ class GetKnowlegeable extends Component{
 			level:''		         
 		  }
 	
-		this.uuid = uuid;
+		// this.uuid = uuid;
 		this.item = {};
-		this.languageList = languageList;
+		// this.languageList = languageList;
 		this.addItems = this.addItems.bind(this);
 		this.handleUserInput = this.handleUserInput.bind(this);
 		this.onChildClickAction  = this.onChildClickAction.bind(this);
@@ -333,6 +327,15 @@ class GetKnowlegeable extends Component{
 	}
 
 	render(){		
+
+		let communityBO = localStorage.getItem('community');
+		let community = JSON.parse(communityBO);		
+		let uuid = community.community.uuid;
+		this.uuid = uuid;
+		let languageList = community.uuidLocales[uuid] ? community.uuidLocales[uuid] : [];
+		this.languageList = languageList;
+		// this.setState({language:languageList});
+
 		console.log(this.state.content)
 		let that = this;		
 		return(
