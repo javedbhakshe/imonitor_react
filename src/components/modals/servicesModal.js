@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Modal, ModalHeader, ModalBody, ModalFooter, Button} from 'reactstrap';
+import {Modal, ModalHeader, ModalBody, Button} from 'reactstrap';
 import Select from 'react-select';
 import {aServiceType}  from '../../data/config';
 
@@ -35,7 +35,7 @@ class ServicesModal extends Component{
 	    return this.aLanguageList.map((ele,ind) => {
 	    	return (
 	    		<li className="nav-item" key={ind}>
-	    			<a className={`nav-link ${ind == 0 ? 'active' : ''}`} data-toggle="tab" role="tab" href={`#tab-${ind}`}>{ele.displayName}</a>
+	    			<a className={`nav-link ${ind === 0 ? 'active' : ''}`} data-toggle="tab" role="tab" href={`#tab-${ind}`}>{ele.displayName}</a>
 	    		</li>
     		);
 	    });
@@ -44,10 +44,10 @@ class ServicesModal extends Component{
   	getTabConents = () => {
   		return this.aLanguageList.map((ele,ind) => {
 	    	return (
-	    		<div className={`tab-pane ${ind == 0 ? 'active' : ''}`} id={`tab-${ind}`} key={ind} role="tabpanel">
+	    		<div className={`tab-pane ${ind === 0 ? 'active' : ''}`} id={`tab-${ind}`} key={ind} role="tabpanel">
 		    		<div className="form-group">
 			            <label htmlFor={`services_name_${ele.locale}`} className="col-form-label">Name:</label>
-			            <input type="text" className={"form-control "+ (ele.locale == 'en_US' ? this.errorClass(this.state.formErrors.title) : '')} id={`name-${ele.locale}`} name="name" data-lang={ele.locale} onChange={this.handleUserInput}	 placeholder="Enter title ..."/>
+			            <input type="text" className={"form-control "+ (ele.locale === 'en_US' ? this.errorClass(this.state.formErrors.title) : '')} id={`name-${ele.locale}`} name="name" data-lang={ele.locale} onChange={this.handleUserInput}	 placeholder="Enter title ..."/>
 						<em className="error invalid-feedback">{this.state.formErrors.title}</em>
 				  	</div>
 		          	<div className="form-group">
@@ -157,6 +157,7 @@ class ServicesModal extends Component{
 					        options={aServiceType}
 					        defaultValue = {aServiceType[0]}
 					        onChange={this.handleDDChange}
+					        value={this.state.serviceType}
 				      	/>
 				      	<label className="control-label">Service Details : </label>
 	          		  	<form onSubmit={this.handleSubmit}>

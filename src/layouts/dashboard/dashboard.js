@@ -50,7 +50,7 @@ class DashBoard extends Component{
 					break;
 				}
 			}
-			if(aMenus.length == aFinalRoutes.length){
+			if(aMenus.length === aFinalRoutes.length){
 				break;
 			}
 		}

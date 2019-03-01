@@ -11,7 +11,8 @@ class Services extends Component{
 	}
 
 	addService = (p_oData,p_type) => {
-		console.log(p_oData['en_US'], p_type.value);
+		console.log(p_oData);
+		
 		let oService = p_oData['en_US'];
 		oService.questions = [];
 		oService.linked = p_type.value === 'Linked'; 
@@ -25,18 +26,39 @@ class Services extends Component{
 		});
 	}
 
+	onListItemDelete = (p_index) =>{
+		console.log(p_index);
+		this.setState( prevState => {
+			let aPrev = prevState.services;
+			aPrev.splice(p_index,1);
+			return {
+				services:aPrev
+			}
+		});
+	}
+
+	onListItemEdit = (p_index) => {
+		console.log(p_index);
+		this.refs.Modal.toggle();
+	}
+
 	render(){
 		return(
 			<div>
 				<div className="row">
 		          	<div className="col-12">
-			            <ServicesModal getFormData = {this.addService}/>
+			            <ServicesModal 
+		            		ref="Modal"
+			            	getFormData = {this.addService}
+		            	/>
 		          	</div>
 
 		          	<div className='col-sm-12 col-md-4 col-lg-4'>
 		          		{this.state.services.length ? 
 		          			<ListGroup name="Services"
 		          				listItems = {this.state.services}
+		          				onDelete = {this.onListItemDelete}
+		          				onEdit = {this.onListItemEdit}
 		          			/> : 
 	          				null
 	          			}

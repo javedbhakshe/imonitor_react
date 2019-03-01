@@ -1,4 +1,4 @@
-import React,{Component} from 'react';
+import React/*,{Component}*/ from 'react';
 import {Card, CardHeader, CardBody} from 'reactstrap'
 
 const ListGroup = (props) => {
@@ -7,34 +7,39 @@ const ListGroup = (props) => {
 	const aList = props.listItems,
 		aListItems = aList.map((ele, ind) => {
 			return (
-				<li className= "list-group-item" >
+				<li className= "list-group-item" key={ind} data-index={ind}>
 					{ele.name}
-					<button className="btn btn-sm btn-custom float-right" 
-							type="button" 
-							title="Delete Content" data-level="0">
-							<span className="fa fa-trash" data-level="0">
-								
-							</span>
+					<button className="btn btn-sm btn-custom float-right fa fa-trash" 
+							type="button"
+							onClick={e => HandleDelete(e)} 
+							title="Delete Content">
+							
 					</button>
-					<button className="btn btn-sm btn-custom float-right" 
+					<button className="btn btn-sm btn-custom float-right fa fa-pencil" 
 						type="button" 
 						title="Edit Content" 
-						data-level="0">
-						<span className="fa fa-pencil" data-level="0">
-						</span>
+						onClick={e => HandleEdit(e)}>
 					</button>
 				</li>
 			);
 		});
 
 
-	const onClickHandle = (e) => {
-		console.log(e.target.parentElement.children,props);
-		let aList = e.target.parentElement.children;
-		console.log(aList);
+	const HandleEdit = (e) => {
+		let nIndex = e.target.parentElement.dataset.index;
+		props.onEdit(nIndex);
+	}
 
-		for(let i = 0; i < aList.length;i++){
-			console.log(aList[i])
+	const HandleDelete = (e) => {
+		let nIndex = e.target.parentElement.dataset.index;
+		props.onDelete(nIndex);
+	}
+
+	const onClickHandle = (e) => {
+		let aList = e.target.parentElement.children,
+			nLen = aList.length,i;
+
+		for(i = 0; i < nLen;i++){
 			aList[i].classList.remove('active');
 		}
 		e.target.classList.add('active');
