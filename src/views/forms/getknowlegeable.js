@@ -40,7 +40,7 @@ class GetKnowlegeable extends Component{
 		let communityBO = localStorage.getItem('community');
 		let community = JSON.parse(communityBO);
 		let communityFAQBOs = community.communityFAQBOs;		
-		if(!_.isEmpty(communityFAQBOs)){
+		if(!_.isEmpty(communityFAQBOs) && communityFAQBOs.length <= 1){
 			let dataObj = JSON.parse(communityFAQBOs[0].communityPreferences.summary);
 			this.state.dataObj =dataObj;
 			this.updateAccordian();

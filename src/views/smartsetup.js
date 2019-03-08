@@ -5,6 +5,7 @@ import GetKnowlegeable from './forms/getknowlegeable';
 import Services from './forms/Services';
 import SmartMap from './forms/smartmap';
 import Nearme from './forms/nearme';
+import Translation from './forms/Translation';
 import Finish from './forms/finish';
 import classnames from 'classnames';
 import {connect} from 'react-redux';
@@ -108,6 +109,20 @@ class SmartSetup extends Component{
 						    	</a>
 						    	<div className="nav-arrow"></div>
 						  	</li>
+							<li className={`nav-item ${classnames({ active: this.state.activeTab === 'translation-tab' })}`}>
+						    	<div className="nav-wedge"></div>
+						    	<a className="nav-link ssup" 
+							    	id="translation-tab" 
+							    	data-toggle="tab" 
+							    	href="#translation" 
+							    	role="tab" 
+							    	aria-controls="translation" 
+							    	aria-selected="false"
+							    	onClick={() => { this.toggle('translation-tab')}}>
+							    	Translation
+						    	</a>
+						    	<div className="nav-arrow"></div>
+						  	</li>
 						  	<li className={`nav-item ${classnames({ active: this.state.activeTab === 'finish-tab' })}`}>
 						     	<div className="nav-wedge"></div>
 							    <a className="nav-link ssup" 
@@ -136,7 +151,10 @@ class SmartSetup extends Component{
 							  <Services />
 						  	</div>
 						  	<div className="tab-pane fade" id="nearme" role="tabpanel" aria-labelledby="nearme-tab">
-						  		<Nearme />
+						  		<Nearme configTab={this.toggleActive} />
+						  	</div>
+							  <div className="tab-pane fade" id="translation" role="tabpanel" aria-labelledby="translation-tab">
+						  		<Translation />
 						  	</div>
 						  	<div className="tab-pane fade" id="finish" role="tabpanel" aria-labelledby="finish-tab">
 						  		<Finish />

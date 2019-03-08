@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
 import { apiServices } from '../../services/apiServices';
+import { connect } from 'react-redux';
 import Loader from '../../components/loaders/loader';
 import {nearmeType} from '../../data/config';
 import Select from 'react-select';
+import _ from 'lodash';
+import NearmeMap from './NearmeMap';
 
 export class addNearme extends Component {
 
@@ -14,10 +17,11 @@ export class addNearme extends Component {
 
         let communityBO = localStorage.getItem('community');
 		let community = JSON.parse(communityBO);
-        let uuid = community.community.uuid;
+        let uuid = community.community.uuid;       
 
         this.state = {
             uuid:uuid,
+            id:'',
             name:'',
             type: '',
             selectedType: '',
@@ -27,15 +31,51 @@ export class addNearme extends Component {
             latitude:'',
             longitude:'',
             isLoading:false,
-            markers: []
+            markers: [],
+            nearmeObj : {}
         };
         
-        this.handleUserInput = this.handleUserInput.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.geCurrenttLocation = this.geCurrenttLocation.bind(this);
+        // this.handleUserInput = this.handleUserInput.bind(this);
+        // this.handleChange = this.handleChange.bind(this);
+        // this.handleSubmit = this.handleSubmit.bind(this);
+        // this.geCurrenttLocation = this.geCurrenttLocation.bind(this);
+        // this.editNearme = this.editNearme.bind(this);
         this.geCurrenttLocation();
     } 
+
+    componentWillReceiveProps = (newProps) => {
+        // console.log(newProps.activeNearme);
+        const nearmeObj = newProps.activeNearme.nearme;  
+        const extensionBOs = newProps.activeNearme.allExtensionBOs;        
+        if(!_.isEmpty(nearmeObj)){
+            const selectTypeObj = _.find(nearmeType, function(obj) { 
+                console.log(obj);
+                return obj.value == nearmeObj.type;
+             });
+            this.setState({
+                id:nearmeObj.id,
+                name:nearmeObj.name,
+                type: nearmeObj.type,
+                selectedType: selectTypeObj,
+                latitude:nearmeObj.latitude,
+                longitude:nearmeObj.longitude,
+            })
+        }
+        
+        if(!_.isEmpty(extensionBOs)){
+            extensionBOs.map( ({nearmeExtension}, key) => {
+                this.setState({
+                    [nearmeExtension.subType]:nearmeExtension.text
+                })
+            });
+        }else{
+            this.setState({               
+                email: '',           
+                contact: '',
+                summary: '',
+            });
+        }
+    }
     
 	handleUserInput = (e) => {
         const name = e.target.name;
@@ -48,7 +88,7 @@ export class addNearme extends Component {
 	    this.setState({ [name]:selectedOption, type:selectedOption.value });
   	}
     
-    handleSubmit(e) {
+    handleSubmit = (e) => {
         e.preventDefault();
         var that = this;  
         this.setState({isLoading : true});    
@@ -88,7 +128,7 @@ export class addNearme extends Component {
 
         var nearmeExtesionBOs = [];
         for (var key in this.state) {
-            if(key == 'address' || key == 'contact' || key == 'email'){
+            if(key == 'summary' || key == 'contact' || key == 'email'){
               var nearmeExtension = {
                   "nearmeExtension":{
                   "type":"address","subType":key,"extkey":key,"active":true,"text":this.state[key],"module":"POPUP"
@@ -99,23 +139,32 @@ export class addNearme extends Component {
         }     
         if(this.state.name && this.state.latitude &&  this.state.longitude){
           let requestOptions = {
-              "nearme":{"uuid": this.state.uuid,"title":this.state.name,"code":this.state.name,"name":this.state.name,"latitude":this.state.latitude,"longitude":this.state.longitude,"type":this.state.type,"tags":this.state.type,"fontFamily":"fontawesome","fontType":this.state.type,"country":"India","state":"Maharashtra","city":"Thane","scope":"PUBLIC","active":true,"rate":0},
+              "nearme":{"id": this.state.id,"uuid": this.state.uuid,"title":this.state.name,"code":this.state.name,"name":this.state.name,"latitude":this.state.latitude,"longitude":this.state.longitude,"type":this.state.type,"tags":this.state.type,"fontFamily":"fontawesome","fontType":this.state.type,"country":"India","state":"Maharashtra","city":"Thane","scope":"PUBLIC","active":true,"rate":0},
               "nearmeExtesionBOs":nearmeExtesionBOs
             };
           apiServices.addNearme(requestOptions).then(function(response){
-			that.setState({isLoading: false});
-            if(response.errors){
-              that.setState({activeTab: 'nearme-list'});
-            }  
-            if(response.status === "SUCCESS"){
-              that.props.nearmeList.push(response);
-              that.props.toggle('nearme-list');
-            }          
+            that.setState({
+                id:'',
+                name:'',
+                type: '',
+                selectedType: '',
+                email: '',           
+                contact: '',
+                summary: '',
+                latitude:'',
+                longitude:'',
+                isLoading:false
+            });
+            if(!_.isEmpty(response.errors)){           
+                that.props.toggle('nearme-list');
+            }else{
+                that.props.toggleList(response);
+            }            
           });
         }
     }
 
-    geCurrenttLocation() {
+    geCurrenttLocation= () => {
         let that = this;
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position){
@@ -133,6 +182,20 @@ export class addNearme extends Component {
                 markers:markerPosition
 
             });           
+          }, function(error){
+            var markerPosition = [
+                {
+                    position: {
+                        lat: 19.0760,
+                        lng:  72.8777
+                    }
+                }
+            ];
+                that.setState({				
+                    latitude : 19.0760,
+                    longitude : 72.8777,
+                    markers:markerPosition
+                });   
           });
         } 
       }
@@ -150,143 +213,148 @@ export class addNearme extends Component {
           markers[index] = { ...markers[index], position: { lat, lng } };
           return { markers };
         });
-      };
+      };     
+     
+      
+      render() {        
 
-      render() {
         return (
 
-    <div className="row">
-        <div className="col-lg-6">
-        <div className="card">
-        <Loader isLoading={this.state.isLoading}/>
-        <div className="card-header">
-            <strong>Add Nearme</strong> Details
-        </div>
-        <form onSubmit={this.handleSubmit}>
-        <div className="card-body">        
-            <div className="form-group row">
-                <label className="col-md-3 col-form-label">Name</label>
-                <div className="col-md-9">
-                <input type="text"
-                                name="name"
-                                placeholder="Enter name"
+            <div className="row">
+                <div className="col-lg-6">
+                <div className="card">
+                <Loader isLoading={this.state.isLoading}/>
+                <div className="card-header">
+                    <strong>Add Nearme</strong> Details
+                </div>
+                <form onSubmit={this.handleSubmit}>
+                <div className="card-body">        
+                    <div className="form-group row">
+                        <label className="col-md-3 col-form-label">Name</label>
+                        <div className="col-md-9">
+                        <input type="text"
+                                        name="name"
+                                        placeholder="Enter name"
+                                        className="form-control"
+                                        id="name"
+                                        value={this.state.name}
+                                        onChange={this.handleUserInput} />
+                        </div>
+                    </div>
+                    <div className="form-group row">
+                        <label className="col-md-3 col-form-label">Type</label>
+                        <div className="col-md-9">
+                        <Select
+                                        name="selectedType"
+                                        placeholder="Please Select Nearme Type"
+                                        value={this.state.selectedType}
+                                        onChange={this.handleChange}
+                                        options={nearmeType}
+                                    />               
+                        </div>
+                    </div>        
+                    <div className="form-group row">
+                        <label className="col-md-3 col-form-label">Latitude</label>
+                        <div className="col-md-9">
+                        <input type="text"
+                                name="latitude"
+                                placeholder="Enter latitude"
                                 className="form-control"
-                                id="name"
-                                value={this.state.name}
+                                id="latitude"
+                                value={this.state.latitude}
                                 onChange={this.handleUserInput} />
-                </div>
-            </div>
-            <div className="form-group row">
-                <label className="col-md-3 col-form-label">Type</label>
-                <div className="col-md-9">
-                <Select
-						        name="selectedType"
-						        placeholder="Please Select Nearme Type"
-						        value={this.state.selectedType}
-						        onChange={this.handleChange}
-						        options={nearmeType}
-					      	/>               
-                </div>
-            </div>        
-            <div className="form-group row">
-                <label className="col-md-3 col-form-label">Latitude</label>
-                <div className="col-md-9">
-                <input type="text"
-                        name="latitude"
-                        placeholder="Enter latitude"
-                        className="form-control"
-                        id="latitude"
-                        value={this.state.latitude}
-                        onChange={this.handleUserInput} />
-                </div>
-            </div>
-            <div className="form-group row">
-                <label className="col-md-3 col-form-label">Longitude</label>
-                <div className="col-md-9">
-                <input type="text"
-                        name="longitude"
-                        placeholder="Enter longitude"
-                        className="form-control"
-                        id="longitude"
-                        value={this.state.longitude}
-                        onChange={this.handleUserInput} />
-                </div>
-            </div>
-            <div className="form-group row">
-                <label className="col-md-3 col-form-label">Email</label>
-                <div className="col-md-9">
-                <input className="form-control"
-                                type="email" 
-                                name="email" 
-                                placeholder="Enter Email" 
-                                id='email'							 
-                                value={this.state.email}
-                                onChange={this.handleUserInput} />
-                </div>
-            </div>
-            <div className="form-group row">
-                <label className="col-md-3 col-form-label">Contact</label>
-                <div className="col-md-9">
-                <input type="text"
-                                name="contact"
-                                placeholder="Enter contact"
+                        </div>
+                    </div>
+                    <div className="form-group row">
+                        <label className="col-md-3 col-form-label">Longitude</label>
+                        <div className="col-md-9">
+                        <input type="text"
+                                name="longitude"
+                                placeholder="Enter longitude"
                                 className="form-control"
-                                id="contact"
-                                value={this.state.contact}
+                                id="longitude"
+                                value={this.state.longitude}
                                 onChange={this.handleUserInput} />
+                        </div>
+                    </div>
+                    <div className="form-group row">
+                        <label className="col-md-3 col-form-label">Email</label>
+                        <div className="col-md-9">
+                        <input className="form-control"
+                                        type="email" 
+                                        name="email" 
+                                        placeholder="Enter Email" 
+                                        id='email'							 
+                                        value={this.state.email}
+                                        onChange={this.handleUserInput} />
+                        </div>
+                    </div>
+                    <div className="form-group row">
+                        <label className="col-md-3 col-form-label">Contact</label>
+                        <div className="col-md-9">
+                        <input type="text"
+                                        name="contact"
+                                        placeholder="Enter contact"
+                                        className="form-control"
+                                        id="contact"
+                                        value={this.state.contact}
+                                        onChange={this.handleUserInput} />
+                        </div>
+                    </div>
+                    <div className="form-group row">
+                        <label className="col-md-3 col-form-label">Summary</label>
+                        <div className="col-md-9">
+                        <textarea className="form-control" name="summary" placeholder="Enter Summary" row="10" id="community_summary"
+                                    value={this.state.summary} onChange={this.handleUserInput} style={{                           
+                                        height: "80px"
+                                        }}></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div className="text-center card-footer">
+                    <button type="submit" className="mr-3 btn btn-primary btn-sm"><i className="fa fa-dot-circle-o"></i> Add Nearme </button>
+                    <button type="reset" className="btn btn-danger btn-sm"><i className="fa fa-ban "></i> Clear</button>
+                </div>
+                </form>
                 </div>
             </div>
-            <div className="form-group row">
-                <label className="col-md-3 col-form-label">Summary</label>
-                <div className="col-md-9">
-                <textarea className="form-control" name="summary" placeholder="Enter Summary" row="10" id="community_summary"
-                            value={this.state.summary} onChange={this.handleUserInput} style={{                           
-                                height: "80px"
-                                }}></textarea>
-                </div>
-            </div>
-        </div>
-        <div className="text-center card-footer">
-            <button type="submit" className="mr-3 btn btn-primary btn-sm"><i className="fa fa-dot-circle-o"></i> Add Nearme </button>
-            <button type="reset" className="btn btn-danger btn-sm"><i className="fa fa-ban "></i> Clear</button>
-        </div>
-        </form>
-        </div>
-    </div>
 
-        <div className="col-lg-6">
-            { this.state.latitude ? <Map 
-                google={this.props.google}     
-                zoom={14}          
-                initialCenter={{
-                    lat: this.state.latitude,
-                    lng: this.state.longitude
-                  }}                
-                style={{
-                    width: "100%",
-                    height: "545px"
-                }}
-            >
-                {this.state.markers.map((marker, index) => (
-                <Marker
-                    key={index}
-                    position={marker.position}
-                    draggable={true}
-                    onDragend={(t, map, coord) => this.onMarkerDragEnd(coord, index)}
-                    name={marker.name}
-                />
-                
-                ))}
-            </Map> : null}
-        </div>
-    </div>
+                <div className="col-lg-6">
+                    { this.state.latitude ? <Map 
+                        google={this.props.google}     
+                        zoom={14}          
+                        initialCenter={{
+                            lat: this.state.latitude,
+                            lng: this.state.longitude
+                        }}                
+                        style={{
+                            width: "100%",
+                            height: "545px"
+                        }}
+                    >
+                        {this.state.markers.map((marker, index) => (
+                        <Marker
+                            key={index}
+                            position={marker.position}
+                            draggable={true}
+                            onDragend={(t, map, coord) => this.onMarkerDragEnd(coord, index)}
+                            name={marker.name}
+                        />
+                        
+                        ))}
+                    </Map> : <div className="alert alert-warning" role="alert">Current Lat not found</div>}
+                </div>
+            </div>
 
       );
      }
   
 }
 
+const mapStateToProps = state => {		
+	return { activeNearme: state.activeNearme };
+}
 
-export default GoogleApiWrapper({
+export default connect(mapStateToProps)(GoogleApiWrapper({
     apiKey: ('AIzaSyAQw9CocoHxqErBbM-GwMQxxFJ5AGLKpBQ')
-  })(addNearme)
+  })(addNearme))
