@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import swal from 'sweetalert'
+import swal from 'sweetalert';
+import _ from 'lodash';
 
 class Accordian extends Component {
 
@@ -52,6 +53,7 @@ class Accordian extends Component {
     }
 
     firstLevelAccordian(data){
+        if(_.isArray(data)){
         let that = this;
         const firstAccrd = data.map(function(item, index){
             
@@ -96,6 +98,7 @@ class Accordian extends Component {
         })
 
         return firstAccrd;
+    }
         
     }
 
