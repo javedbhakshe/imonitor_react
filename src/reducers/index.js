@@ -20,7 +20,16 @@ const knowledgeData = (knowledge = {}, action) => {
     }
 }
 
+const activeNearme = (nearme = {}, action) => {
+    if(action.type === 'ACTIVE_NEARME'){       
+        return action.payload;
+    } else {    
+        return nearme;
+    }
+}
+
 export default combineReducers({
     community,
-    knowledgeData
+    knowledgeData,
+    activeNearme
 })

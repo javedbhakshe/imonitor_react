@@ -3,7 +3,9 @@ import NearmeMap from '../../components/nearme/NearmeMap';
 import { apiServices } from '../../services/apiServices';
 import AddNearme from '../../components/nearme/addNearme';
 import NearmeList from '../../components/nearme/NearmeList';
+import UploadNearme from '../../components/nearme/UploadNearme';
 import classnames from 'classnames';
+import _ from 'lodash';
 
 class Nearme extends Component{
 
@@ -12,7 +14,8 @@ class Nearme extends Component{
         longitude: '',
         isLoading:false,
         nearmeList:[],
-        activeTab: 'map'
+        activeTab: 'map',
+        activeNearme : {}
     }
 
     toggle = (activeTab) => {
@@ -20,6 +23,20 @@ class Nearme extends Component{
             this.setState({activeTab});
        }
     }   
+
+    toggleList =(nearme) => {
+          const nearmeData = this.state.nearmeList;
+          if(nearme.status === "SUCCESS"){
+            nearmeData.push(nearme);           
+          }    
+          if(nearme.status === "DUPLICATE"){
+              const nearmeIndex = _.findIndex(nearmeData, function({ nearme }) { return nearme.id == nearme.nearme.id; });
+              if(!_.isEmpty(nearmeIndex)){    
+                  nearmeData[nearmeIndex] = nearme;
+              }              
+          }      
+        this.setState({nearmeList:nearmeData, activeTab:'nearme-list'});
+    }
   
     
     async componentDidMount(){
@@ -30,15 +47,18 @@ class Nearme extends Component{
         } catch(err) {
             
         }        
-
+        let communityBO = JSON.parse(localStorage.getItem('community'));			
         let requestOptions =  {
             latitude: this.state.latitude ? this.state.latitude : 19.0760,
             longitude: this.state.longitude ? this.state.longitude : 72.8777,
-            limit:100
+            uuid:communityBO.community.uuid,
+            limit:1000
         }
         const response = await apiServices.nearmeList(requestOptions);       
 
-        this.setState({nearmeList: response.nearmeList})
+        if(!_.isEmpty(response.nearmeList)){
+            this.setState({nearmeList: response.nearmeList, latitude:response.nearmeList[0].nearme.latitude,longitude:response.nearmeList[0].nearme.longitude})
+        }
     }
 
      geCurrenttLocation = () => {
@@ -57,6 +77,11 @@ class Nearme extends Component{
        
       }
 
+      onEditNearme = () => {  
+          var that = this;
+          this.setState({activeTab:'nearme-map'});          
+      }
+
 
       render(){
 		return(
@@ -73,19 +98,26 @@ class Nearme extends Component{
                     </button>     
                     <button className={`btn btn-custom btn-light ${classnames({ active: this.state.activeTab === 'nearme-map' })}`} onClick={() => { this.toggle('nearme-map')}} title="Add Content" data-toggle="tab" href="#addMap" role="tab" aria-controls="addMap" >
                         <span className="fa fa-plus" data-toggle="tab" href="#addMap" role="tab" aria-controls="addMap"></span> Add
-                    </button>      
+                    </button>    
+                    <button className={`btn btn-custom btn-light ${classnames({ active: this.state.activeTab === 'nearme-bulk' })}`} onClick={() => { this.toggle('nearme-bulk')}} title="Add Content" data-toggle="tab" href="#nearmeBulk" role="tab" aria-controls="nearmeBulk" >
+                        <span className="fa fa-upload" data-toggle="tab" href="#nearmeBulk" role="tab" aria-controls="nearmeBulk"></span> Upload
+                    </button>   
                 </div> <div className="clear"></div>
                 <div className="tab-content">
                   <div className={`tab-pane mapDetail ${classnames({ active: this.state.activeTab === 'map' })}`} id="map" role="tabpanel">
                     <NearmeMap data={this.state.nearmeList} latitude={this.state.latitude} longitude={this.state.longitude} />
                   </div>
                   <div className={`tab-pane ${classnames({ active: this.state.activeTab === 'nearme-list' })}`} id="mapList" role="tabpanel">
-                  <NearmeList data={this.state.nearmeList} />
-                  
+                    <NearmeList data={this.state.nearmeList} onEditData={this.onEditNearme} />
                   </div>
                   <div className={`tab-pane mapDetail ${classnames({ active: this.state.activeTab === 'nearme-map' })}`} id="addMap" role="tabpanel">
-                    <AddNearme nearmeList={this.state.nearmeList} toggle={this.toggle} />
+                    <AddNearme nearmeList={this.state.nearmeList}  toggleList={this.toggleList} toggle={this.toggle} ref="NearmeData" />
                   </div>
+
+                  <div className={`tab-pane ${classnames({ active: this.state.activeTab === 'nearme-bulk' })}`} id="nearmeBulk" role="tabpanel">
+                    <UploadNearme toggle={this.toggle} />
+                  </div>
+                  
                 </div>
                 </div>
                 {/* <div className="text-center card-footer">

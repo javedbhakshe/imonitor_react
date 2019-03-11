@@ -1,5 +1,7 @@
 import swal from 'sweetalert'
 import _ from 'lodash';
+import axios from "axios";
+
 
 // const apiUrl= 'https://api.imonitorplus.com/api/imonitor';
 const apiUrl = 'https://uat.imonitorplus.com/service/api';
@@ -13,8 +15,9 @@ export const apiServices = {
     createPreferences,
     cloudinaryUpload,
     updateCommunityLangs,
-    addNearme,
-    nearmeList
+    addNearme,    
+    nearmeList,
+    translation
 };
 
 function login(requestObject) {
@@ -181,6 +184,25 @@ function nearmeList(requestObject){
     };
    
     return fetch(`${apiUrl}/creative/nearme/load.json`, requestOptions)
+    .then(handleResponse)
+    .then(data => {
+        // login successful if there's a jwt token in the response
+        if (data.status === 'SUCCESS') {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            console.log('Updated ');
+        }
+
+        return data;
+    });
+}
+
+function translation(uuid, local){
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+    };
+   
+    return fetch(`${apiUrl}/creative/translations/${uuid}/${local}/IMONITOR/true/load.json`)
     .then(handleResponse)
     .then(data => {
         // login successful if there's a jwt token in the response
