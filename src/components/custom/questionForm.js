@@ -9,13 +9,14 @@ class QuestionForm extends Component {
             titleValid: false,
             typeValid: false,
             formValid: false,
-            showNomial: false
+            showNomial: false,
+            data:{}
         };
 
         this.nominal = [];
         this.item = {};
-        this.handleUserInput = this.handleUserInput.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        /*this.handleUserInput = this.handleUserInput.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);*/
 
         const community = JSON.parse(localStorage.getItem('community')),
             uuid = community.community.uuid,
@@ -34,7 +35,7 @@ class QuestionForm extends Component {
         this.aLanguageList = aLanguageList;
     }
 
-    handleSubmit(e) {
+    handleSubmit = (e)  => {
         e.preventDefault();
         this.props.getQuestionData(this.item);
         this.item = {};
@@ -65,7 +66,10 @@ class QuestionForm extends Component {
             });
         }
 
+    }
 
+    showForm = (p_data) => {    
+        console.log(p_data);
     }
 
     validateField(fieldID, value) {
@@ -138,7 +142,12 @@ class QuestionForm extends Component {
                                                         <i className="fa fa-user"></i>
                                                     </span>
                                                 </span>
-                                                <input type="text" className={"form-control "+ (ele.locale == 'en_US' ? that.errorClass(that.state.formErrors.title) : '')} id={`name-${ele.locale}`} name="name" data-lang={ele.locale} onChange={this.handleUserInput}     placeholder="Enter title ..."/>
+                                                <input type="text" 
+                                                    className={"form-control "+ (ele.locale == 'en_US' ? that.errorClass(that.state.formErrors.title) : '')} 
+                                                    id={`name-${ele.locale}`} name="name" data-lang={ele.locale} 
+                                                    onChange={this.handleUserInput}  
+                                                    placeholder="Enter title ..."
+                                                />
                                                 <em className="error invalid-feedback">{that.state.formErrors.title}</em>
                                             </div>                
                                         </fieldset>

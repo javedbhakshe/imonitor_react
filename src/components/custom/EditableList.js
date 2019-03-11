@@ -31,7 +31,7 @@ const EditableList = (props) => {
 	const handleClick = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
-		console.log(e.target);
+		
 		let oData = e.target.dataset;
 		console.log(oData);
 		props.updateActivequestion(oData);

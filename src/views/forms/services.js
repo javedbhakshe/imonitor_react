@@ -33,11 +33,14 @@ class Services extends Component{
 				aLinkedservices = sLinkedservices.split(',');
 				oService.linkedServices = this.makeLinkedService(aLinkedservices);
 				/* Whole Data  */	
-				let aWhole = this.makeWholeData(p_oData,aLinkedservices);
+				let aWhole = this.makeWholeData(p_oData,aLinkedservices),
+					oWhole = {data : aWhole,linked:oService.linked};
+
 				/*  */
-				this.storeServiceData(oService,aWhole,oService.linked);
+				this.storeServiceData(oService,oWhole,oService.linked);
 			}else{
-				this.storeServiceData(oService,p_oData,oService.linked);
+				let oWhole = {data:p_oData,linked:oService.linked,questions:[]};
+				this.storeServiceData(oService,oWhole,oService.linked);
 			}
 		}else{
 			console.log('====console====');
@@ -65,6 +68,7 @@ class Services extends Component{
 				p_data[j]['linked-service'] = p_data[j]['linked-service'] ? p_data[j]['linked-service'] : 'Unknown';
 				oTemp[j] = {name : p_data[j]['linked-service'].split(',')[i]}
 			}
+			oTemp.questions = [];
 			aWholeData.push(oTemp);			
 		}
 		return aWholeData;
@@ -74,16 +78,21 @@ class Services extends Component{
 		let {bIsCurServiceLinked , nCurrentActiveService, nCurrentLinkedService} = this.state,
 			oQuestionObj = {en_data:p_data['en_US'],whole_data:p_data};
 		
+
 		this.setState( prevState =>  {
-			let aPrev = prevState.services;
+			let aPrev = prevState.services,
+				aWholeData = prevState.oWholeData;
 
 			if(bIsCurServiceLinked){
 				aPrev[nCurrentActiveService].linkedServices[nCurrentLinkedService].questions.push(oQuestionObj);
+				aWholeData[nCurrentActiveService].data[nCurrentLinkedService].questions.push(p_data);
 			}else{
 				aPrev[nCurrentActiveService].questions.push(oQuestionObj);
+				aWholeData[nCurrentActiveService].questions.push(p_data)
 			}
 			return {
-				services:aPrev
+				services:aPrev,
+				oWholeData:aWholeData
 			}
 		});
 	}
@@ -102,6 +111,7 @@ class Services extends Component{
 	}
 
 	storeServiceData = (oService,p_oData,p_bIslinked) => {
+
 		this.setState( prevState => {
 			let aPrev = prevState.services,
 				aPrevWhole = prevState.oWholeData,
@@ -124,7 +134,7 @@ class Services extends Component{
 			let aPrev = prevState.services,
 				aPrevWhole = prevState.oWholeData,
 				nIndex , bLinked = false,nLinknedService;
-
+			
 			if(islinked === 'true'){
 
 				let nInd = index.split('~')[0] * 1;
@@ -134,8 +144,8 @@ class Services extends Component{
 					aPrev.splice(nInd,1);
 				}
 				/*  */
-				aPrevWhole[nInd].splice(linkedindex,1);
-				if(aPrevWhole[nInd].length === 0){
+				aPrevWhole[nInd].data.splice(linkedindex,1);
+				if(aPrevWhole[nInd].data.length === 0){
 					aPrevWhole.splice(nInd,1);
 				}
 				/*  */
@@ -188,23 +198,43 @@ class Services extends Component{
 	}
 
 	updateActivequestion = ({index}) => {
+
 		this.setState({
 			nCurrentActiveQuestion:index
 		});
+		/* update form data */
+		let oCurrent,{ services ,oWholeData,bIsCurServiceLinked,nCurrentActiveService, nCurrentLinkedService} = this.state;
+		
+		if(bIsCurServiceLinked){
+			oCurrent = services[nCurrentActiveService].linkedServices[nCurrentLinkedService].questions[index];
+		}else{
+			oCurrent = services[nCurrentActiveService].questions[index];
+		}
+
+		console.log(oCurrent);
+		this.refs.EditableForm.showForm(oCurrent.whole_data);
+		/*  */
 	}
 
 	onQuestionDelete = ({index}) =>{
 
-		let {services,bIsCurServiceLinked , nCurrentActiveService, nCurrentLinkedService} = this.state;
+		let {oWholeData,services,bIsCurServiceLinked , nCurrentActiveService, nCurrentLinkedService} = this.state;
 		
 		
 		if(bIsCurServiceLinked){
 			services[nCurrentActiveService].linkedServices[nCurrentLinkedService].questions.splice(index ,1);
+			oWholeData[nCurrentActiveService].data[nCurrentLinkedService].questions.splice(index,1);
+			
 		}else{
 			services[nCurrentActiveService].questions.splice(index, 1);
+			oWholeData[nCurrentActiveService].questions.splice(index,1);
 		}
 
 		this.setState({services});
+	}
+
+	updateQuestionList = () => {
+		console.log('Add Question in service');
 	}
 
 	getCurrentServiceQuestions = () => {
@@ -221,9 +251,9 @@ class Services extends Component{
 	}
 
 	render(){
-		console.clear();
+		/*// console.clear();
 		console.log(this.state.services);
-		console.log(this.state.oWholeData);
+		console.log(this.state.oWholeData);*/
 		const oSelectedList = {
 			linked:this.state.bIsCurServiceLinked,
 			active:this.state.nCurrentActiveService,
@@ -257,6 +287,14 @@ class Services extends Component{
 			          		 	<div className="card">
 					               <div className="card-header"> 
 					               		Questions
+           							  	<div className="float-right">
+								  			<button type="button" className="btn btn-primary btn-sm" 
+								  				onClick = {this.updateQuestionList}
+							  				>
+								  				<i className="fa fa-plus"></i> Add Question
+								  			</button>
+									  	</div>          
+
 				              		</div>
 				              		<div className="card-body"> 
 					               		<EditableList 
@@ -273,7 +311,7 @@ class Services extends Component{
 		              			<div className="card">
 					               <div className="card-header"> 
 				              			<div className="float-right">
-		                  					<QuestionForm 
+		                  					<QuestionForm ref='EditableForm'
 		                  						getQuestionData = {this.addQuestion} 
 		              						/>	
 					                  	</div>
