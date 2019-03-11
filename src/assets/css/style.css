@@ -633,3 +633,19 @@ h4.title{
 .infoWindowBox{
     width: 300px;
 }
+
+/* Services */
+
+.linked-service-name{
+  pointer-events: none;
+  width: 100%;
+}
+.list-group-item{
+  cursor: pointer; 
+}
+.list-group-item.active{
+  color: #000;
+}
+
+
+/*  */

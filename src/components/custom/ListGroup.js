@@ -2,47 +2,90 @@ import React/*,{Component}*/ from 'react';
 import {Card, CardHeader, CardBody} from 'reactstrap'
 
 const ListGroup = (props) => {
-	console.clear();
-	console.log(props)
+	
+	const createListItem = (name,ind,p_bool,p_linkedIndex = -1) => {
+		let {active, activeLinked} = props.selected;
+
+		return(
+			<li 
+				className= {`list-group-item ${(active == ind && p_linkedIndex == activeLinked) ? 'active' : ''}`} 
+				key={p_bool ?  (ind +'~'+p_linkedIndex) : ind } data-index={ind}
+				data-islinked = {p_bool}
+				data-linkedindex = {p_linkedIndex} 
+				onClick={e => onClickHandle(e)}>
+				{name}
+				<button className="btn btn-sm btn-custom float-right fa fa-trash" 
+						type="button"
+						onClick={e => HandleDelete(e)} 
+						title="Delete Content">
+						
+				</button>
+				<button className="btn btn-sm btn-custom float-right fa fa-pencil" 
+					type="button" 
+					title="Edit Content" 
+					onClick={e => HandleEdit(e)}>
+				</button>
+			</li>
+		)
+	}
+	
 	const aList = props.listItems,
 		aListItems = aList.map((ele, ind) => {
-			return (
-				<li className= "list-group-item" key={ind} data-index={ind}>
-					{ele.name}
-					<button className="btn btn-sm btn-custom float-right fa fa-trash" 
-							type="button"
-							onClick={e => HandleDelete(e)} 
-							title="Delete Content">
-							
-					</button>
-					<button className="btn btn-sm btn-custom float-right fa fa-pencil" 
-						type="button" 
-						title="Edit Content" 
-						onClick={e => HandleEdit(e)}>
-					</button>
-				</li>
-			);
+			let aLinkedItems = [];
+			
+			if(ele.linked){
+				aLinkedItems = ele.linkedServices.map((serv,i) => {
+					return(
+						createListItem(serv.name,ind,true,i)
+					)
+				});
+				return (
+					<li className="list-group-item p-0" key={ind} onClick={e => onClickHandle(e)} 
+						data-index={ind} data-islinked={ele.linked} >
+						<div className="linked-service-name m-2">
+							{ele.data.name}
+						</div>
+						<ul className="list-group-item p-0">
+							{aLinkedItems}
+						</ul>
+					</li>
+				)
+			}else{
+				return (
+					createListItem(ele.data.name,ind,false)
+				);
+			}
 		});
 
 
 	const HandleEdit = (e) => {
-		let nIndex = e.target.parentElement.dataset.index;
-		props.onEdit(nIndex);
+		e.preventDefault();
+		e.stopPropagation();
+		let oDataSet = e.target.parentElement.dataset;
+		props.onEdit(oDataSet);
 	}
 
 	const HandleDelete = (e) => {
-		let nIndex = e.target.parentElement.dataset.index;
-		props.onDelete(nIndex);
+		e.preventDefault();
+		e.stopPropagation();
+		let oDataSet = e.target.parentElement.dataset;
+		props.onDelete(oDataSet);
 	}
 
 	const onClickHandle = (e) => {
-		let aList = e.target.parentElement.children,
+		e.preventDefault();
+		e.stopPropagation();
+		/*let aList = e.target.parentElement.children,
 			nLen = aList.length,i;
 
 		for(i = 0; i < nLen;i++){
 			aList[i].classList.remove('active');
 		}
-		e.target.classList.add('active');
+		e.target.classList.add('active');*/
+
+		/* current active service */
+		props.onSelect(e.target.dataset);
+		/* */
 	}
 
 	return(
@@ -51,7 +94,7 @@ const ListGroup = (props) => {
       			<CardHeader>
       				<strong>{props.name}</strong>
       			</CardHeader>
-      			<CardBody className="p-0" onClick={e => onClickHandle(e)}>
+      			<CardBody className="p-0">
 		 			<ul className="list-group">
 		 				{aListItems}
 		 			</ul>

@@ -9,6 +9,7 @@ class ServicesModal extends Component{
 	    super(props);
 	    this.state = {
 	      	modal: false,
+	      	bEdit:false,
 		  	serviceType:aServiceType[0],
 		  	formErrors: {title: '', description: ''},    
 		  	titleValid: false,
@@ -47,7 +48,11 @@ class ServicesModal extends Component{
 	    		<div className={`tab-pane ${ind === 0 ? 'active' : ''}`} id={`tab-${ind}`} key={ind} role="tabpanel">
 		    		<div className="form-group">
 			            <label htmlFor={`services_name_${ele.locale}`} className="col-form-label">Name:</label>
-			            <input type="text" className={"form-control "+ (ele.locale === 'en_US' ? this.errorClass(this.state.formErrors.title) : '')} id={`name-${ele.locale}`} name="name" data-lang={ele.locale} onChange={this.handleUserInput}	 placeholder="Enter title ..."/>
+			            <input type="text" 
+			            	className={"form-control "+ (ele.locale === 'en_US' ? this.errorClass(this.state.formErrors.title) : '')} 
+			            	id={`name-${ele.locale}`} name="name" data-lang={ele.locale} 
+			            	onChange={this.handleUserInput}	 placeholder="Enter title ..."
+		            	/>
 						<em className="error invalid-feedback">{this.state.formErrors.title}</em>
 				  	</div>
 		          	<div className="form-group">
@@ -72,11 +77,29 @@ class ServicesModal extends Component{
 
   	toggle = () => {		
 	    this.setState({
-	      modal: !this.state.modal
+	      	modal: !this.state.modal
 	    });
   	}
+
+  	onClose = () =>{
+  		this.toggle();
+  		this.setState({
+  			bEdit:false
+  		})
+  	}
+
+  	onListEdit = (p_data) => {
+  		this.setState({
+	      	modal: !this.state.modal,
+	      	bEdit: true
+	    });	
+	    /*this.item = p_data;*/
+	    console.log(p_data);
+
+  	}	
 	  
 	handleUserInput = (e) => {
+		
 		let lang = e.target.dataset["lang"];		
 		if(!this.item[lang]){
 			this.item[lang]={}
@@ -116,9 +139,11 @@ class ServicesModal extends Component{
 
   	handleSubmit = (e) => {
 		e.preventDefault();	
-	  	this.props.getFormData(this.item,this.state.serviceType);
+		let bEdit = this.state.bEdit,
+			oCurrent = Object.assign({}, this.item);
+	  	this.props.getFormData(oCurrent,this.state.serviceType,bEdit);
 	  	this.item = {};	
-	  	this.setState({ formValid: false});
+	  	this.setState({ formValid: false,bEdit:false});
   	}
 
   	handleChange = (e) => {
@@ -148,7 +173,7 @@ class ServicesModal extends Component{
 			<div className="mb-2">
 			 	<Button color="primary" onClick={this.toggle}>Add Services</Button>
 				<Modal isOpen={this.state.modal} toggle={this.toggle} className="modal-lg" onOpened={this.onModalOpen}>
-		          	<ModalHeader toggle={this.toggle}>Service</ModalHeader>
+		          	<ModalHeader toggle={this.onClose}>Service</ModalHeader>
 	          		<ModalBody>
 	          			<label className="control-label">Service Type : </label>
 	          			<Select
