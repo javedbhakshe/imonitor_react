@@ -313,9 +313,14 @@ class GetKnowlegeable extends Component{
 			  if(response.errors){
 				// that.setState({activeTab: 'getknowlegeable-tab'});
 			  }  
-			  if(response.status === "SUCCESS"){
-				//   that.props.community(response.community);
-				  that.props.configTab('service-tab');
+			  if(response.status === "SUCCESS"){				
+					if(_.isEmpty(communityBO.communityFAQBOs)){
+						communityBO.communityFAQBOs.push(response);
+					} else{
+						communityBO.communityFAQBOs[0] = response;
+					}
+					localStorage.setItem('community', JSON.stringify(communityBO));
+				    that.props.configTab('service-tab');
 				  
 			  }          
 			});
@@ -424,7 +429,7 @@ class GetKnowlegeable extends Component{
 
 				<div className="text-center card-footer">
 					<button type="Button" className="mr-3 btn btn-primary btn-sm" onClick={this.formSubmit}><i className="fa fa-dot-circle-o"></i> Save and Continue </button>
-					{/* <button type="reset" className="btn btn-danger btn-sm"><i className="fa fa-ban "></i> Reset</button> */}
+					<button type="Button" className="btn btn-danger btn-sm"><i className="fa fa-ban "></i> Skip</button>
 				</div>
 			</div>				
 		)
