@@ -54,9 +54,11 @@ class Services extends Component{
 		this.setState({
 			nCurrentActiveService: index,
 			bIsCurServiceLinked : bislinked,
-			nCurrentLinkedService: linkedindex === undefined ? 0 : linkedindex 
+			nCurrentLinkedService: linkedindex === undefined ? 0 : linkedindex,
+		 	nCurrentActiveQuestion : -1
 		});
 
+		this.refs.EditableForm.initializeState(true);
 	}
 
 	makeWholeData = (p_data,p_arr) => {
@@ -92,7 +94,8 @@ class Services extends Component{
 			}
 			return {
 				services:aPrev,
-				oWholeData:aWholeData
+				oWholeData:aWholeData,
+				nCurrentActiveQuestion:-1
 			}
 		});
 	}
@@ -231,6 +234,11 @@ class Services extends Component{
 		}
 
 		this.setState({services});
+		/* */
+		if(index * 1 === this.state.nCurrentActiveQuestion * 1){
+			this.refs.EditableForm.initializeState(true);
+		}
+		/* */
 	}
 
 	updateQuestionList = () => {
@@ -251,9 +259,9 @@ class Services extends Component{
 	}
 
 	render(){
-		/*// console.clear();
-		console.log(this.state.services);
-		console.log(this.state.oWholeData);*/
+		// console.clear();
+		// console.log(this.state.services);
+		console.log(this.state.oWholeData);
 		const oSelectedList = {
 			linked:this.state.bIsCurServiceLinked,
 			active:this.state.nCurrentActiveService,
@@ -309,12 +317,13 @@ class Services extends Component{
 				          	</div>
 				          	<div className="col-sm-12 col-md-4 col-lg-4 p-0">
 		              			<div className="card">
-					               <div className="card-header"> 
-				              			<div className="float-right">
-		                  					<QuestionForm ref='EditableForm'
-		                  						getQuestionData = {this.addQuestion} 
-		              						/>	
-					                  	</div>
+					               	<div className="card-header"> 
+				              			Question Form
+				              		</div>
+				              		<div className="card-body">
+	                  					<QuestionForm ref='EditableForm'
+	                  						getQuestionData = {this.addQuestion} 
+	              						/>	
 				              		</div>
 				              	</div>
 				            </div>

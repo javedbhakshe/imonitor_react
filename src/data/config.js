@@ -413,12 +413,24 @@ const nearmeType = [
 	{value:"others", label:"Others"},                                                    
 ];
 
+
+const aQuestionType = [
+	{value:"", label:"Please Select Type"},
+	{value:"Text", label:"Text"},
+	{value:"Number", label:"Number"},
+	{value:"Date", label:"Date"},
+	{value:"Dropdown", label:"Dropdown"},
+	{value:"Radio", label:"Radio"},
+	{value:"Checkbox", label:"Checkbox"}	
+];
+
 export {
   	aCommunityType,
   	aCommunityLanguages,
   	aCommCountries,
 	aCommunitySections,
   	aServiceType,
-	nearmeType  
+	nearmeType,
+	aQuestionType  
 };
 
