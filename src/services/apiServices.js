@@ -122,13 +122,13 @@ function createPreferences(uuid,requestObject) {
         if (data.status === 'SUCCESS') {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
            
-            let communityBO = JSON.parse(localStorage.getItem('community'));
-            if(_.isEmpty(communityBO.communityFAQBOs)){
-                communityBO.communityFAQBOs.push(data);
-            } else{
-                communityBO.communityFAQBOs[0] = data;
-            }
-            localStorage.setItem('community', JSON.stringify(communityBO));
+            // let communityBO = JSON.parse(localStorage.getItem('community'));
+            // if(_.isEmpty(communityBO.communityFAQBOs)){
+            //     communityBO.communityFAQBOs.push(data);
+            // } else{
+            //     communityBO.communityFAQBOs[0] = data;
+            // }
+            // localStorage.setItem('community', JSON.stringify(communityBO));
         }
 
         return data;

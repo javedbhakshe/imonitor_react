@@ -2,8 +2,11 @@ import React,{Component} from 'react';
 import ServicesModal from '../../components/modals/servicesModal';
 /*import { Card, CardBody, CardHeader } from 'reactstrap';*/
 import ListGroup from '../../components/custom/ListGroup';
-import QuestionForm from '../../components/custom/QuestionForm'
-import EditableList from '../../components/custom/EditableList'
+import QuestionForm from '../../components/custom/QuestionForm';
+import EditableList from '../../components/custom/EditableList';
+import { apiServices } from '../../services/apiServices';
+import _ from 'lodash';
+import swal from 'sweetalert';
 
 class Services extends Component{
 
@@ -15,6 +18,16 @@ class Services extends Component{
 		nCurrentLinkedService : -1,
 		bIsCurServiceLinked : false, 
 		
+	}
+
+	componentDidMount(){
+		let communityBO = localStorage.getItem('community');
+		let community = JSON.parse(communityBO);
+		let communityPreferenceBOs = community.communityPreferenceBOs;		
+		if(!_.isEmpty(communityPreferenceBOs)){
+			let dataObj = JSON.parse(communityPreferenceBOs[0].communityPreferences.summary);
+			this.setState({oWholeData:dataObj.oWholeData, services:dataObj.services});			
+		}
 	}
 
 	addService = (p_oData,p_type,p_bEdit) => {
@@ -258,6 +271,55 @@ class Services extends Component{
 		return aCurrent;
 	}
 
+	formSubmit = () => {
+		var that = this;  
+		if(this.state.oWholeData.length > 0){
+			this.setState({isLoading : true});   
+			let communityBO = JSON.parse(localStorage.getItem('community'));
+			let uuid = communityBO.community.uuid;
+			let requestOptions = {};
+			let dataObj = {
+				'services':this.state.services,
+				'oWholeData':this.state.oWholeData
+			}
+			if(!_.isEmpty(communityBO.communityPreferenceBOs))  {
+				communityBO.communityPreferenceBOs[0]['communityPreferences']['summary'] = JSON.stringify(dataObj);
+				requestOptions = communityBO.communityPreferenceBOs[0];
+			}else{				
+				requestOptions = { 
+					communityPreferences: {
+						type:"Service",
+						code:"Service",
+						active:"Y",
+						summary:JSON.stringify(dataObj)
+					} 
+				};
+			}
+			
+			apiServices.createPreferences(uuid, requestOptions).then(function(response){
+			  that.setState({isLoading: false});
+			  if(response.errors){
+				// that.setState({activeTab: 'getknowlegeable-tab'});
+			  }  
+			  if(response.status === "SUCCESS"){
+				//   that.props.community(response.community);
+				if(_.isEmpty(communityBO.communityPreferenceBOs)){
+					communityBO.communityPreferenceBOs.push(response);
+				} else{
+					communityBO.communityPreferenceBOs[0] = response;
+				}
+				localStorage.setItem('community', JSON.stringify(communityBO));
+				that.props.configTab('nearme-tab');
+				  
+			  }          
+			});
+		  }else{
+			swal("No Services Section!", {
+				icon: "error",
+			});
+		  }
+	}
+
 	render(){
 		// console.clear();
 		// console.log(this.state.services);
@@ -269,7 +331,7 @@ class Services extends Component{
 		}
 
 		return(
-			<div>
+			<div className="card">
 				<div className="row">
 		          	<div className="col-12">
 			            <ServicesModal 
@@ -281,7 +343,8 @@ class Services extends Component{
 	        	{
 	        		this.state.services.length ? 
         			(
-        				<div className="row">
+        				<div className="card-body">	
+						<div className="row">
 	        				<div className='col-sm-12 col-md-4 col-lg-4 p-0'>
 			          			<ListGroup name="Services"
 			          				listItems = {this.state.services}
@@ -328,9 +391,14 @@ class Services extends Component{
 				              	</div>
 				            </div>
 			            </div>
+						</div>
         			)
 	        		:null
-	        	}
+				}
+				 <div className="text-center card-footer">
+					<button type="Button" className="mr-3 btn btn-primary btn-sm" onClick={this.formSubmit}><i className="fa fa-dot-circle-o"></i> Save and Continue </button>
+					<button type="Button" className="btn btn-danger btn-sm"><i className="fa fa-ban "></i> Skip</button>
+				</div>
 			</div>
 		);
 	}
