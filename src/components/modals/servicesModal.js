@@ -139,9 +139,15 @@ class ServicesModal extends Component{
 
   	handleSubmit = (e) => {
 		e.preventDefault();	
-		let bEdit = this.state.bEdit,
+		let {bEdit} = this.state,
 			oCurrent = Object.assign({}, this.item);
-	  	this.props.getFormData(oCurrent,this.state.serviceType,bEdit);
+
+
+		if(bEdit){
+	  		this.props.editservicedata(oCurrent,this.state.serviceType);
+		}else{
+			this.props.getFormData(oCurrent,this.state.serviceType);
+		}
 	  	this.item = {};	
 	  	this.setState({ formValid: false,bEdit:false});
   	}

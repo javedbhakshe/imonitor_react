@@ -415,7 +415,7 @@ const nearmeType = [
 
 
 const aQuestionType = [
-	{value:"", label:"Please Select Type"},
+	/*{value:"", label:"Please Select Type"},*/
 	{value:"Text", label:"Text"},
 	{value:"Number", label:"Number"},
 	{value:"Date", label:"Date"},

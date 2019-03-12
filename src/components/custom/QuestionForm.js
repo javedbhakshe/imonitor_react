@@ -5,7 +5,7 @@ class QuestionForm extends Component {
     constructor(props) {
         super(props);
 
-     /*   this.state = {
+        /* this.state = {
             formErrors: { title: '', type: '' },
             titleValid: false,
             typeValid: false,
@@ -36,7 +36,6 @@ class QuestionForm extends Component {
     }
 
     initializeState = (p_isSet) => {
-        console.log('initilize');
         let oTemp = {};
         for(let i in this.aLanguageList){
             let sProp = this.aLanguageList[i].locale;
@@ -45,11 +44,17 @@ class QuestionForm extends Component {
         if(p_isSet){
             this.setState({
                 showNomial: false,
+                formValid:false,
+                editMode:false,
+                errorClass:{title:'',type:''},
                 data:oTemp
             });
         }else{
             this.state = {
                 showNomial: false,
+                formValid:false,
+                editMode:false,
+                errorClass:{title:'',type:''},
                 data:oTemp
             };
         }
@@ -59,7 +64,12 @@ class QuestionForm extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.getQuestionData(this.state.data);
+        console.log(this.state.editMode);
+        if(this.state.editMode){
+            this.props.editQuestionData(this.state.data);
+        }else {
+            this.props.getQuestionData(this.state.data)
+        }
         this.initializeState(true);
     }
 
@@ -75,13 +85,27 @@ class QuestionForm extends Component {
     }
 
     handleInputChange = (e) =>{
+
         let sLang = e.target.dataset['lang'],
-            {value,name} = e.target;
+            {value,name} = e.target,
+            oError = {title:'',type:''},
+            bFormValid = true;
+
+        if(name === 'name' && sLang === 'en_US'){
+            if(!value){
+                oError.title = 'English Title Should not empty';
+                oError.type = 'is-invalid';
+                bFormValid = false;
+            }
+        }
+
         this.setState(prevState => {
             let {data} = prevState;
             data[sLang][name] = value;
             return{
-                data:data
+                data:data,
+                errorClass:oError,
+                formValid:bFormValid
             }  
         });
     }
@@ -119,12 +143,13 @@ class QuestionForm extends Component {
                                 </span>
                             </span>
                             <input type="text" 
-                                className="form-control"
+                                className={`form-control ${ele.locale === 'en_US' ? this.errorClass() :''}`}
                                 id={`name_${ele.locale}`} name="name" data-lang={ele.locale}  
                                 placeholder="Enter title ..."
                                 value = {this.state.data[ele.locale]['name']}
                                 onChange = {this.handleInputChange}
                             />
+                            <em className="error invalid-feedback">{this.state.errorClass.title}</em>
                         </div>
                     </div>
                     <div className="form-group">
@@ -181,15 +206,25 @@ class QuestionForm extends Component {
 
             return {
                 data:p_data,
-                showNomial:bFlag
+                showNomial:bFlag,
+                editMode:true
             }
-
         });
+
     }
 
-    
+    errorClass = () => {
+        let {name} = this.state.data['en_US'],
+            oError = {title:'',type:''};
+        
+        if(!name){
+            oError.title = 'English Title Should not empty';
+            oError.type = 'is-invalid';
+        }
+        return oError.type;
+    }
+
     render() {
-        console.log(this.state)
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
@@ -200,7 +235,11 @@ class QuestionForm extends Component {
                         {this.getTabConents()}
                     </div>
                     <div className="text-center card-footer">
-                        <button type="submit" className="mr-3 btn btn-primary btn-sm" ><i className="fa fa-plus"></i> Add </button>
+                        <button type="submit" className="mr-3 btn btn-primary btn-sm" 
+                            disabled={!this.state.formValid}
+                        >
+                        <i className="fa fa-plus"></i> Add 
+                        </button>
                     </div>
                 </form>
             </div>
