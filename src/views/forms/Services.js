@@ -46,12 +46,12 @@ class Services extends Component{
 			oService.linkedServices = this.makeLinkedService(aLinkedservices);
 			/* Whole Data  */	
 			let aWhole = this.makeWholeData(p_oData,aLinkedservices),
-				oWhole = {data : aWhole,linked:oService.linked};
+				oWhole = {data : aWhole,linked:oService.linked,serviceType:p_type,linkedServices:sLinkedservices};
 
 			/*  */
 			this.storeServiceData(oService,oWhole,oService.linked);
 		}else{
-			let oWhole = {data:p_oData,linked:oService.linked,questions:[]};
+			let oWhole = {data:p_oData,linked:oService.linked,questions:[],serviceType:p_type};
 			this.storeServiceData(oService,oWhole,oService.linked);
 		}
 
@@ -63,6 +63,7 @@ class Services extends Component{
 
 	editService = (p_data) =>{
 		console.log(p_data);
+		console.log('Edit Module....');
 	}
 
 	updateSeletedService = ({index, islinked, linkedindex}) => {
@@ -233,7 +234,15 @@ class Services extends Component{
 
 		let oCurrent = Object.assign({},this.state.oWholeData[index]),
 			bLinked = islinked === 'true';
-		this.refs.Modal.onListEdit(oCurrent);
+
+		if(!bLinked){
+			this.refs.Modal.onListEdit(oCurrent);
+		}else{
+			console.log(oCurrent);
+			console.log('Edit Linked Service...');
+		}
+		
+
 		this.setState({
 			nCurrentActiveService: index,
 			nCurrentActiveQuestion: 0,
@@ -370,7 +379,7 @@ class Services extends Component{
 		          	<div className="col-12">
 			            <ServicesModal 
 		            		ref="Modal"
-			            	getFormData = {this.addService}
+			            	addServicedata = {this.addService}
 			            	editservicedata = {this.editService}
 		            	/>
 		          	</div>
