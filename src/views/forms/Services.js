@@ -380,7 +380,7 @@ class Services extends Component{
         			(
         				<div className="card-body">	
 						<div className="row">
-	        				<div className='col-sm-12 col-md-4 col-lg-4 p-0'>
+	        				<div className='col-sm-12 col-md-3 col-lg-3 p-0'>
 			          			<ListGroup name="Services"
 			          				listItems = {this.state.services}
 			          				onDelete = {this.onListItemDelete}
@@ -431,7 +431,7 @@ class Services extends Component{
         			)
 	        		:null
 				}
-				 <div className="text-center card-footer">
+			 	<div className="text-center card-footer">
 					<button type="Button" className="mr-3 btn btn-primary btn-sm" onClick={this.formSubmit}><i className="fa fa-dot-circle-o"></i> Save and Continue </button>
 					<button type="Button" className="btn btn-danger btn-sm"><i className="fa fa-ban "></i> Skip</button>
 				</div>
