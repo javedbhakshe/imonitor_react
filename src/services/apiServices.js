@@ -3,7 +3,7 @@ import _ from 'lodash';
 import axios from "axios";
 
 
-// const apiUrl= 'https://api.imonitorplus.com/api/imonitor';
+// const apiUrl= 'https://api.imonitorplus.com/api';
 const apiUrl = 'https://uat.imonitorplus.com/service/api';
 
 export const apiServices = {

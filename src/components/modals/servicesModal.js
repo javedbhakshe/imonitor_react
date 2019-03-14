@@ -177,7 +177,7 @@ class ServicesModal extends Component{
 		
 		return(
 			<div className="mb-2">
-			 	<Button color="primary" onClick={this.toggle}>Add Services</Button>
+			 	<Button className="btn btn-light survey-btn" color="primary" onClick={this.toggle}>Add Services</Button>
 				<Modal isOpen={this.state.modal} toggle={this.toggle} className="modal-lg" onOpened={this.onModalOpen}>
 		          	<ModalHeader toggle={this.onClose}>Service</ModalHeader>
 	          		<ModalBody>

@@ -167,7 +167,7 @@ class GetKnowlegeable extends Component{
 	}
 	onContentEditAction(d){
 		let that = this;	
-		this.setState({level:d, editForm:true});
+		this.setState({level:d, editForm:true, formValid:true, titleValid:true});
 		let levelInx = d;
 		let LevelInxArr = levelInx.split("-");			
 		let innerData = this.state.dataObj[LevelInxArr[0]];	
@@ -179,15 +179,18 @@ class GetKnowlegeable extends Component{
 		}
 		this.item = innerData;
 		this.languageList.map(function(value, index) {
-			
+
+			document.getElementById('title-'+value.locale).value = '';
 			if(that.item[value.locale] && that.item[value.locale]['title']){
 				document.getElementById('title-'+value.locale).value = that.item[value.locale]['title'];
 			}
 			
+			document.getElementById('description-'+value.locale).value = '';
 			if(that.item[value.locale] && that.item[value.locale]['description']){
 				document.getElementById('description-'+value.locale).value = that.item[value.locale]['description'];
 			}
 
+			document.getElementById('video-'+value.locale).value = '';
 			if(that.item[value.locale] && that.item[value.locale]['video']){
 				document.getElementById('video-'+value.locale).value = that.item[value.locale]['video'];
 			}

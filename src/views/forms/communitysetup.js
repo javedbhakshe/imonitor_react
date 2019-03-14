@@ -5,6 +5,7 @@ import { apiServices } from '../../services/apiServices';
 import Loader from '../../components/loaders/loader';
 import { community } from '../../actions';
 import {aCommunityType, aCommunityLanguages, aCommCountries, aCommunitySections}  from '../../data/config';
+import _ from 'lodash';
 
 class CommunitySetUp extends Component{
 
@@ -29,7 +30,7 @@ class CommunitySetUp extends Component{
 		}
 
 		if(aLangs.length === 0){
-			aLangs.push({value:'en_US',label: 'English (United States)'});
+			aLangs.push({value:'en_US',label: 'English (United States)'});			
 		}
 
         this.state = {
@@ -65,11 +66,14 @@ class CommunitySetUp extends Component{
 		const file = e.target.files[0];
 		
 		let that = this;
-		apiServices.cloudinaryUpload(file).then(function(response){
-			if(response.url){
-				that.setState({[name]: response.url});
-			}       
-		});
+		if(file){
+			apiServices.cloudinaryUpload(file).then(function(response){
+				if(response.url){
+					that.setState({[name]: response.url});
+				}       
+			});
+		}
+		
 	}
 	
 	handleSubmit = (e) => {
@@ -78,6 +82,7 @@ class CommunitySetUp extends Component{
         console.log(this.state);
         this.setState({isLoading : true});          
         if(this.state.name && this.state.emaill){
+			let communityBO = JSON.parse(localStorage.getItem('community'));				
     		let requestOptions =  {
     			community:{
 					uuid:this.state.uuid,

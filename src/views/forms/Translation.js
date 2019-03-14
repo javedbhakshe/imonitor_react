@@ -35,7 +35,7 @@ class Translation extends Component{
 
     render(){
         var that = this;
-        let englishLable = !_.isEmpty(this.state.languageData) ? this.state.languageData['en_US'].lbl : {};
+        let englishLable = !_.isEmpty(this.state.languageData['en_US']) ? (this.state.languageData['en_US'].lbl ? this.state.languageData['en_US'].lbl : {}) : {};
         return (
         <div>
             <table className="table table-bordered">

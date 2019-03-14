@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
 import {aQuestionType}  from '../../data/config';
+import _ from 'lodash';
+
 class QuestionForm extends Component {
     constructor(props) {
         super(props);
@@ -39,7 +41,7 @@ class QuestionForm extends Component {
         let oTemp = {};
         for(let i in this.aLanguageList){
             let sProp = this.aLanguageList[i].locale;
-            oTemp[sProp] = {name:'',nominal:'',type:aQuestionType[0]};
+            oTemp[sProp] = {mendatory: '',name:'',nominal:'',type:aQuestionType[0], dependent:{value:"", label:"Please Select"}};
         }
         if(p_isSet){
             this.setState({
@@ -78,7 +80,7 @@ class QuestionForm extends Component {
         return this.aLanguageList.map((ele,ind) => {
             return (
                 <li className="nav-item" key={ind}>
-                    <a className={`nav-link ${ind === 0 ? 'active' : ''}`} data-toggle="tab" role="tab" href={`#tab-${ind}`}>{ele.displayName}</a>
+                    <a className={`nav-link ${ind === 0 ? 'active' : ''}`} data-toggle="tab" role="tab" href={`#tab-${ind}`}>{ele.displayLanguage}</a>
                 </li>
             );
         });
@@ -87,7 +89,7 @@ class QuestionForm extends Component {
     handleInputChange = (e) =>{
 
         let sLang = e.target.dataset['lang'],
-            {value,name} = e.target,
+            {value,name,checked} = e.target,
             oError = {title:'',type:''},
             bFormValid = true;
 
@@ -101,7 +103,14 @@ class QuestionForm extends Component {
 
         this.setState(prevState => {
             let {data} = prevState;
-            data[sLang][name] = value;
+            if(name == 'mendatory'){
+                for(let i in data){
+                    data[i]['mendatory'] = checked; 
+                } 
+            }else{
+                data[sLang][name] = value;
+            }
+           
             return{
                 data:data,
                 errorClass:oError,
@@ -111,12 +120,13 @@ class QuestionForm extends Component {
     }
 
     handleSelect = (selectedOption,e) => {
-        let sName = 'type',
-            sLang =  e.name.split('type_')[1];
+        let dataObj = e.name.split('#')
+        let sName = dataObj[0],
+            sLang =  dataObj[1];
         this.setState(prevState => {
             let {data} = prevState,
                 sValue = selectedOption.value, 
-                bFlag =  (sValue === 'Dropdown' || sValue === 'Radio' || sValue === 'Checkbox');
+                bFlag =  sName == 'type' ? (sValue === 'Dropdown' || sValue === 'Radio' || sValue === 'Checkbox') : this.state.showNomial;
 
             for(let i in data){
                 data[i][sName] = selectedOption; 
@@ -130,10 +140,27 @@ class QuestionForm extends Component {
 
 
     getTabConents = (e) => {
+    
+        let dependentQuestionList = [];
+        if(!_.isEmpty(this.props.listItems)){
+            dependentQuestionList = this.props.listItems.map(({en_data}, index) => {
+                return {value:index, label:en_data.name}
+            });
+            dependentQuestionList.unshift({value:"", label:"Please Select"});
+        }
+
         return this.aLanguageList.map((ele,ind) => {
             const {value} = this.state.data[ele.locale]['type'];
             return (
                 <div className={`tab-pane ${ind === 0 ? 'active' : ''}`} id={`tab-${ind}`} key={ind} role="tabpanel">
+                   <div className="form-group float-right">                        
+                        <div className="form-check form-check-inline mr-1">
+                            <input className="form-check-input" id = {`mendatory_${ele.locale}`} data-lang={ele.locale} onChange = {this.handleInputChange} name="mendatory" 
+                            type="checkbox"
+                            checked = {this.state.data[ele.locale]['mendatory']}  />
+                            <label className="form-check-label" >Mandatory</label>
+                        </div>
+                    </div>
                     <div className="form-group">
                         <label htmlFor={`name_${ele.locale}`} className="col-form-label">Attribute Name</label>
                         <div className="input-group">
@@ -161,9 +188,9 @@ class QuestionForm extends Component {
                                 </span>
                             </span>
                             <Select 
-                                name = {`type_${ele.locale}`}
+                                name = {`type#${ele.locale}`}
                                 className = "form-control p-0"
-                                defaultValue = {aQuestionType[0]}
+                                defaultValue = {aQuestionType[0]}                                
                                 placeholder="Please Select Type"
                                 options={aQuestionType}
                                 onChange = {this.handleSelect}
@@ -193,6 +220,25 @@ class QuestionForm extends Component {
                             </div>
                         </div>
                     }
+                    {/* <div className="form-group">
+                        <label htmlFor={`type_${ele.locale}`} className="col-form-label">Dependent Question</label>
+                        <div className="input-group">
+                            <span className="input-group-prepend">
+                                <span className="input-group-text">
+                                    <i className="fa fa-list"></i>
+                                </span>
+                            </span>
+                            <Select 
+                                name = {`dependent#${ele.locale}`}
+                                className = "form-control p-0"
+                                placeholder="Please Select Dependent"
+                                options={dependentQuestionList}
+                                onChange = {this.handleSelect}
+                                data-lang={ele.locale}
+                                value = { this.state.data[ele.locale]['dependent'] }
+                            />
+                        </div>
+                    </div> */}
                 </div>
             )
         });

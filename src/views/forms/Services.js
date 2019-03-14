@@ -419,7 +419,8 @@ class Services extends Component{
 				              			Question Form
 				              		</div>
 				              		<div className="card-body">
-	                  					<QuestionForm ref='EditableForm'
+										  <QuestionForm ref='EditableForm'
+										  	listItems = {this.getCurrentServiceQuestions()}
 	                  						getQuestionData = {this.addQuestion}
 	                  						editQuestionData = {this.editQuestion} 
 	              						/>	

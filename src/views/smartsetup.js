@@ -22,16 +22,17 @@ class SmartSetup extends Component{
 	  
 	toggleActive = (activeTab) => {
 		document.getElementById(activeTab).click();
-
-		console.log(this.props.community.key_value_pairs);
-		if(this.props.community.key_value_pairs){
-			let oSections = JSON.parse(this.props.community.key_value_pairs),
+		
+		if(this.props.community){
+			if(this.props.community.key_value_pairs){
+				let oSections = JSON.parse(this.props.community.key_value_pairs),
 				aMenus = ['Setup'];
 
 			for(let i in oSections){
 				aMenus.push(oSections[i].value);
 			}
 			this.props.testFn(aMenus);
+			}			
 		}
 
 	}
