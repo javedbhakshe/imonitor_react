@@ -39,6 +39,7 @@ class App extends Component{
 		}
 		
 		this.onLoginSuccess  = this.onLoginSuccess.bind(this);
+		this.onFirstTimeLoginSuccess  = this.onFirstTimeLoginSuccess.bind(this);
 		this.state = {loggedIn : false, firstTimeLogin: firstTimeLogin};
 
 		/*  */
@@ -53,7 +54,7 @@ class App extends Component{
 				return <Redirect from={prop.path} to={prop.to}  key={key}/>;
 			}
 			if(prop.loggedIn){
-				return <Route path={prop.path} render={e => ( this.state.firstTimeLogin && this.state.loggedIn) ? <FirstTimeLogin onSuccess = {this.onLoginSuccess} /> : <Login onSuccess = {this.onLoginSuccess} />} key={key}/>;
+				return <Route path={prop.path} render={e => ( this.state.firstTimeLogin && this.state.loggedIn) ? <FirstTimeLogin onSuccess = {this.onFirstTimeLoginSuccess} /> : <Login onSuccess = {this.onLoginSuccess} />} key={key}/>;
 			}
    	 		return <Route path={prop.path} component={prop.component} key={key}/>;
 		}, this);		
@@ -79,6 +80,10 @@ class App extends Component{
 			firstTimeLogin = communityBO.identityBO.users.firstTimeLogin;			
 		}
 		this.setState({loggedIn:true, firstTimeLogin:firstTimeLogin});
+	}
+
+	onFirstTimeLoginSuccess(){
+		this.setState({loggedIn:false, firstTimeLogin:true});
 	}
 }
 

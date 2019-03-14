@@ -40,7 +40,19 @@ class FirstTimeLogin extends Component {
               that.setState({responseError: response.errors[0],isLoading : false});
             }  
             if(response.status === "SUCCESS"){
-              that.props.onSuccess();
+              let oRequestObject = {
+                "uuid":communityBO.community.uuid,
+                "type":"COMMUNITY",
+                "field":"name",
+                "text":communityBO.community.name,
+                "locale_lang":'en_US',
+                "module":"IMONITOR",
+                "domain": ""
+              };
+              apiServices.updateCommunityLangs(oRequestObject).then((e) => {                
+                localStorage.removeItem('community');                
+                that.props.onSuccess();                
+              });              
             }          
           });
         }

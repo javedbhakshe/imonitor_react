@@ -6,6 +6,7 @@ import Loader from '../../components/loaders/loader';
 import { community } from '../../actions';
 import {aCommunityType, aCommunityLanguages, aCommCountries, aCommunitySections}  from '../../data/config';
 import _ from 'lodash';
+import swal from 'sweetalert';
 
 class CommunitySetUp extends Component{
 
@@ -128,24 +129,33 @@ class CommunitySetUp extends Component{
 	 			"type":"COMMUNITY",
 	 			"field":"name",
 	 			"text":this.state.name,
-	 			"locale_lang":'en_Us',
+	 			"locale_lang":'en_US',
 	 			"module":"IMONITOR"
  			};
 
-	    this.setState({ [name]:selectedOption });
+	    
 		if(e.action === 'select-option'){
+			this.setState({ [name]:selectedOption });
   			oRequestObject.locale_lang = e.option.value;
   			oRequestObject.domain = "";
 	  		apiServices.updateCommunityLangs(oRequestObject).then((e) => {
 	  			console.log(e);
 	  		});
 		}else if(e.action === 'remove-value'){
-			oRequestObject.locale_lang = e.removedValue.value;
-			oRequestObject.deleteFlag = "true";
-			oRequestObject.domain = "";
-			apiServices.updateCommunityLangs(oRequestObject).then((e) => {
-	  			console.log(e);
-	  		});
+			if(e.removedValue.value !== 'en_US'){
+				this.setState({ [name]:selectedOption });
+				oRequestObject.locale_lang = e.removedValue.value;
+				oRequestObject.deleteFlag = "true";
+				oRequestObject.domain = "";
+				apiServices.updateCommunityLangs(oRequestObject).then((e) => {
+					  console.log(e);
+				  });
+			}else{
+				swal("Cannot Delete Defualt Language!", {
+					icon: "error",
+				});
+			}
+			
 		}
   	}
 	
