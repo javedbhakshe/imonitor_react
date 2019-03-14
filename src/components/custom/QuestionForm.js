@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
-import {aQuestionType}  from '../../data/config';
+import {aQuestionType,aUserType}  from '../../data/config';
 import _ from 'lodash';
 
 class QuestionForm extends Component {
@@ -41,7 +41,10 @@ class QuestionForm extends Component {
         let oTemp = {};
         for(let i in this.aLanguageList){
             let sProp = this.aLanguageList[i].locale;
-            oTemp[sProp] = {mendatory: '',name:'',nominal:'',type:aQuestionType[0], dependent:{value:"", label:"Please Select"}};
+            oTemp[sProp] =  {   
+                /*mandatory: false,*/ name:'',nominal:'',
+                type:aQuestionType[0]
+            };
         }
         if(p_isSet){
             this.setState({
@@ -49,6 +52,8 @@ class QuestionForm extends Component {
                 formValid:false,
                 editMode:false,
                 errorClass:{title:'',type:''},
+                mandatory:false,
+                userType:aUserType,
                 data:oTemp
             });
         }else{
@@ -57,6 +62,8 @@ class QuestionForm extends Component {
                 formValid:false,
                 editMode:false,
                 errorClass:{title:'',type:''},
+                mandatory:false,
+                userType:aUserType,
                 data:oTemp
             };
         }
@@ -67,10 +74,11 @@ class QuestionForm extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         console.log(this.state.editMode);
+        let oQuestionConfig = {isMandatory:this.state.mandatory,userType:this.state.userType};
         if(this.state.editMode){
-            this.props.editQuestionData(this.state.data);
+            this.props.editQuestionData(this.state.data,oQuestionConfig);
         }else {
-            this.props.getQuestionData(this.state.data)
+            this.props.addQuestionData(this.state.data,oQuestionConfig);
         }
         this.initializeState(true);
     }
@@ -89,7 +97,7 @@ class QuestionForm extends Component {
     handleInputChange = (e) =>{
 
         let sLang = e.target.dataset['lang'],
-            {value,name,checked} = e.target,
+            {value,name} = e.target,
             oError = {title:'',type:''},
             bFormValid = true;
 
@@ -103,19 +111,22 @@ class QuestionForm extends Component {
 
         this.setState(prevState => {
             let {data} = prevState;
-            if(name == 'mendatory'){
-                for(let i in data){
-                    data[i]['mendatory'] = checked; 
-                } 
-            }else{
-                data[sLang][name] = value;
-            }
+            
+            data[sLang][name] = value;
            
             return{
                 data:data,
                 errorClass:oError,
                 formValid:bFormValid
             }  
+        });
+    }
+
+    handleCheckBox = (e) => {
+        console.log(e.target);
+        let { checked } = e.target;
+        this.setState({
+            mandatory:checked
         });
     }
 
@@ -140,27 +151,10 @@ class QuestionForm extends Component {
 
 
     getTabConents = (e) => {
-    
-        let dependentQuestionList = [];
-        if(!_.isEmpty(this.props.listItems)){
-            dependentQuestionList = this.props.listItems.map(({en_data}, index) => {
-                return {value:index, label:en_data.name}
-            });
-            dependentQuestionList.unshift({value:"", label:"Please Select"});
-        }
 
         return this.aLanguageList.map((ele,ind) => {
-            const {value} = this.state.data[ele.locale]['type'];
             return (
                 <div className={`tab-pane ${ind === 0 ? 'active' : ''}`} id={`tab-${ind}`} key={ind} role="tabpanel">
-                   <div className="form-group float-right">                        
-                        <div className="form-check form-check-inline mr-1">
-                            <input className="form-check-input" id = {`mendatory_${ele.locale}`} data-lang={ele.locale} onChange = {this.handleInputChange} name="mendatory" 
-                            type="checkbox"
-                            checked = {this.state.data[ele.locale]['mendatory']}  />
-                            <label className="form-check-label" >Mandatory</label>
-                        </div>
-                    </div>
                     <div className="form-group">
                         <label htmlFor={`name_${ele.locale}`} className="col-form-label">Attribute Name</label>
                         <div className="input-group">
@@ -244,7 +238,7 @@ class QuestionForm extends Component {
         });
     }
     
-    showForm = (p_data) => {    
+    showForm = (p_data,p_isMand,p_userType) => {    
         
         this.setState(prevState => {
             let {value} = p_data['en_US']['type'],
@@ -253,7 +247,9 @@ class QuestionForm extends Component {
             return {
                 data:p_data,
                 showNomial:bFlag,
-                editMode:true
+                editMode:true,
+                mandatory:p_isMand,
+                userType:p_userType
             }
         });
 
@@ -274,11 +270,37 @@ class QuestionForm extends Component {
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
+                    <div className="form-group">                        
+                        <div className="form-check form-check-inline">
+                            <input className="form-check-input" id = "mandatory_checkbox"
+                                onChange = {this.handleCheckBox} 
+                                name = "mandatory" 
+                                type = "checkbox"
+                                checked = {this.state.mandatory} 
+                            />
+                            <label htmlFor="mandatory_checkbox" className="form-check-label" >Mandatory</label>
+                        </div>
+                    </div>
+
                     <ul className="nav nav-tabs" role="tablist">
                         {this.getTabList()}
                     </ul>
                     <div className="tab-content">
                         {this.getTabConents()}
+                    </div>
+                    <div className="form-group">
+                        <label className="col-form-label">User Type : </label>
+                        <div className="input-group">
+                            <Select
+                                name="usertype"
+                                options={aUserType}
+                                className="form-control p-0 mb-3"
+                                defaultValue = {aUserType[0]}
+                                onChange={e => this.setState({userType:e})}
+                                isMulti = {true}
+                                value={this.state.userType}
+                            />
+                        </div>
                     </div>
                     <div className="text-center card-footer">
                         <button type="submit" className="mr-3 btn btn-primary btn-sm" 

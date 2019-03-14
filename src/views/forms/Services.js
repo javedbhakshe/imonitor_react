@@ -94,9 +94,9 @@ class Services extends Component{
 		return aWholeData;
 	}
 
-	addQuestion = (p_data) => {
+	addQuestion = (p_data,{isMandatory,userType}) => {
 		let {bIsCurServiceLinked , nCurrentActiveService, nCurrentLinkedService,nCurrentActiveQuestion} = this.state,
-			oQuestionObj = {en_data:p_data['en_US'],whole_data:p_data};
+			oQuestionObj = {en_data:p_data['en_US'],whole_data:p_data,isMandatory:isMandatory,userType:userType};
 		
 
 		this.setState( prevState =>  {
@@ -118,9 +118,9 @@ class Services extends Component{
 		});
 	}
 
-	editQuestion = (p_data) => {
+	editQuestion = (p_data,{isMandatory,userType}) => {
 		let {bIsCurServiceLinked , nCurrentActiveService, nCurrentLinkedService,nCurrentActiveQuestion} = this.state,
-			oQuestionObj = {en_data:p_data['en_US'],whole_data:p_data};
+			oQuestionObj = {en_data:p_data['en_US'],whole_data:p_data,isMandatory:isMandatory,userType:userType};
 		
 
 		this.setState( prevState =>  {
@@ -235,6 +235,7 @@ class Services extends Component{
 		let oCurrent = Object.assign({},this.state.oWholeData[index]),
 			bLinked = islinked === 'true';
 
+		console.log(oCurrent);
 		if(!bLinked){
 			this.refs.Modal.onListEdit(oCurrent);
 		}else{
@@ -268,7 +269,7 @@ class Services extends Component{
 		}
 
 		console.log(oCurrent);
-		this.refs.EditableForm.showForm(oCurrent.whole_data);
+		this.refs.EditableForm.showForm(oCurrent.whole_data,oCurrent.isMandatory,oCurrent.userType);
 		/*  */
 	}
 
@@ -364,9 +365,9 @@ class Services extends Component{
 	}
 
 	render(){
-		// console.clear();
-		// console.log(this.state.services);
-		// console.log(this.state.oWholeData);
+		/*console.clear();
+		console.log(this.state.services);
+		console.log(this.state.oWholeData);*/
 		const oSelectedList = {
 			linked:this.state.bIsCurServiceLinked,
 			active:this.state.nCurrentActiveService,
@@ -403,12 +404,12 @@ class Services extends Component{
 					               <div className="card-header"> 
 					               		Questions
            							  	{/*<div className="float-right">
-           							  	          								  			<button type="button" className="btn btn-primary btn-sm" 
-           							  	          								  				onClick = {this.updateQuestionList}
-           							  	          							  				>
-           							  	          								  				<i className="fa fa-plus"></i> Add Question
-           							  	          								  			</button>
-           							  	          									  	</div>*/}          
+  								  			<button type="button" className="btn btn-primary btn-sm" 
+  								  				onClick = {this.updateQuestionList}
+  							  				>
+  								  				<i className="fa fa-plus"></i> Add Question
+  								  			</button>
+  									  	</div>*/}          
 
 				              		</div>
 				              		<div className="card-body"> 
@@ -430,7 +431,7 @@ class Services extends Component{
 				              		<div className="card-body">
 										  <QuestionForm ref='EditableForm'
 										  	listItems = {this.getCurrentServiceQuestions()}
-	                  						getQuestionData = {this.addQuestion}
+	                  						addQuestionData = {this.addQuestion}
 	                  						editQuestionData = {this.editQuestion} 
 	              						/>	
 				              		</div>

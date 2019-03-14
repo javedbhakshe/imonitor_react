@@ -424,6 +424,11 @@ const aQuestionType = [
 	{value:"Checkbox", label:"Checkbox"}	
 ];
 
+const aUserType = [
+	{value:"WHO_USER", label:"WHO_USER"},	
+	{value:"WHO_VOLUNTEER", label:"WHO_VOLUNTEER"}	
+];
+
 export {
   	aCommunityType,
   	aCommunityLanguages,
@@ -431,6 +436,7 @@ export {
 	aCommunitySections,
   	aServiceType,
 	nearmeType,
-	aQuestionType  
+	aQuestionType,
+  	aUserType
 };
 
