@@ -248,6 +248,7 @@ class QuestionForm extends Component {
                 data:p_data,
                 showNomial:bFlag,
                 editMode:true,
+                formValid:true,
                 mandatory:p_isMand,
                 userType:p_userType
             }

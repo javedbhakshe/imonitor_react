@@ -182,7 +182,6 @@ class ServicesModal extends Component{
 		let {bEdit} = this.state,
 			oCurrent = Object.assign({}, this.state.data);
 
-
 		if(bEdit){
 	  		this.props.editservicedata(oCurrent,this.state.serviceType);
 		}else{

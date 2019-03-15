@@ -230,12 +230,11 @@ class Services extends Component{
 		}
 	}
 
-	onListItemEdit = ({index,islinked,linkedindex}) => {
+	onListItemEdit = ({index,islinked,linkedindex = 0}) => {
 
 		let oCurrent = Object.assign({},this.state.oWholeData[index]),
 			bLinked = islinked === 'true';
 
-		console.log(oCurrent);
 		if(!bLinked){
 			this.refs.Modal.onListEdit(oCurrent);
 		}else{

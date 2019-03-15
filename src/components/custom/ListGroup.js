@@ -20,11 +20,14 @@ const ListGroup = (props) => {
 						title="Delete Content">
 						
 				</button>
-				<button className="btn btn-sm btn-custom float-right fa fa-pencil" 
-					type="button" 
-					title="Edit Content" 
-					onClick={e => HandleEdit(e)}>
-				</button>
+				{
+					!p_bool && 
+					<button className="btn btn-sm btn-custom float-right fa fa-pencil" 
+						type="button" 
+						title="Edit Content" 
+						onClick={e => HandleEdit(e)}>
+					</button>
+				}
 			</li>
 		)
 	}
@@ -42,8 +45,15 @@ const ListGroup = (props) => {
 				return (
 					<li className="list-group-item p-0" key={ind} onClick={e => onClickHandle(e)} 
 						data-index={ind} data-islinked={ele.linked} >
-						<div className="linked-service-name m-2">
-							{ele.data.name}
+						<div className="m-2" data-index={ind} data-islinked={ele.linked}>
+							<span className="linked-service-name">
+								{ele.data.name}
+							</span>
+							<button className="btn btn-sm btn-custom float-right fa fa-pencil" 
+								type="button" 
+								title="Edit Content" 
+								onClick={e => HandleEdit(e)}>
+							</button>
 						</div>
 						<ul className="list-group-item p-0">
 							{aLinkedItems}
