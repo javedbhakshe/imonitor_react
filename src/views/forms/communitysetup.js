@@ -151,7 +151,7 @@ class CommunitySetUp extends Component{
 					  console.log(e);
 				  });
 			}else{
-				swal("Cannot Delete Defualt Language!", {
+				swal("Cannot Delete Default Language!", {
 					icon: "error",
 				});
 			}

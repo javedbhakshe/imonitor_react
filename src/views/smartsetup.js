@@ -96,6 +96,19 @@ class SmartSetup extends Component{
 						    	</a>
 						  		<div className="nav-arrow"></div>
 						  	</li>
+							<li className={`nav-item ${classnames({ active: this.state.activeTab === 'survey-tab' })}`}>
+						     	<div className="nav-wedge"></div>
+							    <a className="nav-link ssup" 
+						    		id="survey-tab" data-toggle="tab" 
+						    		href="#survey" role="tab" 
+						    		aria-controls="survey" 
+						    		aria-selected="false"
+						    		onClick={() => { this.toggle('survey-tab')}}
+						    	>
+						    	Survey
+						    	</a>
+						  		<div className="nav-arrow"></div>
+						  	</li>
 						  	<li className={`nav-item ${classnames({ active: this.state.activeTab === 'nearme-tab' })}`}>
 						    	<div className="nav-wedge"></div>
 						    	<a className="nav-link ssup" 
@@ -151,12 +164,15 @@ class SmartSetup extends Component{
 							<div className="tab-pane fade" id="service" role="tabpanel" aria-labelledby="service-tab">
 							  <Services configTab={this.toggleActive} />
 						  	</div>
+							<div className="tab-pane fade" id="survey" role="tabpanel" aria-labelledby="survey-tab">
+							  <Services configTab={this.toggleActive} />
+						  	</div>
 						  	<div className="tab-pane fade" id="nearme" role="tabpanel" aria-labelledby="nearme-tab">
 						  		<Nearme configTab={this.toggleActive} />
 						  	</div>
-							  <div className="tab-pane fade" id="translation" role="tabpanel" aria-labelledby="translation-tab">
+							{/* <div className="tab-pane fade" id="translation" role="tabpanel" aria-labelledby="translation-tab">
 						  		<Translation />
-						  	</div>
+						  	</div> */}
 						  	<div className="tab-pane fade" id="finish" role="tabpanel" aria-labelledby="finish-tab">
 						  		<Finish />
 						  	</div>

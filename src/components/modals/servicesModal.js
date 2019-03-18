@@ -31,7 +31,25 @@ class ServicesModal extends Component{
 
 		this.aLanguageList = aLanguageList; 
 		this.intializeModalState();
-  	}
+	  }
+	  
+	  componentWillUpdate =() =>{
+		const community = JSON.parse(localStorage.getItem('community')),
+	    	uuid = community.community.uuid,
+	    	aLanguageList = community.uuidLocales[uuid] ? community.uuidLocales[uuid] : [];
+
+		for(let i in aLanguageList){
+			if(aLanguageList[i].locale === 'en_US'){
+				let oEle = aLanguageList.splice(i,1)[0];
+				aLanguageList.unshift(oEle);
+				break;
+			}
+		}
+
+		this.aLanguageList = aLanguageList; 
+		this.intializeModalState();
+
+	}
 
   	intializeModalState = (p_isSet) => {
   		let oTemp = {};

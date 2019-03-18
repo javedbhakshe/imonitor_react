@@ -49,8 +49,8 @@ class Nearme extends Component{
         }        
         let communityBO = JSON.parse(localStorage.getItem('community'));			
         let requestOptions =  {
-            latitude: this.state.latitude ? this.state.latitude : 19.0760,
-            longitude: this.state.longitude ? this.state.longitude : 72.8777,
+            // latitude: this.state.latitude ? this.state.latitude : 19.0760,
+            // longitude: this.state.longitude ? this.state.longitude : 72.8777,
             uuid:communityBO.community.uuid,
             limit:1000
         }
