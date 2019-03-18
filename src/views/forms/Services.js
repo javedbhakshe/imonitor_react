@@ -5,6 +5,7 @@ import ListGroup from '../../components/custom/ListGroup';
 import QuestionForm from '../../components/custom/QuestionForm';
 import EditableList from '../../components/custom/EditableList';
 import { apiServices } from '../../services/apiServices';
+import Loader from '../../components/loaders/loader';
 import _ from 'lodash';
 import swal from 'sweetalert';
 
@@ -17,13 +18,15 @@ class Services extends Component{
 		nCurrentActiveQuestion: -1,
 		nCurrentLinkedService : -1,
 		bIsCurServiceLinked : false, 
+		isLoading : false
 		
 	}
 
 	componentDidMount(){
 		let communityBO = localStorage.getItem('community');
 		let community = JSON.parse(communityBO);
-		let communityPreferenceBOs = community.communityPreferenceBOs;		
+		let typeValue = this.props.serviceType;
+		let communityPreferenceBOs = typeValue == 'Service' ? community.communityPreferenceBOs : community.communitySurveyBOs;		
 		if(!_.isEmpty(communityPreferenceBOs)){
 			let dataObj = JSON.parse(communityPreferenceBOs[0].communityPreferences.summary);
 			this.setState({oWholeData:dataObj.oWholeData, services:dataObj.services});			
@@ -318,20 +321,22 @@ class Services extends Component{
 		if(this.state.oWholeData.length > 0){
 			this.setState({isLoading : true});   
 			let communityBO = JSON.parse(localStorage.getItem('community'));
+			let typeValue = this.props.serviceType;
+			let commuityReferenceBO = typeValue == 'Service' ? communityBO.communityPreferenceBOs : communityBO.communitySurveyBOs;
 			let uuid = communityBO.community.uuid;
 			let requestOptions = {};
 			let dataObj = {
 				'services':this.state.services,
 				'oWholeData':this.state.oWholeData
 			}
-			if(!_.isEmpty(communityBO.communityPreferenceBOs))  {
-				communityBO.communityPreferenceBOs[0]['communityPreferences']['summary'] = JSON.stringify(dataObj);
-				requestOptions = communityBO.communityPreferenceBOs[0];
+			if(!_.isEmpty(commuityReferenceBO))  {
+				commuityReferenceBO[0]['communityPreferences']['summary'] = JSON.stringify(dataObj);
+				requestOptions = commuityReferenceBO[0];
 			}else{				
 				requestOptions = { 
 					communityPreferences: {
-						type:"Service",
-						code:"Service",
+						type:typeValue,
+						code:typeValue,
 						active:"Y",
 						summary:JSON.stringify(dataObj)
 					} 
@@ -345,13 +350,14 @@ class Services extends Component{
 			  }  
 			  if(response.status === "SUCCESS"){
 				//   that.props.community(response.community);
-				if(_.isEmpty(communityBO.communityPreferenceBOs)){
-					communityBO.communityPreferenceBOs.push(response);
+				if(_.isEmpty(commuityReferenceBO)){
+					commuityReferenceBO.push(response);
 				} else{
-					communityBO.communityPreferenceBOs[0] = response;
+					commuityReferenceBO[0] = response;
 				}
 				localStorage.setItem('community', JSON.stringify(communityBO));
-				that.props.configTab('nearme-tab');
+				let confTab = typeValue == 'Service' ? 'survey-tab' : 'nearme-tab' ;
+				that.props.configTab(confTab);
 				  
 			  }          
 			});
@@ -374,12 +380,14 @@ class Services extends Component{
 
 		return(
 			<div className="card">
+			<Loader isLoading={this.state.isLoading}/>
 				<div className="row">
 		          	<div className="col-12">
 			            <ServicesModal 
 		            		ref="Modal"
 			            	addServicedata = {this.addService}
-			            	editservicedata = {this.editService}
+							editservicedata = {this.editService}
+							serviceType = {this.props.serviceType}
 		            	/>
 		          	</div>
 		        </div>

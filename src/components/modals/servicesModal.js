@@ -251,13 +251,13 @@ class ServicesModal extends Component{
 	render(){
 		return(
 			<div className="mb-2">
-			 	<Button className="btn btn-light survey-btn" color="primary" onClick={this.toggle}>Add Services</Button>
+			 	<Button className="btn btn-light survey-btn" color="primary" onClick={this.toggle}>Add {this.props.serviceType}</Button>
 				<Modal isOpen={this.state.modal} toggle={this.toggle} className="modal-lg" onOpened={this.onModalOpen} 
 						onClosed = {this.onModalClose}
 						>
-		          	<ModalHeader toggle={this.onClose}>Service</ModalHeader>
+		          	<ModalHeader toggle={this.onClose}>{this.props.serviceType}</ModalHeader>
 	          		<ModalBody>
-	          			<label className="control-label">Service Type : </label>
+	          			<label className="control-label">{this.props.serviceType} Type : </label>
 	          			<Select
 	          				className='mb-2'
 					        name="serviceType"
@@ -267,7 +267,7 @@ class ServicesModal extends Component{
 					        value={this.state.serviceType}
 					        isDisabled = {this.state.bEdit}
 				      	/>
-				      	<label className="control-label">Service Details : </label>
+				      	<label className="control-label">{this.props.serviceType} Details : </label>
 	          		  	<form onSubmit={this.handleSubmit}>
 				          	<ul className="nav nav-tabs" role="tablist">
 								{this.getTabList()}
