@@ -31,7 +31,6 @@ class Services extends Component{
 	}
 
 	addService = (p_oData,p_type,p_bEdit) => {
-		
 		let oService = {};
 		oService.data = p_oData['en_US'];
 		oService.questions = [];
@@ -46,7 +45,11 @@ class Services extends Component{
 			oService.linkedServices = this.makeLinkedService(aLinkedservices);
 			/* Whole Data  */	
 			let aWhole = this.makeWholeData(p_oData,aLinkedservices),
-				oWhole = {data : aWhole,linked:oService.linked,serviceType:p_type,linkedServices:sLinkedservices};
+				oWhole = {
+					data : aWhole,linked:oService.linked,
+					serviceType:p_type,linkedServices:sLinkedservices,
+					editable:p_oData
+				};
 
 			/*  */
 			this.storeServiceData(oService,oWhole,oService.linked);
@@ -62,8 +65,10 @@ class Services extends Component{
 	}
 
 	editService = (p_data) =>{
+		console.log(' ===== Edit Module....');
 		console.log(p_data);
-		console.log('Edit Module....');
+		console.log(this.state);
+
 	}
 
 	updateSeletedService = ({index, islinked, linkedindex}) => {
@@ -81,14 +86,14 @@ class Services extends Component{
 
 	makeWholeData = (p_data,p_arr) => {
 		let i,aWholeData = [];
-
 		for(i in p_arr){
 			let oTemp ={};
 			for(let j in p_data){
-				p_data[j]['linked-service'] = p_data[j]['linked-service'] ? p_data[j]['linked-service'] : 'Unknown';
-				oTemp[j] = {name : p_data[j]['linked-service'].split(',')[i]}
+				let sName = p_data[j]['linked-service'].split(',')[i] ? p_data[j]['linked-service'].split(',')[i] : '';
+				oTemp[j] = {name : sName}
 			}
 			oTemp.questions = [];
+			oTemp.data = 
 			aWholeData.push(oTemp);			
 		}
 		return aWholeData;
@@ -234,13 +239,8 @@ class Services extends Component{
 
 		let oCurrent = Object.assign({},this.state.oWholeData[index]),
 			bLinked = islinked === 'true';
-
-		if(!bLinked){
-			this.refs.Modal.onListEdit(oCurrent);
-		}else{
-			console.log(oCurrent);
-			console.log('Edit Linked Service...');
-		}
+		
+		this.refs.Modal.onListEdit(oCurrent);
 		
 
 		this.setState({
@@ -267,7 +267,6 @@ class Services extends Component{
 			oCurrent = services[nCurrentActiveService].questions[index];
 		}
 
-		console.log(oCurrent);
 		this.refs.EditableForm.showForm(oCurrent.whole_data,oCurrent.isMandatory,oCurrent.userType);
 		/*  */
 	}

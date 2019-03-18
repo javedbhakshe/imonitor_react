@@ -145,14 +145,30 @@ class ServicesModal extends Component{
   	}
 
   	onListEdit = (p_data) => {
-	    let {data,serviceType} = p_data;
-	    console.log(data);
-	    this.setState({
+	    let {data,serviceType,linked} = p_data;
+	    if(linked){
+	    	data = p_data.editable;
+	    }
+
+	    console.log(serviceType);
+
+	    /*this.setState({
 	    	data:data,
 	    	serviceType : serviceType,
 	      	modal: !this.state.modal,
-	      	bEdit:true
-	    });
+	      	bEdit:true,
+	      	formValid:true
+	    });*/
+
+	    this.setState(prevState => {
+	    	return{
+	    		data:data,
+		    	serviceType : serviceType,
+		      	modal: !this.state.modal,
+		      	bEdit:true,
+		      	formValid:true
+	    	}
+	    })
   	}	
 	  
 	handleUserInput = (e) => {
@@ -214,9 +230,17 @@ class ServicesModal extends Component{
   	}
 
   	onModalOpen = () =>{
-  		this.setState({
-			serviceType:aServiceType[0]
-  		})
+  		this.setState(prevState => {
+  			let {bEdit} = prevState,
+  				oVal = aServiceType[0];
+
+  			if(bEdit){
+  				oVal = prevState.serviceType;
+  			}
+  			return{
+				serviceType:oVal
+  			}
+  		});
   	}
 
   	onModalClose = () =>{
