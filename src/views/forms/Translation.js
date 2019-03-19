@@ -1,15 +1,22 @@
 import React, { Component } from 'react';
 import { apiServices } from '../../services/apiServices';
+import TranslationModal from '../../components/modals/TranslationModal';
 import _ from 'lodash';
+
 
 class Translation extends Component{
 
     state = {
         languageList: [],
-        languageData: {}
+        languageData: {},
+        editData : {}
     }
 
-    async componentDidMount(){
+    componentDidMount(){
+        this.loadData();
+    }
+
+    loadData = async () => {
         let communityBO = JSON.parse(localStorage.getItem('community'));
         let uuid = communityBO.community.uuid;
         let languageList = communityBO.uuidLocales[uuid] ? communityBO.uuidLocales[uuid] : [];
@@ -21,7 +28,7 @@ class Translation extends Component{
             languageListObj[[value.locale]] = value;
         }));
 
-        this.setState({languageList:languageListObj, languageData});
+        this.setState({languageList:languageListObj, languageData, editData : {}});
     }
     
     renderLanguageData = (label) => {
@@ -31,6 +38,22 @@ class Translation extends Component{
             )
         })
     }
+
+    editTranslation = (label) => {
+        let transData = {};
+        for (let i in this.state.languageData) {
+            let transVal = this.state.languageData[i];
+            transData[i] = !_.isEmpty(transVal.lbl) ? transVal.lbl[label] : ''
+        }      
+        
+        let editData = {
+            field:label,
+            languageData:transData
+        }
+
+        this.setState({editData});
+        console.log(transData);
+    }
    
 
     render(){
@@ -38,6 +61,7 @@ class Translation extends Component{
         let englishLable = !_.isEmpty(this.state.languageData['en_US']) ? (this.state.languageData['en_US'].lbl ? this.state.languageData['en_US'].lbl : {}) : {};
         return (
         <div>
+            <TranslationModal loadTranslation={ this.loadData} formData={this.state.editData}/>
             <table className="table table-bordered">
                 <thead className="thead-dark">
                     <tr> 
@@ -59,7 +83,7 @@ class Translation extends Component{
                             return <tr key={key}>
                                 <th scope="row">{key}</th>
                                 {that.renderLanguageData(key)}  
-                                <th scope="col"><button className="btn btn-sm btn-custom badge-success" ><span className="fa fa-pencil" aria-hidden="true"></span> Edit</button>
+                                <th scope="col"><button className="btn btn-sm btn-custom badge-success" onClick={ () => this.editTranslation(key)} ><span className="fa fa-pencil" aria-hidden="true"></span> Edit</button>
                         </th>                                                   
                             </tr>
                         }) 

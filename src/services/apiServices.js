@@ -17,7 +17,8 @@ export const apiServices = {
     updateCommunityLangs,
     addNearme,    
     nearmeList,
-    translation
+    translation,
+    addTranslation
 };
 
 function login(requestObject) {
@@ -184,6 +185,26 @@ function nearmeList(requestObject){
     };
    
     return fetch(`${apiUrl}/creative/nearme/load.json`, requestOptions)
+    .then(handleResponse)
+    .then(data => {
+        // login successful if there's a jwt token in the response
+        if (data.status === 'SUCCESS') {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            console.log('Updated ');
+        }
+
+        return data;
+    });
+}
+
+function addTranslation(requestObject){
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(requestObject)
+    };
+   
+    return fetch(`${apiUrl}/creative/translations/save.json`, requestOptions)
     .then(handleResponse)
     .then(data => {
         // login successful if there's a jwt token in the response

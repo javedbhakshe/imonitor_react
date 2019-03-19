@@ -123,7 +123,7 @@ class SmartSetup extends Component{
 						    	</a>
 						    	<div className="nav-arrow"></div>
 						  	</li>
-							{/* <li className={`nav-item ${classnames({ active: this.state.activeTab === 'translation-tab' })}`}>
+							<li className={`nav-item ${classnames({ active: this.state.activeTab === 'translation-tab' })}`}>
 						    	<div className="nav-wedge"></div>
 						    	<a className="nav-link ssup" 
 							    	id="translation-tab" 
@@ -136,7 +136,7 @@ class SmartSetup extends Component{
 							    	Translation
 						    	</a>
 						    	<div className="nav-arrow"></div>
-						  	</li> */}
+						  	</li>
 						  	<li className={`nav-item ${classnames({ active: this.state.activeTab === 'finish-tab' })}`}>
 						     	<div className="nav-wedge"></div>
 							    <a className="nav-link ssup" 
@@ -170,9 +170,9 @@ class SmartSetup extends Component{
 						  	<div className="tab-pane fade" id="nearme" role="tabpanel" aria-labelledby="nearme-tab">
 						  		<Nearme configTab={this.toggleActive} />
 						  	</div>
-							{/* <div className="tab-pane fade" id="translation" role="tabpanel" aria-labelledby="translation-tab">
+							<div className="tab-pane fade" id="translation" role="tabpanel" aria-labelledby="translation-tab">
 						  		<Translation />
-						  	</div> */}
+						  	</div>
 						  	<div className="tab-pane fade" id="finish" role="tabpanel" aria-labelledby="finish-tab">
 						  		<Finish />
 						  	</div>
