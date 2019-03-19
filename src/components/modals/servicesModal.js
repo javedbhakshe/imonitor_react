@@ -7,16 +7,6 @@ class ServicesModal extends Component{
 
  	constructor(props) {
 	    super(props);
-	    /*this.state = {
-	      	modal: false,
-	      	bEdit:false,
-		  	serviceType:aServiceType[0],
-		  	formErrors: {title: '', description: ''},    
-		  	titleValid: false,
-		  	formValid: false,
-		  	data:{}  
-	    };*/
-
 	    const community = JSON.parse(localStorage.getItem('community')),
 	    	uuid = community.community.uuid,
 	    	aLanguageList = community.uuidLocales[uuid] ? community.uuidLocales[uuid] : [];
@@ -29,11 +19,27 @@ class ServicesModal extends Component{
 			}
 		}
 
-		this.aLanguageList = aLanguageList; 
-		this.intializeModalState();
+		this.aLanguageList = aLanguageList;
+
+		let oTemp = {};
+  		for(let i in this.aLanguageList){
+            let sProp = this.aLanguageList[i].locale;
+            oTemp[sProp] = {name:'','linked-service':'',description:''};
+        }
+
+     	this.state = {
+        	modal: false,
+	      	bEdit:false,
+		  	serviceType:aServiceType[0],
+		  	formErrors: {title: '', description: ''}, 
+		  	formValid: false,
+		  	data:oTemp
+        };
 	  }
 	  
-	  componentWillUpdate =() =>{
+
+  	/*componentWillUpdate =() =>{
+	  	
 		const community = JSON.parse(localStorage.getItem('community')),
 	    	uuid = community.community.uuid,
 	    	aLanguageList = community.uuidLocales[uuid] ? community.uuidLocales[uuid] : [];
@@ -47,9 +53,7 @@ class ServicesModal extends Component{
 		}
 
 		this.aLanguageList = aLanguageList; 
-		this.intializeModalState();
-
-	}
+	}*/
 
   	intializeModalState = (p_isSet) => {
   		let oTemp = {};
@@ -57,27 +61,15 @@ class ServicesModal extends Component{
             let sProp = this.aLanguageList[i].locale;
             oTemp[sProp] = {name:'','linked-service':'',description:''};
         }
-        if(p_isSet){
-        	this.setState ({
-        		modal: false,
-		      	bEdit:false,
-			  	serviceType:aServiceType[0],
-			  	formErrors: {title: '', description: ''},    
-			  	titleValid: false,
-			  	formValid: false,
-			  	data:oTemp
-        	});
-        }else{
-	        this.state = {
-	        	modal: false,
-		      	bEdit:false,
-			  	serviceType:aServiceType[0],
-			  	formErrors: {title: '', description: ''},    
-			  	titleValid: false,
-			  	formValid: false,
-			  	data:oTemp
-	        };
-        }
+
+        this.setState({
+    		modal: false,
+	      	bEdit:false,
+		  	serviceType:aServiceType[0],
+		  	formErrors: {title: '', description: ''},  
+		  	formValid: false,
+		  	data:oTemp
+    	});
   	}
 
   	getTabList = () => {
@@ -177,32 +169,25 @@ class ServicesModal extends Component{
 			{lang} = e.target.dataset;
 
 		
-		this.validateField(id, value)
 
 		this.setState(prevState => {
 			let {data} = prevState;
 			data[lang][name] = value;
 			return {data}
 		});
+		this.validateField();
 	
 	}
 
-	validateField = (fieldID, value) => {
-        let fieldValidationErrors = this.state.formErrors;
-        let titleValid = this.state.titleValid;
-       
-        switch(fieldID) {
-            case 'name-en_US':
-                titleValid = value.length >= 1;
-                fieldValidationErrors.title = titleValid ? '' : 'English Title Should not be empty';
-                break;
-          
-            default:
-                break;
-        }
-        this.setState({formErrors: fieldValidationErrors,
-			titleValid: titleValid,
-			formValid: titleValid
+	validateField = () => {
+      	this.setState(prev => {
+      		let bFormValid = Boolean(prev.data['en_US'].name),
+      			oError = prev.formErrors;
+  		 	oError.title = bFormValid ? '' : 'English Title Should not be empty';
+      		return{
+      			formErrors: oError,
+				formValid: bFormValid
+      		}
       	});
 	}
 	

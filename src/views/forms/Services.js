@@ -33,10 +33,9 @@ class Services extends Component{
 		}
 	}
 
-	addService = (p_oData,p_type,p_bEdit) => {
+	addService = (p_oData,p_type) => {
 		let oService = {};
 		oService.data = p_oData['en_US'];
-		oService.questions = [];
 		oService.linked = p_type.value === 'Linked';
 		if(oService.linked){
 			let sLinkedservices = oService.data['linked-service'],
@@ -57,6 +56,7 @@ class Services extends Component{
 			/*  */
 			this.storeServiceData(oService,oWhole,oService.linked);
 		}else{
+			oService.questions = [];
 			let oWhole = {data:p_oData,linked:oService.linked,questions:[],serviceType:p_type};
 			this.storeServiceData(oService,oWhole,oService.linked);
 		}
@@ -67,11 +67,71 @@ class Services extends Component{
 		}
 	}
 
-	editService = (p_data) =>{
-		console.log(' ===== Edit Module....');
-		console.log(p_data);
-		console.log(this.state);
+	editService = (p_oData,p_type) =>{
+		let oService = {},
+			{services, oWholeData ,bIsCurServiceLinked , nCurrentActiveService, 
+				nCurrentLinkedService, nCurrentActiveQuestion } = this.state;
+		oService.data = p_oData['en_US'];
+		oService.linked = bIsCurServiceLinked;
+		if(bIsCurServiceLinked){
+			/*    */
+			let sLinkedservices = oService.data['linked-service'],
+				aLinkedservices = [],aPrevWholedata = oWholeData[nCurrentActiveService].data,
+				aPrevLinked = services[nCurrentActiveService].linkedServices;
+			if(!sLinkedservices){
+				sLinkedservices = oService.data['linked-service'] = 'Unknown';
+			}
+			aLinkedservices = sLinkedservices.split(',');
+			oService.linkedServices = this.makeLinkedService(aLinkedservices);
+			for(let s = 0; s < aPrevLinked.length; s++){
+				oService.linkedServices[s].questions = aPrevLinked[s].questions;
+			}
+			/* Whole Data  */	
+			let aWhole = this.makeWholeData(p_oData,aLinkedservices),
+				oWhole,j,nLen = aPrevWholedata.length;
 
+			for(j = 0;j < nLen;j++){
+				aWhole[j].questions = aPrevWholedata[j].questions;
+			}
+
+			oWhole = {
+				data : aWhole,linked:bIsCurServiceLinked,
+				serviceType:p_type,linkedServices:sLinkedservices,
+				editable:p_oData
+			}
+
+			this.setState( prevState => {
+				let aPrev = prevState.services,
+					aPrevWhole = prevState.oWholeData;
+
+				aPrev[nCurrentActiveService] = oService;
+				aPrevWhole[nCurrentActiveService] = oWhole;
+				return {
+					services:aPrev,
+					oWholeData:aPrevWhole,
+					nCurrentLinkedService:0,
+					nCurrentActiveQuestion:-1
+				}
+			});
+
+		}else {
+			oService.questions = services[nCurrentActiveService].questions;
+			let oWhole = {data:p_oData,linked:oService.linked,questions:oWholeData[nCurrentActiveService].questions,serviceType:p_type};
+			this.setState( prevState => {
+				let aPrev = prevState.services,
+					aPrevWhole = prevState.oWholeData;
+
+				aPrev[nCurrentActiveService] = oService;
+				aPrevWhole[nCurrentActiveService] = oWhole;
+				return {
+					services:aPrev,
+					oWholeData:aPrevWhole,
+					nCurrentLinkedService:-1,
+					nCurrentActiveQuestion:-1
+				}
+			});
+		}
+		this.refs.EditableForm.initializeState(true);
 	}
 
 	updateSeletedService = ({index, islinked, linkedindex}) => {
@@ -96,7 +156,6 @@ class Services extends Component{
 				oTemp[j] = {name : sName}
 			}
 			oTemp.questions = [];
-			oTemp.data = 
 			aWholeData.push(oTemp);			
 		}
 		return aWholeData;

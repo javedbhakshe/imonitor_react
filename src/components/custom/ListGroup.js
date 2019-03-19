@@ -72,7 +72,7 @@ const ListGroup = (props) => {
 		e.preventDefault();
 		e.stopPropagation();
 		let oDataSet = e.target.parentElement.dataset;
-		// props.onEdit(oDataSet);
+		props.onEdit(oDataSet);
 	}
 
 	const HandleDelete = (e) => {
