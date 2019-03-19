@@ -83,7 +83,11 @@ class TranslationModal extends Component {
       }
     
     handleShow = () => {
-    this.setState({ show: true });
+    this.setState({ 
+        show: true,
+        field : '',       
+        languageData : {}
+     });
     }
 
 
@@ -92,7 +96,7 @@ class TranslationModal extends Component {
             <div className="card">
                 <Loader isLoading={this.state.isLoading}/>
                 <Button className="btn btn-light survey-btn" color="primary" onClick={this.handleShow}>Add Translation</Button>
-				<Modal isOpen={this.state.show} className="modal-lg" onOpened={this.handleShow} onClosed = {this.handleClose} >
+				<Modal isOpen={this.state.show} className="modal-lg" >
 		          	<ModalHeader>Add Translations</ModalHeader>	          		
                     <form id="languageForm" onSubmit={this.handleSubmit}>                        
                         <ModalBody>                       
