@@ -59,6 +59,10 @@ class Translation extends Component{
         console.log(transData);
     }
 
+    closedEdit = () => {
+        this.setState({editData : {}});
+    }
+
     deleteTranslation = (label) => {
         var that = this;
         swal({
@@ -104,7 +108,7 @@ class Translation extends Component{
         return (
         <div>
              <Loader isLoading={this.state.isLoading}/>
-            <TranslationModal loadTranslation={ this.loadData} formData={this.state.editData}/>
+            <TranslationModal loadTranslation={ this.loadData} formData={this.state.editData} closedEdit={this.closedEdit}/>
             <table className="table table-bordered">
                 <thead className="thead-dark">
                     <tr> 

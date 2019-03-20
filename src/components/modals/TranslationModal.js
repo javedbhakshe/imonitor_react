@@ -80,6 +80,7 @@ class TranslationModal extends Component {
 
     handleClose = () => {
         this.setState({ show: false });
+        this.props.closedEdit();
       }
     
     handleShow = () => {
@@ -101,7 +102,7 @@ class TranslationModal extends Component {
                     <form id="languageForm" onSubmit={this.handleSubmit}>                        
                         <ModalBody>                       
                             <div className="form-group">
-                                <label>Field</label>
+                                <label>Label</label>
                                 <input type="text" name="field" className="form-control" onChange={this.handleUserInput}  placeholder="Enter Field" value={this.state.field} />
                                 <small id="fieldHelp" className="form-text text-muted">Field name used by mobile developer to show translated data .</small>
                             </div>

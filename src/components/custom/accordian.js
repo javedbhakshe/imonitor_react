@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import swal from 'sweetalert';
 import _ from 'lodash';
 
+const renderHTML = (rawHTML) => React.createElement("div", { dangerouslySetInnerHTML: { __html: rawHTML } });
+
 class Accordian extends Component {
 
     constructor(props){
@@ -88,7 +90,7 @@ class Accordian extends Component {
                     </h5>
                     </div>
                     <div className="collapse" id={"collapse"+index} role="tabpanel" aria-labelledby={"heading"+index} data-parent="#accordion">
-                    <div className="card-body">{item['en_US'].description}</div>
+                    <div className="card-body">{renderHTML(item['en_US'].description)}</div>
                         <div id="accordion1" className="accordDiv" role="tablist">
                             {secondLevel}
                         </div>
@@ -138,7 +140,7 @@ class Accordian extends Component {
                 </h5>
                 </div>
                 <div className="collapse" id={"collapse"+inx+index} role="tabpanel" aria-labelledby={"heading"+inx+index} data-parent="#accordion1">
-                <div className="card-body">{item['en_US'].description}</div>
+                <div className="card-body">{renderHTML(item['en_US'].description)}</div>
                     <div id="accordion2" className="accordDiv" role="tablist">
                         {nextLevel}
                     </div>
@@ -179,7 +181,7 @@ class Accordian extends Component {
                 </h5>
                 </div>
                 <div className="collapse" id={"collapse"+inx1+inx2+index} role="tabpanel" aria-labelledby={"heading"+inx1+inx2+index} data-parent="#accordion2">
-                <div className="card-body">{item['en_US'].description}</div>
+                <div className="card-body">{renderHTML(item['en_US'].description)}</div>
                     {/* <div id="accordion3" className="accordDiv" role="tablist">
                         {nextLevel}
                     </div> */}

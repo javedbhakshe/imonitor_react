@@ -425,8 +425,8 @@ const aQuestionType = [
 ];
 
 const aUserType = [
-	{value:"WHO_USER", label:"WHO_USER"},	
-	{value:"WHO_VOLUNTEER", label:"WHO_VOLUNTEER"}	
+	{value:"USER", label:"USER"},	
+	{value:"VOLUNTEER", label:"VOLUNTEER"}	
 ];
 
 const aMobileSections = [

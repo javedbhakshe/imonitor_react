@@ -4,8 +4,6 @@ import {NavLink} from 'react-router-dom';
 import Loader from '../components/loaders/loader';
 import swal from 'sweetalert';
 
-const renderHTML = (rawHTML) => React.createElement("div", { dangerouslySetInnerHTML: { __html: rawHTML } });
-
 class Register extends Component {
     constructor(props){
         super(props);
