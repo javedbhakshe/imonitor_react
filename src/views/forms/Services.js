@@ -86,14 +86,18 @@ class Services extends Component{
 			oService.linkedServices = this.makeLinkedService(aLinkedservices);
 			nPrenLen = oService.linkedServices.length;
 			for(s = 0; s < nPrenLen; s++){
-				oService.linkedServices[s].questions = aPrevLinked[s].questions;
+				if(aPrevLinked[s]){
+					oService.linkedServices[s].questions = aPrevLinked[s].questions;
+				}
 			}
 			/* Whole Data  */	
 			let aWhole = this.makeWholeData(p_oData,aLinkedservices),
 				oWhole,j,nLen = aWhole.length;
 
 			for(j = 0;j < nLen;j++){
-				aWhole[j].questions = aPrevWholedata[j].questions;
+				if(aPrevWholedata[j]){
+					aWhole[j].questions = aPrevWholedata[j].questions;
+				}
 			}
 
 			oWhole = {
@@ -248,9 +252,9 @@ class Services extends Component{
 		this.setState( prevState => {
 			let aPrev = prevState.services,
 				aPrevWhole = prevState.oWholeData,
-				nIndex , bLinked = false,nLinknedService;
+				nIndex , bLinked = (islinked === 'true'),nLinknedService;
 			
-			if(islinked === 'true'){
+			if(bLinked){
 
 				let nInd = index.split('~')[0] * 1;
 				aPrev[nInd].linkedServices.splice(linkedindex,1);
@@ -260,6 +264,15 @@ class Services extends Component{
 				}
 				/*  */
 				aPrevWhole[nInd].data.splice(linkedindex,1);
+				/*  Editable options */
+				/*let aLinkeddata = aPrevWhole[nInd].data,
+					i,nLen = aLinkeddata.length,aFinalLinks = [];
+				for(i = 0; i < nLen;i++){
+					aFinalLinks.push(aLinkeddata[i]['en_US'].name);
+				}
+				aPrevWhole[nInd].linkedServices = aFinalLinks.join(',');*/
+				/*  */
+				
 				if(aPrevWhole[nInd].data.length === 0){
 					aPrevWhole.splice(nInd,1);
 				}
@@ -306,7 +319,7 @@ class Services extends Component{
 		
 		this.refs.Modal.onListEdit(oCurrent);
 		
-
+		console.log(oCurrent);
 		this.setState({
 			nCurrentActiveService: index,
 			nCurrentActiveQuestion: 0,
@@ -368,7 +381,7 @@ class Services extends Component{
 		
 		let aCurrent = [],
 			{services,bIsCurServiceLinked , nCurrentActiveService, nCurrentLinkedService} = this.state;
-		
+
 		if(bIsCurServiceLinked){
 			aCurrent = services[nCurrentActiveService].linkedServices[nCurrentLinkedService].questions; 
 		}else{

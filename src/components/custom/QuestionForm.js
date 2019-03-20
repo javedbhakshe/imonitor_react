@@ -36,7 +36,6 @@ class QuestionForm extends Component {
         /*this.formRef = React.createRef();*/
 
         this.aLanguageList = aLanguageList;
-        console.log(aLanguageList);
         this.initializeState();
     }
 

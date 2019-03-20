@@ -142,16 +142,6 @@ class ServicesModal extends Component{
 	    	data = p_data.editable;
 	    }
 
-	    console.log(serviceType);
-
-	    /*this.setState({
-	    	data:data,
-	    	serviceType : serviceType,
-	      	modal: !this.state.modal,
-	      	bEdit:true,
-	      	formValid:true
-	    });*/
-
 	    this.setState(prevState => {
 	    	return{
 	    		data:data,

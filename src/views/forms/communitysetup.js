@@ -171,7 +171,6 @@ class CommunitySetUp extends Component{
   	}
 	
 	render(){
-		console.log(this.props);
 		return(			
 			<div className="card">
 			<Loader isLoading={this.state.isLoading}/>

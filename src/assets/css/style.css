@@ -649,7 +649,8 @@ h4.title{
 
 .linked-service-name, .service-name{
     display: inline-block;
-    width: 60%;
+    width: auto;
+    max-width: 60%;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -658,7 +659,8 @@ h4.title{
 
 .service-question-name{
   display: inline-block;
-  width: 80%;
+  width: auto;
+  max-width: 80%;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
