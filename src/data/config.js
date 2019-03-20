@@ -430,11 +430,12 @@ const aUserType = [
 ];
 
 const aMobileSections = [
-	{value:"Dashboard",label:"Dashboard"},
-	{value:"Inbox",label:"Inbox"},
-	{value:"Maps",label:"Maps"},
-	{value:"Analytics",label:"Analytics"},
-	{value:"Charts",label:"Charts"}
+	{value:"Information",label:"Information"},
+	{value:"Services",label:"Services"},
+	{value:"Survey",label:"Survey"},
+	{value:"Nearme",label:"Nearme"},
+	{value:"Reminder",label:"Reminder"},
+	{value:"Peer chat",label:"Peer chat"}
 ];
 
 export {
