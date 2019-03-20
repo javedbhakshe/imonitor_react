@@ -27,9 +27,10 @@ class SmartSetup extends Component{
 			if(this.props.community.key_value_pairs){
 				let oSections = JSON.parse(this.props.community.key_value_pairs),
 				aMenus = ['Setup'];
+				let dashboardData = oSections.dashboard;
 
-			for(let i in oSections){
-				aMenus.push(oSections[i].value);
+			for(let i in dashboardData){
+				aMenus.push(dashboardData[i].value);
 			}
 			this.props.testFn(aMenus);
 			}			

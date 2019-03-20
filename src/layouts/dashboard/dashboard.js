@@ -28,8 +28,9 @@ class DashBoard extends Component{
 			community = communityBO.community,oSections,aMenus = ['Setup'];
 		if(community.key_value_pairs){
 			oSections = JSON.parse(community.key_value_pairs);
-			for(let i in oSections){
-				aMenus.push(oSections[i].value);
+			let dashboardData = oSections.dashboard;
+			for(let i in dashboardData){
+				aMenus.push(dashboardData[i].value);
 			}
 		}
 		this.computeMenusList(aMenus);
