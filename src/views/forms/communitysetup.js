@@ -306,7 +306,7 @@ class CommunitySetUp extends Component{
 						 }}
 						  />
 					</div>
-					<div className="col-lg-12">
+					<div className="col-lg-6 col-md-6 col-sm-12">
 					    <div className="form-group">
 							<label className="control-label">Choose dashboard sections</label>
 							<Select
@@ -319,7 +319,7 @@ class CommunitySetUp extends Component{
 					      	/>
 						</div>
 					</div>
-					<div className="col-lg-12">
+					<div className="col-lg-6 col-md-6 col-sm-12">
 					    <div className="form-group">
 							<label className="control-label">Choose mobile sections</label>
 							<Select
