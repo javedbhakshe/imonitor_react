@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { apiServices } from '../../services/apiServices';
 import Loader from '../../components/loaders/loader';
 import { community } from '../../actions';
-import {aCommunityType, aCommunityLanguages, aCommCountries, aCommunitySections, aDahsboardSections}  from '../../data/config';
+import {aCommunityType, aCommunityLanguages, aCommCountries, aCommunitySections, aMobileSections}  from '../../data/config';
 import _ from 'lodash';
 import swal from 'sweetalert';
 
@@ -328,7 +328,7 @@ class CommunitySetUp extends Component{
 						        onChange={this.handleChange}
 						        value={this.state.mobileSections}
 						   		isMulti={true}
-						        options={aCommunitySections}
+						        options={aMobileSections}
 					      	/>
 						</div>
 					</div>

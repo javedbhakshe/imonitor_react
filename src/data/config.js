@@ -429,7 +429,7 @@ const aUserType = [
 	{value:"WHO_VOLUNTEER", label:"WHO_VOLUNTEER"}	
 ];
 
-const aDahsboardSections = [
+const aMobileSections = [
 	{value:"Dashboard",label:"Dashboard"},
 	{value:"Inbox",label:"Inbox"},
 	{value:"Maps",label:"Maps"},
@@ -445,6 +445,7 @@ export {
   	aServiceType,
 	nearmeType,
 	aQuestionType,
-  	aUserType
+  	aUserType,
+  	aMobileSections
 };
 
