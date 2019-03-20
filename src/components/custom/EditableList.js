@@ -14,7 +14,9 @@ const EditableList = (props) => {
 						onClick={e => handleClick(e)}
 						data-index={ind}
 						>
-						{en_data.name ? en_data.name : 'Unknown'}
+						<span className="service-question-name">
+							{en_data.name ? en_data.name : 'Unknown'}
+						</span>
 						<button className="btn btn-sm btn-custom float-right fa fa-trash" 
 								type="button"
 								onClick={e => handleDelete(e)} 

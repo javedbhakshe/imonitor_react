@@ -13,7 +13,7 @@ const ListGroup = (props) => {
 				data-islinked = {p_bool}
 				data-linkedindex = {p_linkedIndex} 
 				onClick={e => onClickHandle(e)}>
-				{name}
+				<span className='service-name'>{name}</span>
 				<button className="btn btn-sm btn-custom float-right fa fa-trash" 
 						type="button"
 						onClick={e => HandleDelete(e)} 

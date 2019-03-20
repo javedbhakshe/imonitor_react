@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Select from 'react-select';
 import {aQuestionType,aUserType}  from '../../data/config';
 import _ from 'lodash';
+import swal from 'sweetalert'; 
+
 
 class QuestionForm extends Component {
     constructor(props) {
@@ -34,6 +36,7 @@ class QuestionForm extends Component {
         /*this.formRef = React.createRef();*/
 
         this.aLanguageList = aLanguageList;
+        console.log(aLanguageList);
         this.initializeState();
     }
 
@@ -73,13 +76,18 @@ class QuestionForm extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log(this.state.editMode);
         let oQuestionConfig = {isMandatory:this.state.mandatory,userType:this.state.userType};
         if(this.state.editMode){
             this.props.editQuestionData(this.state.data,oQuestionConfig);
         }else {
             this.props.addQuestionData(this.state.data,oQuestionConfig);
+            swal("Good job!", "You have added question successfully.", "success");
         }
+        this.initializeState(true);
+    }
+
+    addNewquestion = (e) => {
+        e.preventDefault();
         this.initializeState(true);
     }
 
@@ -88,7 +96,7 @@ class QuestionForm extends Component {
         return this.aLanguageList.map((ele,ind) => {
             return (
                 <li className="nav-item" key={ind}>
-                    <a className={`nav-link ${ind === 0 ? 'active' : ''}`} data-toggle="tab" role="tab" href={`#tab-${ind}`}>{ele.displayLanguage}</a>
+                    <a className={`nav-link ${ind === 0 ? 'active' : ''}`} data-toggle="tab" role="tab" href={`#tab-${ind}`}>{`${ele.displayLanguage}_${ele.country}`}</a>
                 </li>
             );
         });
@@ -304,10 +312,25 @@ class QuestionForm extends Component {
                         </div>
                     </div>
                     <div className="text-center card-footer">
-                        <button type="submit" className="mr-3 btn btn-primary btn-sm" 
-                            disabled={!this.state.formValid}
+                        {   
+                            this.state.editMode ?
+                            <button type="submit" className="mr-3 btn btn-primary btn-sm" 
+                                disabled={!this.state.formValid}
+                            >
+                                <i className="fa fa-pencil"></i> Edit 
+                            </button>
+                            :
+                            <button type="submit" className="mr-3 btn btn-primary btn-sm" 
+                                disabled={!this.state.formValid}
+                            >
+                                <i className="fa fa-plus"></i> Add 
+                            </button>
+                        }
+
+                        <button className="mr-3 btn btn-danger btn-sm"
+                            onClick = {this.addNewquestion}
                         >
-                        <i className="fa fa-plus"></i> Add 
+                            <i className="fa fa-plus"></i> Add New 
                         </button>
                     </div>
                 </form>

@@ -77,18 +77,20 @@ class Services extends Component{
 			/*    */
 			let sLinkedservices = oService.data['linked-service'],
 				aLinkedservices = [],aPrevWholedata = oWholeData[nCurrentActiveService].data,
-				aPrevLinked = services[nCurrentActiveService].linkedServices;
+				aPrevLinked = services[nCurrentActiveService].linkedServices,
+				s,nPrenLen;
 			if(!sLinkedservices){
 				sLinkedservices = oService.data['linked-service'] = 'Unknown';
 			}
 			aLinkedservices = sLinkedservices.split(',');
 			oService.linkedServices = this.makeLinkedService(aLinkedservices);
-			for(let s = 0; s < aPrevLinked.length; s++){
+			nPrenLen = oService.linkedServices.length;
+			for(s = 0; s < nPrenLen; s++){
 				oService.linkedServices[s].questions = aPrevLinked[s].questions;
 			}
 			/* Whole Data  */	
 			let aWhole = this.makeWholeData(p_oData,aLinkedservices),
-				oWhole,j,nLen = aPrevWholedata.length;
+				oWhole,j,nLen = aWhole.length;
 
 			for(j = 0;j < nLen;j++){
 				aWhole[j].questions = aPrevWholedata[j].questions;

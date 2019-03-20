@@ -647,6 +647,24 @@ h4.title{
   color: #000;
 }
 
+.linked-service-name, .service-name{
+    display: inline-block;
+    width: 60%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    pointer-events: none;
+}
+
+.service-question-name{
+  display: inline-block;
+  width: 80%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  pointer-events: none; 
+}
+
 
 /*  */
 /* Just add this CSS to your project */

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import rootReducer from './reducers'
-import {HashRouter, Route, Switch, Redirect} from 'react-router-dom';
+import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
 /*import DashBoard from './layouts/dashboard/dashboard';*/
 import FirstTimeLogin from './views/FirstTimeLogin';
 import Login from './views/Login';
@@ -64,11 +64,11 @@ class App extends Component{
 
 	render(){		
 		return (
-			<HashRouter>
+			<BrowserRouter>
 				<Switch>
 					{!this.state.firstTimeLogin  ? this.aIndexRoutes : this.aLoginRoutes}
 				</Switch>
-			</HashRouter>
+			</BrowserRouter>
 		);
 		
 	}

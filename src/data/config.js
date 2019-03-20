@@ -429,6 +429,14 @@ const aUserType = [
 	{value:"WHO_VOLUNTEER", label:"WHO_VOLUNTEER"}	
 ];
 
+const aDahsboardSections = [
+	{value:"Dashboard",label:"Dashboard"},
+	{value:"Inbox",label:"Inbox"},
+	{value:"Maps",label:"Maps"},
+	{value:"Analytics",label:"Analytics"},
+	{value:"Charts",label:"Charts"}
+];
+
 export {
   	aCommunityType,
   	aCommunityLanguages,
