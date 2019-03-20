@@ -4,6 +4,7 @@ import { apiServices } from '../../services/apiServices';
 import Accordian from '../../components/custom/accordian';
 import swal from 'sweetalert';
 import Loader from '../../components/loaders/loader';
+import CKEditor from "react-ckeditor-component";
 
 class GetKnowlegeable extends Component{
 	
@@ -20,11 +21,13 @@ class GetKnowlegeable extends Component{
 			titleValid: false,
 			formValid: false,       
 			editForm: false, 
-			level:''		         
+			level:'',
+			editorData:{}					         
 		  }
 	
 		// this.uuid = uuid;
 		this.item = {};
+		this.editorContent = {};
 		// this.languageList = languageList;
 		this.addItems = this.addItems.bind(this);
 		this.handleUserInput = this.handleUserInput.bind(this);
@@ -59,6 +62,20 @@ class GetKnowlegeable extends Component{
 
 		this.item[lang][name] = value;
 	
+	}
+
+	handleEditor = (event, lang) => {		
+		if(!this.item[lang]){
+			this.item[lang]={}
+		}
+		this.item[lang]['description'] =  event.editor.getData();
+		if(!this.editorContent[lang]){
+			this.editorContent[lang]={}
+		}	
+		this.editorContent[lang] = this.item[lang]['description'];
+		this.setState({
+			editorData: this.editorContent
+		})
 	}
 
 	fileChangedHandler = (e) => {
@@ -160,8 +177,10 @@ class GetKnowlegeable extends Component{
 		this.item = {};	
 		this.setState({level:d, editForm:false, formErrors: {title: '', description: ''},    
 			titleValid: false,
-			formValid: false
+			formValid: false,
+			editorData:{}
 		});
+		
 		document.getElementById('addItems').reset();
 		// document.getElementById("tab-en_US").onclick();
 	}
@@ -185,9 +204,16 @@ class GetKnowlegeable extends Component{
 				document.getElementById('title-'+value.locale).value = that.item[value.locale]['title'];
 			}
 			
-			document.getElementById('description-'+value.locale).value = '';
+			// document.getElementById('description-'+value.locale).value = '';
 			if(that.item[value.locale] && that.item[value.locale]['description']){
-				document.getElementById('description-'+value.locale).value = that.item[value.locale]['description'];
+				if(!that.editorContent[value.locale]){
+					that.editorContent[value.locale]={}
+				}	
+				that.editorContent[value.locale] = that.item[value.locale]['description'];
+				// document.getElementById('description-'+value.locale).value = that.item[value.locale]['description'];
+				that.setState({
+					editorData: that.editorContent
+				  })
 			}
 
 			document.getElementById('video-'+value.locale).value = '';
@@ -344,7 +370,7 @@ class GetKnowlegeable extends Component{
 		this.languageList = languageList;
 		// this.setState({language:languageList});
 
-		console.log(this.state.content)
+		// console.log(this.state.content)
 		let that = this;		
 		return(
 			
@@ -384,9 +410,15 @@ class GetKnowlegeable extends Component{
 											</div>
 											<div className="form-group">
 												<label className="control-label" >Description</label>
-												<textarea className="form-control" name="description" id={'description-'+value.locale}  rows="6" 								
+												<CKEditor activeClass="editor"
+												  content={that.state.editorData[value.locale]}
+												  events={{																								
+													"change": (e) => that.handleEditor(e, value.locale)
+												  }}												 											 
+												  />
+												{/* <textarea className="form-control" name="description" id={'description-'+value.locale}  rows="6" 								
 												placeholder="Enter a description ..." data-lang={value.locale}
-												onChange={that.handleUserInput}></textarea>
+												onChange={that.handleUserInput}></textarea> */}
 											</div>	
 											<div className="row">
 											<div className="col-lg-3">
