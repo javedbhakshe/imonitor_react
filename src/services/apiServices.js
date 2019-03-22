@@ -18,7 +18,9 @@ export const apiServices = {
     addNearme,    
     nearmeList,
     translation,
-    addTranslation
+    addTranslation,
+    dashboardUsers,
+    loadApplicants
 };
 
 function login(requestObject) {
@@ -223,7 +225,46 @@ function translation(uuid, local){
         headers: { 'Content-Type': 'application/json' }
     };
    
-    return fetch(`${apiUrl}/creative/translations/${uuid}/${local}/IMONITOR/true/load.json`)
+    return fetch(`${apiUrl}/creative/translations/${uuid}/${local}/IMONITOR/load.json`)
+    .then(handleResponse)
+    .then(data => {
+        // login successful if there's a jwt token in the response
+        if (data.status === 'SUCCESS') {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            console.log('Updated ');
+        }
+
+        return data;
+    });
+}
+
+function dashboardUsers(uuid){
+    const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    };
+   
+    return fetch(`${apiUrl}/imonitor/communities/${uuid}/im.json`)
+    .then(handleResponse)
+    .then(data => {
+        // login successful if there's a jwt token in the response
+        if (data.status === 'SUCCESS') {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            console.log('Updated ');
+        }
+
+        return data;
+    });
+}
+
+function loadApplicants(requestObject){
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(requestObject)
+    };
+   
+    return fetch(`${apiUrl}/imonitor/applicants/community/loadApplicants.json`, requestOptions)
     .then(handleResponse)
     .then(data => {
         // login successful if there's a jwt token in the response
