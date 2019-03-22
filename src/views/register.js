@@ -101,16 +101,16 @@ class Register extends Component {
           <div className="card text-white bg-primary py-5 d-md-down-none" >
               <div className="card-body text-center">
                 <div>
-                  <h2>Community Register</h2>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                  <ol className="text-left">
-                  <li>Community Management</li>
-                  <li>Instant Alerts and Response</li>
+                  <h2>Community Registration</h2>
+                  <p></p>
+                  <ul className="text-left">
+                  <li>Self-use commmunity setup</li>
+                  <li>Content management</li>
                   <li>Effective Activity Monitoring</li>
                   <li>Enable Evidence-based Advocacy</li>
                   <li>Interactive Dashboards & Reports</li>
-                  <li>Rate Quality of Services</li>
-                  </ol>
+                  <li>Quick access to nearby facilities</li>
+                  </ul>
                   {/* <button className="btn btn-primary active mt-3" type="button">Register Community!</button> */}
                 </div>
               </div>
