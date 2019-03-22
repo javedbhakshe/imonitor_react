@@ -21,7 +21,6 @@ const EditableList = (props) => {
 								type="button"
 								onClick={e => handleDelete(e)} 
 								title="Delete Content">
-								
 						</button>
 					</li>
 				);
@@ -35,7 +34,7 @@ const EditableList = (props) => {
 		e.stopPropagation();
 		
 		let oData = e.target.dataset;
-		console.log(oData);
+		
 		props.updateActivequestion(oData);
 	}
 

@@ -49,10 +49,11 @@ class Services extends Component{
 			let aWhole = this.makeWholeData(p_oData,aLinkedservices),
 				oWhole = {
 					data : aWhole,linked:oService.linked,
-					serviceType:p_type,linkedServices:sLinkedservices,
+					serviceType:p_type,/*linkedServices:sLinkedservices,*/
 					editable:p_oData
 				};
 
+			console.log(p_oData);
 			/*  */
 			this.storeServiceData(oService,oWhole,oService.linked);
 		}else{
@@ -102,7 +103,7 @@ class Services extends Component{
 
 			oWhole = {
 				data : aWhole,linked:bIsCurServiceLinked,
-				serviceType:p_type,linkedServices:sLinkedservices,
+				serviceType:p_type,/*linkedServices:sLinkedservices,*/
 				editable:p_oData
 			}
 
@@ -265,12 +266,12 @@ class Services extends Component{
 				/*  */
 				aPrevWhole[nInd].data.splice(linkedindex,1);
 				/*  Editable options */
-				/*let aLinkeddata = aPrevWhole[nInd].data,
-					i,nLen = aLinkeddata.length,aFinalLinks = [];
-				for(i = 0; i < nLen;i++){
-					aFinalLinks.push(aLinkeddata[i]['en_US'].name);
+				let x , oEditableLinks = aPrevWhole[nInd].editable;
+				for(x in oEditableLinks){
+					let aTemp = oEditableLinks[x]['linked-service'].split(',');
+					aTemp.splice(linkedindex,1);
+					oEditableLinks[x]['linked-service'] = aTemp.join(',');
 				}
-				aPrevWhole[nInd].linkedServices = aFinalLinks.join(',');*/
 				/*  */
 				
 				if(aPrevWhole[nInd].data.length === 0){
@@ -378,7 +379,6 @@ class Services extends Component{
 	}
 
 	getCurrentServiceQuestions = () => {
-		
 		let aCurrent = [],
 			{services,bIsCurServiceLinked , nCurrentActiveService, nCurrentLinkedService} = this.state;
 
@@ -388,6 +388,38 @@ class Services extends Component{
 			aCurrent = services[nCurrentActiveService].questions;
 		}
 		return aCurrent;
+	}
+
+	handleShuffle = (p_index,p_dir) => {
+
+		this.setState(prevState => {
+			let aPrev = prevState.services,
+				aWhole = prevState.oWholeData
+
+
+			let oEle = aPrev.splice(p_index,1)[0],
+				oWho = aWhole.splice(p_index,1)[0],
+				nLength = aPrev.length,
+				bLinked = oEle.linked;
+
+			p_index = p_dir === 'up' ? p_index *1 - 1 : p_index *1 + 1;
+			p_index = (p_index < 0) ? nLength : (p_index > nLength) ? 0 :p_index;
+
+			aPrev.splice(p_index,0,oEle);
+			aWhole.splice(p_index,0,oWho);
+
+			return{
+				nCurrentActiveService:p_index,
+				bIsCurServiceLinked:bLinked,
+				nCurrentLinkedService:bLinked ? 0 : -1,
+				nCurrentActiveQuestion: -1,
+				services:aPrev,
+				oWholeData:aWhole
+
+			}
+		});
+
+		this.refs.EditableForm.initializeState(true);
 	}
 
 	formSubmit = () => {
@@ -477,6 +509,7 @@ class Services extends Component{
 			          				onEdit = {this.onListItemEdit}
 			          				onSelect = {this.updateSeletedService}
 			          				selected = {oSelectedList}
+			          				onShuffle = {this.handleShuffle}
 			          			/>
 				          	</div>
 				          	<div className='col-sm-12 col-md-4 col-lg-4 p-0'>

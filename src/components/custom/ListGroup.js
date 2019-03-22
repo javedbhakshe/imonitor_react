@@ -28,6 +28,24 @@ const ListGroup = (props) => {
 						onClick={e => HandleEdit(e)}>
 					</button>
 				}
+				{
+					!p_bool && 
+					<button className="btn btn-sm btn-custom float-right fa fa-long-arrow-up" 
+						type="button" 
+						name="up"
+						title="Move up" 
+						onClick={e => handleShuffle(e)}>
+					</button>
+				}
+				{
+					!p_bool && 
+					<button className="btn btn-sm btn-custom float-right fa fa-long-arrow-down" 
+						type="button"
+						name="down" 
+						title="Move down" 
+						onClick={e => handleShuffle(e)}>
+					</button>
+				}
 			</li>
 		)
 	}
@@ -49,11 +67,29 @@ const ListGroup = (props) => {
 							<span className="linked-service-name">
 								{ele.data.name}
 							</span>
+							
 							<button className="btn btn-sm btn-custom float-right fa fa-pencil" 
 								type="button" 
 								title="Edit Content" 
 								onClick={e => HandleEdit(e)}>
 							</button>
+
+							<button className="btn btn-sm btn-custom float-right fa fa-long-arrow-up" 
+								type="button" 
+								name="up"
+								title="Move Up" 
+								onClick={e => handleShuffle(e)}>
+							</button>
+
+							<button className="btn btn-sm btn-custom float-right fa fa-long-arrow-down" 
+								type="button"
+								name="down" 
+								title="Move Down" 
+								onClick={e => handleShuffle(e)}>
+							</button>
+
+							
+
 						</div>
 						<ul className="list-group-item p-0">
 							{aLinkedItems}
@@ -85,17 +121,19 @@ const ListGroup = (props) => {
 	const onClickHandle = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
-		/*let aList = e.target.parentElement.children,
-			nLen = aList.length,i;
-
-		for(i = 0; i < nLen;i++){
-			aList[i].classList.remove('active');
-		}
-		e.target.classList.add('active');*/
-
 		/* current active service */
 		props.onSelect(e.target.dataset);
 		/* */
+	}
+
+	const handleShuffle = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+		
+		let {name} = e.target,
+			{index} = e.target.parentElement.dataset;
+
+		props.onShuffle(index,name)
 	}
 
 	return(
