@@ -698,3 +698,8 @@ h4.title{
 .survey-btn{
     width: 100%;
 }
+
+.translationTable , .translationTable button {
+    font-size: 11px;
+    table-layout: fixed;
+}

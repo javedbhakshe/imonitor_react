@@ -10,10 +10,12 @@ class Translation extends Component{
 
     state = {
         uuid:'',
+        searchTax:'',
         languageList: [],
         languageData: {},
         editData : {},
         isLoading:false,
+        englishLable: {}
     }
 
     componentDidMount(){
@@ -32,7 +34,8 @@ class Translation extends Component{
             languageListObj[[value.locale]] = value;
         }));
 
-        this.setState({uuid:uuid,languageList:languageListObj, languageData, editData : {}});
+        let englishLable = !_.isEmpty(languageData['en_US']) ? (languageData['en_US'].lbl ? languageData['en_US'].lbl : {}) : {};
+        this.setState({uuid:uuid,languageList:languageListObj, languageData,englishLable, editData : {}});
     }
     
     renderLanguageData = (label) => {
@@ -100,39 +103,59 @@ class Translation extends Component{
             } 
           });
     }
+
+    searchData = (e) => {
+        var that = this;        
+        let acceptedValues = e.target.value;
+        let englishData = this.state.languageData['en_US'].lbl;
+        var filteredObject = Object.keys(englishData).reduce(function(r, key) {
+            if(englishData[key].toLowerCase().includes(acceptedValues.toLowerCase())){
+                r[key] = englishData[key]
+            }            
+            return r;
+          }, {})
+        this.setState({englishLable:filteredObject,searchTax:e.target.value});
+    }
    
 
     render(){
         var that = this;
-        let englishLable = !_.isEmpty(this.state.languageData['en_US']) ? (this.state.languageData['en_US'].lbl ? this.state.languageData['en_US'].lbl : {}) : {};
         return (
         <div>
-             <Loader isLoading={this.state.isLoading}/>
-            <TranslationModal loadTranslation={ this.loadData} formData={this.state.editData} closedEdit={this.closedEdit}/>
-            <table className="table table-bordered">
+            <Loader isLoading={this.state.isLoading}/>
+            <div className="row">
+                <div className="col-sm input-group mb-3">
+                    <input type="text" className="form-control" placeholder="Please Enter English Word Here" value={this.props.searchTax} onChange={this.searchData} />
+                </div>
+                <div className="col-sm">
+                    <TranslationModal loadTranslation={ this.loadData} formData={this.state.editData} closedEdit={this.closedEdit}/>
+                </div>               
+            </div>           
+            <table className="table table-bordered translationTable">
                 <thead className="thead-dark">
                     <tr> 
-                        <th scope="col">Label</th>            
+                        <th width="200px" scope="col">Label</th>            
                             {
-                                Object.entries(this.state.languageList).map(([key, item]) => {
+                                
+                                Object.entries(this.state.languageList).map(([key, item]) => {                                    
                                     return (
                                         <th scope="col" key={key}>{item.displayName}</th>                                
                                     )
                                 })
                             }	
-                        <th width="160px" scope="col">Action</th>             
+                        <th width="140px" scope="col">Action</th>             
                     </tr>
                 </thead>
                 <tbody>               
                 {
-                    !_.isEmpty(englishLable) ? 
-                        Object.entries(englishLable).map(([key, value]) => {                       
+                    !_.isEmpty(this.state.englishLable) ? 
+                        Object.entries(this.state.englishLable).map(([key, value]) => {                       
                             return <tr key={key}>
                                 <th scope="row">{key}</th>
                                 {that.renderLanguageData(key)}  
                                 <th scope="col">
                                 <button className="mr-1 btn btn-primary btn-sm" onClick={ () => this.editTranslation(key)} ><span className="fa fa-pencil" aria-hidden="true"></span> Edit</button>
-                                <button className="btn btn-danger btn-sm" onClick={ () => this.deleteTranslation(key)} ><span className="fa fa-pencil" aria-hidden="true"></span> Delete</button>                                </th>                                                   
+                                <button className="btn btn-danger btn-sm" onClick={ () => this.deleteTranslation(key)} ><span className="fa fa-trash" aria-hidden="true"></span> Delete</button>                                </th>                                                   
                             </tr>
                         }) 
                     : null
