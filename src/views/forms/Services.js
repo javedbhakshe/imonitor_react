@@ -374,8 +374,11 @@ class Services extends Component{
 		/* */
 	}
 
-	updateQuestionList = () => {
+	resetActiveQuestion = () => {
 		console.log('Add Question in service');
+		this.setState( {
+			nCurrentActiveQuestion: -1
+		});
 	}
 
 	getCurrentServiceQuestions = () => {
@@ -388,6 +391,18 @@ class Services extends Component{
 			aCurrent = services[nCurrentActiveService].questions;
 		}
 		return aCurrent;
+	}
+
+	getDependant = () => {
+		console.log(this.state);
+		let {nCurrentActiveService , bIsCurServiceLinked , nCurrentLinkedService, nCurrentActiveQuestion,services} = this.state;
+		console.log(nCurrentActiveService , bIsCurServiceLinked , nCurrentLinkedService, nCurrentActiveQuestion);
+		if(bIsCurServiceLinked){
+			console.log(services[nCurrentActiveService].linkedServices[nCurrentLinkedService].questions)
+		}else{
+			console.log(services[nCurrentActiveService].questions);
+		}
+		return [];
 	}
 
 	handleShuffle = (p_index,p_dir) => {
@@ -528,7 +543,6 @@ class Services extends Component{
 				              		<div className="card-body"> 
 					               		<EditableList 
 					               			listItems = {this.getCurrentServiceQuestions()}
-					               			currentActive = {this.state.nCurrentActiveQuestion}
 					               			updateActivequestion ={ this.updateActivequestion }
 					               			ondelete = {this.onQuestionDelete}
 					               			selected = { this.state.nCurrentActiveQuestion }
@@ -545,7 +559,9 @@ class Services extends Component{
 										  <QuestionForm ref='EditableForm'
 										  	listItems = {this.getCurrentServiceQuestions()}
 	                  						addQuestionData = {this.addQuestion}
-	                  						editQuestionData = {this.editQuestion} 
+	                  						editQuestionData = {this.editQuestion}
+	                  						getDependant = {this.getDependant} 
+	                  						reset = {this.resetActiveQuestion}
 	              						/>	
 				              		</div>
 				              	</div>

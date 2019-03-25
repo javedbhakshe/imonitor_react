@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
 import {aQuestionType,aUserType}  from '../../data/config';
-import _ from 'lodash';
 import swal from 'sweetalert'; 
 
 
@@ -56,6 +55,7 @@ class QuestionForm extends Component {
                 errorClass:{title:'',type:''},
                 mandatory:false,
                 userType:aUserType,
+                dependantQuestions:{},
                 data:oTemp
             });
         }else{
@@ -66,6 +66,7 @@ class QuestionForm extends Component {
                 errorClass:{title:'',type:''},
                 mandatory:false,
                 userType:aUserType,
+                dependantQuestions:{},
                 data:oTemp
             };
         }
@@ -88,6 +89,7 @@ class QuestionForm extends Component {
     addNewquestion = (e) => {
         e.preventDefault();
         this.initializeState(true);
+        this.props.reset();
     }
 
 
@@ -139,12 +141,11 @@ class QuestionForm extends Component {
 
     handleSelect = (selectedOption,e) => {
         let dataObj = e.name.split('#')
-        let sName = dataObj[0],
-            sLang =  dataObj[1];
+        let sName = dataObj[0];
         this.setState(prevState => {
             let {data} = prevState,
                 sValue = selectedOption.value, 
-                bFlag =  sName == 'type' ? (sValue === 'Dropdown' || sValue === 'Radio' || sValue === 'Checkbox') : this.state.showNomial;
+                bFlag =  sName === 'type' ? (sValue === 'Dropdown' || sValue === 'Radio' || sValue === 'Checkbox') : this.state.showNomial;
 
             for(let i in data){
                 data[i][sName] = selectedOption; 
@@ -310,13 +311,25 @@ class QuestionForm extends Component {
                             />
                         </div>
                     </div>
+                    {/*<div className="form-group">
+                                            <label className="col-form-label">Dependant question : </label>
+                                            <div className="input-group">
+                                                <Select
+                                                    name="dependantQuestions"
+                                                    options={this.props.getDependant()}
+                                                    className="form-control p-0 mb-3"
+                                                    onChange={e => this.setState({dependantQuestions:e})}
+                                                    value={this.state.dependantQuestions}
+                                                />
+                                            </div>
+                                        </div>*/}
                     <div className="text-center card-footer">
                         {   
                             this.state.editMode ?
                             <button type="submit" className="mr-3 btn btn-primary btn-sm" 
                                 disabled={!this.state.formValid}
                             >
-                                <i className="fa fa-pencil"></i> Edit 
+                                <i className="fa fa-pencil"></i> Save 
                             </button>
                             :
                             <button type="submit" className="mr-3 btn btn-primary btn-sm" 
@@ -326,11 +339,15 @@ class QuestionForm extends Component {
                             </button>
                         }
 
-                        <button className="mr-3 btn btn-danger btn-sm"
-                            onClick = {this.addNewquestion}
-                        >
-                            <i className="fa fa-plus"></i> Add New 
-                        </button>
+                        {
+                            this.state.editMode ? 
+                            <button className="mr-3 btn btn-danger btn-sm"
+                                onClick = {this.addNewquestion}
+                            >
+                                <i className="fa fa-plus"></i> Add New 
+                            </button>
+                            :null
+                        }
                     </div>
                 </form>
             </div>
