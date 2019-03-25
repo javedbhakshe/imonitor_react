@@ -4,7 +4,8 @@ const EditableList = (props) => {
 	
 
 	const createList = () => {
-		const aList = props.listItems,
+		
+		const aList = props.listItems ? props.listItems : [],
 			nIndex = props.selected * 1;
 		return (
 			aList.map(({en_data},ind) =>{
