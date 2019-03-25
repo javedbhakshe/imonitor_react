@@ -38,8 +38,8 @@ class ServicesModal extends Component{
 	  }
 	  
 
-  	/*componentWillUpdate =() =>{
-	  	
+  	openServiceModal =() =>{
+	  	/* Jugad for toggle... it is used to dynamically update language ... need to change...*/
 		const community = JSON.parse(localStorage.getItem('community')),
 	    	uuid = community.community.uuid,
 	    	aLanguageList = community.uuidLocales[uuid] ? community.uuidLocales[uuid] : [];
@@ -53,7 +53,11 @@ class ServicesModal extends Component{
 		}
 
 		this.aLanguageList = aLanguageList; 
-	}*/
+		this.intializeModalState();
+		this.setState({
+	      	modal: !this.state.modal
+	    });
+	}
 
   	intializeModalState = (p_isSet) => {
   		let oTemp = {};
@@ -226,7 +230,7 @@ class ServicesModal extends Component{
 	render(){
 		return(
 			<div className="mb-2">
-			 	<Button className="btn btn-light survey-btn" color="primary" onClick={this.toggle}>Add {this.props.serviceType}</Button>
+			 	<Button className="btn btn-light survey-btn" color="primary" onClick={this.openServiceModal}>Add {this.props.serviceType}</Button>
 				<Modal isOpen={this.state.modal} toggle={this.toggle} className="modal-lg" onOpened={this.onModalOpen} 
 						onClosed = {this.onModalClose}
 						>

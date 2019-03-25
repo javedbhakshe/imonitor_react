@@ -55,7 +55,7 @@ class QuestionForm extends Component {
                 errorClass:{title:'',type:''},
                 mandatory:false,
                 userType:aUserType,
-                dependantQuestions:{},
+                dependantQuestion:null,
                 data:oTemp
             });
         }else{
@@ -66,7 +66,7 @@ class QuestionForm extends Component {
                 errorClass:{title:'',type:''},
                 mandatory:false,
                 userType:aUserType,
-                dependantQuestions:{},
+                dependantQuestion:null,
                 data:oTemp
             };
         }
@@ -76,7 +76,8 @@ class QuestionForm extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        let oQuestionConfig = {isMandatory:this.state.mandatory,userType:this.state.userType};
+        let nDepeant = this.state.dependantQuestion ? this.state.dependantQuestion.index : -1, 
+            oQuestionConfig = {isMandatory:this.state.mandatory,userType:this.state.userType,dependantIndex:nDepeant};
         if(this.state.editMode){
             this.props.editQuestionData(this.state.data,oQuestionConfig);
         }else {
@@ -246,8 +247,14 @@ class QuestionForm extends Component {
         });
     }
     
-    showForm = (p_data,p_isMand,p_userType) => {    
+    showForm = (p_data,p_isMand,p_userType,p_dependantIndex) => {    
         
+        let oDependant = null;
+        if(p_dependantIndex !== -1){
+            // console.log(this.props.getDependant());
+            oDependant = this.props.getDependant()[p_dependantIndex];
+        }
+
         this.setState(prevState => {
             let {value} = p_data['en_US']['type'],
                 bFlag = (value === 'Dropdown' || value === 'Radio' || value === 'Checkbox'); 
@@ -258,7 +265,8 @@ class QuestionForm extends Component {
                 editMode:true,
                 formValid:true,
                 mandatory:p_isMand,
-                userType:p_userType
+                userType:p_userType,
+                dependantQuestion:oDependant
             }
         });
 
@@ -275,7 +283,15 @@ class QuestionForm extends Component {
         return oError.type;
     }
 
+    onDepndantChange = (selectedOption,e) => {
+        this.setState({
+            dependantQuestion:selectedOption
+        });
+        console.log(selectedOption,e);
+    }
+
     render() {
+        const aDepOptions = this.props.getDependant();
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
@@ -297,32 +313,37 @@ class QuestionForm extends Component {
                     <div className="tab-content">
                         {this.getTabConents()}
                     </div>
-                    <div className="form-group">
-                        <label className="col-form-label">User Type : </label>
-                        <div className="input-group">
-                            <Select
-                                name="usertype"
-                                options={aUserType}
-                                className="form-control p-0 mb-3"
-                                defaultValue = {aUserType[0]}
-                                onChange={e => this.setState({userType:e})}
-                                isMulti = {true}
-                                value={this.state.userType}
-                            />
-                        </div>
-                    </div>
                     {/*<div className="form-group">
-                                            <label className="col-form-label">Dependant question : </label>
+                                            <label className="col-form-label">User Type : </label>
                                             <div className="input-group">
                                                 <Select
-                                                    name="dependantQuestions"
-                                                    options={this.props.getDependant()}
+                                                    name="usertype"
+                                                    options={aUserType}
                                                     className="form-control p-0 mb-3"
-                                                    onChange={e => this.setState({dependantQuestions:e})}
-                                                    value={this.state.dependantQuestions}
+                                                    defaultValue = {aUserType[0]}
+                                                    onChange={e => this.setState({userType:e})}
+                                                    isMulti = {true}
+                                                    value={this.state.userType}
                                                 />
                                             </div>
                                         </div>*/}
+                    {
+                       /* aDepOptions.length ?  
+                        <div className="form-group">
+                            <label className="col-form-label">Dependant question : </label>
+                            <div className="input-group">
+                                <Select
+                                    name="dependantQuestion"
+                                    className="form-control p-0 mb-3"
+                                    options={aDepOptions}
+                                    onChange={this.onDepndantChange}
+                                    value={this.state.dependantQuestion}
+                                    placeholder="Please select dependant question"
+                                />
+                            </div>
+                        </div> :
+                        null*/
+                    }
                     <div className="text-center card-footer">
                         {   
                             this.state.editMode ?
