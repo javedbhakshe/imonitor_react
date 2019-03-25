@@ -328,7 +328,7 @@ class QuestionForm extends Component {
                                             </div>
                                         </div>*/}
                     {
-                       /* aDepOptions.length ?  
+                        aDepOptions.length ?  
                         <div className="form-group">
                             <label className="col-form-label">Dependant question : </label>
                             <div className="input-group">
@@ -342,7 +342,7 @@ class QuestionForm extends Component {
                                 />
                             </div>
                         </div> :
-                        null*/
+                        null
                     }
                     <div className="text-center card-footer">
                         {   

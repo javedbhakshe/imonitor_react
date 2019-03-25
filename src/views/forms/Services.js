@@ -52,8 +52,6 @@ class Services extends Component{
 					serviceType:p_type,/*linkedServices:sLinkedservices,*/
 					editable:p_oData
 				};
-
-			console.log(p_oData);
 			/*  */
 			this.storeServiceData(oService,oWhole,oService.linked);
 		}else{
@@ -320,7 +318,6 @@ class Services extends Component{
 		
 		this.refs.Modal.onListEdit(oCurrent);
 		
-		console.log(oCurrent);
 		this.setState({
 			nCurrentActiveService: index,
 			bIsCurServiceLinked : bLinked,
@@ -399,7 +396,6 @@ class Services extends Component{
 	}
 
 	resetActiveQuestion = () => {
-		console.log('Add Question in service');
 		this.setState({
 			nCurrentActiveQuestion: -1
 		});
@@ -423,7 +419,7 @@ class Services extends Component{
 		
 		if(bIsCurServiceLinked){
 			if(nCurrentActiveQuestion !== -1){
-				services[nCurrentActiveService].linkedServices[nCurrentLinkedService].questions.slice(0,nCurrentActiveQuestion);				
+				aDep = services[nCurrentActiveService].linkedServices[nCurrentLinkedService].questions.slice(0,nCurrentActiveQuestion);				
 			}else{
 				aDep = services[nCurrentActiveService].linkedServices[nCurrentLinkedService].questions;
 			}
@@ -438,7 +434,6 @@ class Services extends Component{
 		let i , nLen = aDep.length,aFinal = [];
 		for(i = 0; i < nLen ;i++){	
 			let oTemp = aDep[i].en_data;
-			console.log(oTemp);
 			if(oTemp.type.value === 'Dropdown' ||oTemp.type.value === 'Radio' || oTemp.type.value === 'Checkbox'){
 				
 				let oques = {value:oTemp.name, label:oTemp.name , index : i, nominals: oTemp.nominal.split(',')};
@@ -533,9 +528,9 @@ class Services extends Component{
 	}
 
 	render(){
-		// console.clear();
+		/*console.clear();
 		console.log(this.state.services);
-		console.log(this.state.oWholeData);
+		console.log(this.state.oWholeData);*/
 		const oSelectedList = {
 			linked:this.state.bIsCurServiceLinked,
 			active:this.state.nCurrentActiveService,
