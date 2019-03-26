@@ -166,11 +166,14 @@ class Services extends Component{
 		return aWholeData;
 	}
 
-	addQuestion = (p_data,{isMandatory,userType,dependantIndex}) => {
+	addQuestion = (p_data,{isMandatory,userType,dependantIndex,dependantAnswer}) => {
 		let {bIsCurServiceLinked , nCurrentActiveService, nCurrentLinkedService,nCurrentActiveQuestion} = this.state,
-			oQuestionObj = {en_data:p_data['en_US'],whole_data:p_data,isMandatory:isMandatory,userType:userType,dependantIndex:dependantIndex};
+			oQuestionObj = {
+				en_data:p_data['en_US'],whole_data:p_data,
+				isMandatory,userType,
+				dependantIndex,dependantAnswer
+			};
 		
-
 		this.setState( prevState =>  {
 			let aPrev = prevState.services,
 				aWholeData = prevState.oWholeData;
@@ -190,9 +193,13 @@ class Services extends Component{
 		});
 	}
 
-	editQuestion = (p_data,{isMandatory,userType,dependantIndex}) => {
+	editQuestion = (p_data,{isMandatory,userType,dependantIndex,dependantAnswer}) => {
 		let {bIsCurServiceLinked , nCurrentActiveService, nCurrentLinkedService,nCurrentActiveQuestion} = this.state,
-			oQuestionObj = {en_data:p_data['en_US'],whole_data:p_data,isMandatory:isMandatory,userType:userType,dependantIndex:dependantIndex};
+			oQuestionObj = {
+				en_data:p_data['en_US'],whole_data:p_data,
+				isMandatory,userType,
+				dependantIndex,dependantAnswer
+			};
 		
 
 		this.setState( prevState =>  {
@@ -340,7 +347,8 @@ class Services extends Component{
 				oCurrent = services[nCurrentActiveService].questions[index];
 			}
 
-			this.refs.EditableForm.showForm(oCurrent.whole_data,oCurrent.isMandatory,oCurrent.userType,oCurrent.dependantIndex);
+			// this.refs.EditableForm.showForm(oCurrent.whole_data,oCurrent.isMandatory,oCurrent.userType,oCurrent.dependantIndex,oCurrent.dependantAnswer);
+			this.refs.EditableForm.showForm(oCurrent);
 		});
 	}
 
