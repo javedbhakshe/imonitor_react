@@ -525,8 +525,8 @@ class Services extends Component{
 					commuityReferenceBO[0] = response;
 				}
 				localStorage.setItem('community', JSON.stringify(communityBO));
-				let confTab = typeValue == 'Service' ? 'survey-tab' : 'nearme-tab' ;
-				that.props.configTab(confTab);
+				// let confTab = typeValue == 'Service' ? 'survey-tab' : 'nearme-tab' ;
+				that.props.configTab('nearme-tab');
 				  
 			  }          
 			});

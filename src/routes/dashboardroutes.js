@@ -4,7 +4,8 @@ import Charts from '../views/charts';
 import Maps from '../views/maps';
 import SmartSetUp from '../views/smartsetup';
 import Analytics from '../views/analytics';
-
+import Users from '../views/forms/Users';
+import Translation from '../views/forms/Translation';
 
 const dashboardRoutes = [
 	{
@@ -43,7 +44,19 @@ const dashboardRoutes = [
 	    icon: "fa fa-pie-chart",
 	    component: Analytics
   	},  
-  	{ 
+  	{
+	    path: "/users",
+	    name: "Users",
+	    icon: "fa fa-user-circle",
+	    component: Users
+	},  
+	{
+	  path: "/translation",
+	  name: "Translation",
+	  icon: "fa fa-language",
+	  component: Translation
+  	}, 
+	{ 
 		redirect: true, 
 		path: "/", 
 		to: "/dashboard", 

@@ -382,9 +382,11 @@ const aCommCountries = [
 const aCommunitySections = [
 	{value:"Dashboard",label:"Dashboard"},
 	{value:"Inbox",label:"Inbox"},
-	{value:"Maps",label:"Maps"},
+	{value:"Maps",label:"Maps"},	
 	{value:"Analytics",label:"Analytics"},
-	{value:"Charts",label:"Charts"}
+	{value:"Charts",label:"Charts"},
+	{value:"Users",label:"Users"},
+	{value:"Translation",label:"Translation"}
 ];
 
 const aServiceType = [
