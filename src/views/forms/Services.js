@@ -29,7 +29,9 @@ class Services extends Component{
 		let communityPreferenceBOs = typeValue == 'Service' ? community.communityPreferenceBOs : community.communitySurveyBOs;		
 		if(!_.isEmpty(communityPreferenceBOs)){
 			let dataObj = JSON.parse(communityPreferenceBOs[0].communityPreferences.summary);
-			this.setState({oWholeData:dataObj.oWholeData, services:dataObj.services});			
+			let firstServiceType = dataObj.services[0] ? dataObj.services[0].linked : false;
+			let nCurrentLinkedService = firstServiceType ? 0 : -1;
+			this.setState({oWholeData:dataObj.oWholeData, services:dataObj.services, bIsCurServiceLinked:firstServiceType, nCurrentLinkedService});			
 		}
 	}
 
