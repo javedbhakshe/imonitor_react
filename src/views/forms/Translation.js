@@ -132,7 +132,7 @@ class Translation extends Component{
                 </div>               
             </div>           
             <table className="table table-bordered translationTable">
-                <thead className="thead-dark">
+                <thead className="thead-light">
                     <tr> 
                         <th width="200px" scope="col">Label</th>            
                             {

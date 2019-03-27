@@ -429,6 +429,12 @@ const aUserType = [
 	{value:"VOLUNTEER", label:"VOLUNTEER"}	
 ];
 
+const dashboardUserType = [
+	{value:"ADMIN", label:"ADMIN"},	
+	{value:"COMMUNITY-RESPONDER", label:"COMMUNITY RESPONDER"},
+	{value:"COMMUNITY-PROFILER", label:"COMMUNITY PROFILER"}
+];
+
 const aMobileSections = [
 	{value:"Information",label:"Information"},
 	{value:"Services",label:"Services"},
@@ -447,6 +453,7 @@ export {
 	nearmeType,
 	aQuestionType,
   	aUserType,
-  	aMobileSections
+	aMobileSections,
+	dashboardUserType
 };
 

@@ -6,6 +6,7 @@ import Services from './forms/Services';
 /*import SmartMap from './forms/smartmap';*/
 import Nearme from './forms/nearme';
 import Translation from './forms/Translation';
+import Users from './forms/Users';
 import Finish from './forms/finish';
 import classnames from 'classnames';
 import {connect} from 'react-redux';
@@ -54,7 +55,7 @@ class SmartSetup extends Component{
 						    		aria-selected="false"
 						    		onClick={() => { this.toggle('appconfig-tab')}}
 						    	>
-						    	Dashboard Config
+						    	Config
 						    	</a>
 						  		<div className="nav-arrow"></div>
 						  	</li>
@@ -138,6 +139,20 @@ class SmartSetup extends Component{
 						    	</a>
 						    	<div className="nav-arrow"></div>
 						  	</li>
+							<li className={`nav-item ${classnames({ active: this.state.activeTab === 'users-tab' })}`}>
+						    	<div className="nav-wedge"></div>
+						    	<a className="nav-link ssup" 
+							    	id="users-tab" 
+							    	data-toggle="tab" 
+							    	href="#users" 
+							    	role="tab" 
+							    	aria-controls="users" 
+							    	aria-selected="false"
+							    	onClick={() => { this.toggle('users-tab')}}>
+							    	Users
+						    	</a>
+						    	<div className="nav-arrow"></div>
+						  	</li>
 						  	<li className={`nav-item ${classnames({ active: this.state.activeTab === 'finish-tab' })}`}>
 						     	<div className="nav-wedge"></div>
 							    <a className="nav-link ssup" 
@@ -173,6 +188,9 @@ class SmartSetup extends Component{
 						  	</div>
 							<div className="tab-pane fade" id="translation" role="tabpanel" aria-labelledby="translation-tab">
 						  		<Translation />
+						  	</div>
+							<div className="tab-pane fade" id="users" role="tabpanel" aria-labelledby="users-tab">
+						  		<Users />
 						  	</div>
 						  	<div className="tab-pane fade" id="finish" role="tabpanel" aria-labelledby="finish-tab">
 						  		<Finish />

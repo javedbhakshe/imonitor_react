@@ -20,7 +20,9 @@ export const apiServices = {
     translation,
     addTranslation,
     dashboardUsers,
-    loadApplicants
+    loadApplicants,
+    addDashboardUsers,
+    addApplicants
 };
 
 function login(requestObject) {
@@ -257,6 +259,26 @@ function dashboardUsers(uuid){
     });
 }
 
+function addDashboardUsers(requestObject){
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(requestObject)
+    };
+   
+    return fetch(`${apiUrl}/imonitor/communities/um/save.json`, requestOptions)
+    .then(handleResponse)
+    .then(data => {
+        // login successful if there's a jwt token in the response
+        if (data.status === 'SUCCESS') {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            console.log('Updated ');
+        }
+
+        return data;
+    });
+}
+
 function loadApplicants(requestObject){
     const requestOptions = {
         method: 'POST',
@@ -265,6 +287,26 @@ function loadApplicants(requestObject){
     };
    
     return fetch(`${apiUrl}/imonitor/applicants/community/loadApplicants.json`, requestOptions)
+    .then(handleResponse)
+    .then(data => {
+        // login successful if there's a jwt token in the response
+        if (data.status === 'SUCCESS') {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            console.log('Updated ');
+        }
+
+        return data;
+    });
+}
+
+function addApplicants(requestObject){
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(requestObject)
+    };
+   
+    return fetch(`${apiUrl}/imonitor/applicants/save.json`, requestOptions)
     .then(handleResponse)
     .then(data => {
         // login successful if there's a jwt token in the response
