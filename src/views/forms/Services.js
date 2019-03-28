@@ -43,9 +43,10 @@ class Services extends Component{
 			let sLinkedservices = oService.data['linked-service'],
 				aLinkedservices = [];
 			if(!sLinkedservices){
-				sLinkedservices = oService.data['linked-service'] = 'Unknown';
+				sLinkedservices = oService.data['linked-service'] = ['Unknown'];
 			}
-			aLinkedservices = sLinkedservices.split(',');
+			// aLinkedservices = sLinkedservices.split(',');
+			aLinkedservices = sLinkedservices;
 			oService.linkedServices = this.makeLinkedService(aLinkedservices);
 			/* Whole Data  */	
 			let aWhole = this.makeWholeData(p_oData,aLinkedservices),
@@ -81,9 +82,10 @@ class Services extends Component{
 				aPrevLinked = services[nCurrentActiveService].linkedServices,
 				s,nPrenLen;
 			if(!sLinkedservices){
-				sLinkedservices = oService.data['linked-service'] = 'Unknown';
+				sLinkedservices = oService.data['linked-service'] = ['Unknown'];
 			}
-			aLinkedservices = sLinkedservices.split(',');
+			// aLinkedservices = sLinkedservices.split(',');
+			aLinkedservices = sLinkedservices;
 			oService.linkedServices = this.makeLinkedService(aLinkedservices);
 			nPrenLen = oService.linkedServices.length;
 			for(s = 0; s < nPrenLen; s++){
@@ -159,7 +161,7 @@ class Services extends Component{
 		for(i in p_arr){
 			let oTemp ={};
 			for(let j in p_data){
-				let sName = p_data[j]['linked-service'].split(',')[i] ? p_data[j]['linked-service'].split(',')[i] : '';
+				let sName = p_data[j]['linked-service'][i] ? p_data[j]['linked-service'][i] : '';
 				oTemp[j] = {name : sName}
 			}
 			oTemp.questions = [];
@@ -275,9 +277,9 @@ class Services extends Component{
 				/*  Editable options */
 				let x , oEditableLinks = aPrevWhole[nInd].editable;
 				for(x in oEditableLinks){
-					let aTemp = oEditableLinks[x]['linked-service'].split(',');
+					let aTemp = oEditableLinks[x]['linked-service'];
 					aTemp.splice(linkedindex,1);
-					oEditableLinks[x]['linked-service'] = aTemp.join(',');
+					oEditableLinks[x]['linked-service'] = aTemp;
 				}
 				/*  */
 				

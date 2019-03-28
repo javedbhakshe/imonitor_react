@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import {Modal, ModalHeader, ModalBody, Button} from 'reactstrap';
 import Select from 'react-select';
+import Options from '../options/Options';
 import {aServiceType}  from '../../data/config';
 
 class ServicesModal extends Component{
@@ -24,7 +25,7 @@ class ServicesModal extends Component{
 		let oTemp = {};
   		for(let i in this.aLanguageList){
             let sProp = this.aLanguageList[i].locale;
-            oTemp[sProp] = {name:'','linked-service':'',description:''};
+            oTemp[sProp] = {name:'','linked-service':[],description:''};
         }
 
      	this.state = {
@@ -63,7 +64,7 @@ class ServicesModal extends Component{
   		let oTemp = {};
   		for(let i in this.aLanguageList){
             let sProp = this.aLanguageList[i].locale;
-            oTemp[sProp] = {name:'','linked-service':'',description:''};
+            oTemp[sProp] = {name:'','linked-service':[],description:''};
         }
 
         this.setState({
@@ -84,6 +85,17 @@ class ServicesModal extends Component{
 	    		</li>
     		);
 	    });
+  	}
+
+  	handleLinkeServices = (p_selected,e) =>{
+  		let {lang,name} = e,
+  			value = p_selected;
+
+		this.setState(prevState => {
+			let {data} = prevState;
+			data[lang][name] = value;
+			return {data}
+		});
   	}
 
   	getTabConents = () => {
@@ -113,13 +125,13 @@ class ServicesModal extends Component{
 		          	{
 		          		this.state.serviceType.value === 'Linked' && 
 		          		<div className="form-group">
-				            <label htmlFor={`linked_service_${ele.locale}`} className="col-form-label">Linked service(s) (Comma separated) : </label>
-			            	<input type="text" className="form-control" 
-				            	id={`linked_service_${ele.locale}`} name="linked-service" 
-				            	data-lang={ele.locale} placeholder="Enter Service(s) ..."
-			            		onChange={this.handleUserInput}
-			            		value={this.state.data[ele.locale]['linked-service']}
-			            	/>
+				            <label className="col-form-label">Linked service(s) : </label>
+				            <Options
+                                name="linked-service" lang={ele.locale} 
+                              	value={this.state.data[ele.locale]['linked-service']}
+                                onChange={this.handleLinkeServices}
+                            />
+			            	
 		          		</div>
 		          	}
 	          	</div>
