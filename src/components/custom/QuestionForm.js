@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
 import {aQuestionType,aUserType}  from '../../data/config';
+import Options from '../options/Options';
 import swal from 'sweetalert'; 
 
 
@@ -43,7 +44,7 @@ class QuestionForm extends Component {
         for(let i in this.aLanguageList){
             let sProp = this.aLanguageList[i].locale;
             oTemp[sProp] =  {   
-                /*mandatory: false,*/ name:'',nominal:'',
+                /*mandatory: false,*/ name:'',nominal:[],
                 type:aQuestionType[0]
             };
         }
@@ -150,7 +151,6 @@ class QuestionForm extends Component {
     }
 
     handleCheckBox = (e) => {
-        console.log(e.target);
         let { checked } = e.target;
         this.setState({
             mandatory:checked
@@ -171,6 +171,16 @@ class QuestionForm extends Component {
             return{
                 data:data,
                 showNomial:bFlag
+            }
+        });
+    }
+
+    handleOptionsChange = (options,e) => {
+        this.setState(prevState => {
+            let {data} = prevState;
+            data[e.lang][e.name] = options;
+            return{
+                data:data
             }
         });
     }
@@ -223,21 +233,12 @@ class QuestionForm extends Component {
 
                         this.state.showNomial && 
                         <div className="form-group">
-                            <label  htmlFor={`nominal_${ele.locale}`} className="col-form-label">Nominals(coma seperated) </label>
-                            <div className="input-group">
-                                <span className="input-group-prepend">
-                                    <span className="input-group-text">
-                                        <i className="fa fa-bars"></i>
-                                    </span>
-                                </span>
-                                <textarea className="form-control" id={`nominal_${ele.locale}`} 
-                                    name="nominal" data-lang={ele.locale}
-                                    value = {this.state.data[ele.locale]['nominal']}
-                                    onChange = {this.handleInputChange}
-                                >
-                                    
-                                </textarea>
-                            </div>
+                            <label  className="col-form-label">Nominals</label>
+                            <Options
+                                name="nominal" lang={ele.locale} 
+                                value={this.state.data[ele.locale]['nominal']}
+                                onChange={this.handleOptionsChange}
+                            />
                         </div>
                     }
                     {/* <div className="form-group">
@@ -265,10 +266,20 @@ class QuestionForm extends Component {
     }
       
     showForm = ({whole_data,isMandatory,userType,dependantIndex,dependantAnswer}) => {    
-        
-        let oDependant = null,aDepAnswer = [],aFinalAnswers = [];
+        debugger
+        let i,oDependant = null,aDepAnswer = [],aFinalAnswers = [],aRecieved = [];
         if(dependantIndex !== -1){
-            oDependant = this.props.getDependant()[dependantIndex];
+            /* */
+            aRecieved = this.props.getDependant();
+            for(i in aRecieved){
+                if(aRecieved[i].index === dependantIndex){
+                    oDependant = aRecieved[i];
+                    break;
+                }
+            }
+
+            /* */
+            // oDependant = this.props.getDependant()[dependantIndex];
             aDepAnswer = this.getDepOpts(oDependant.nominals);
             for(let j in dependantAnswer){
                 aFinalAnswers.push(aDepAnswer[dependantAnswer[j]]);

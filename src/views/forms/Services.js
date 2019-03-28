@@ -444,7 +444,7 @@ class Services extends Component{
 			let oTemp = aDep[i].en_data;
 			if(oTemp.type.value === 'Dropdown' ||oTemp.type.value === 'Radio' || oTemp.type.value === 'Checkbox'){
 				
-				let oques = {value:oTemp.name, label:oTemp.name , index : i, nominals: oTemp.nominal.split(',')};
+				let oques = {value:oTemp.name, label:oTemp.name , index : i, nominals: oTemp.nominal};
 				aFinal.push(oques);
 			}
 		}
