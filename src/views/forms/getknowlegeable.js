@@ -360,6 +360,10 @@ class GetKnowlegeable extends Component{
 		  }
 	}
 
+	formSkip = () =>{
+		this.props.configTab('service-tab');
+	}
+
 	render(){		
 
 		let communityBO = localStorage.getItem('community');
@@ -464,7 +468,7 @@ class GetKnowlegeable extends Component{
 
 				<div className="text-center card-footer">
 					<button type="Button" className="mr-3 btn btn-primary btn-sm" onClick={this.formSubmit}><i className="fa fa-dot-circle-o"></i> Save and Continue </button>
-					<button type="Button" className="btn btn-danger btn-sm"><i className="fa fa-ban "></i> Skip</button>
+					<button type="Button" className="btn btn-danger btn-sm" onClick={this.formSkip}><i className="fa fa-ban "></i> Skip</button>
 				</div>
 			</div>				
 		)

@@ -129,7 +129,7 @@ class Login extends Component {
                             >Login</button>
                           </div>
                           <div className="col-6 text-right">
-                            <button className="btn btn-link px-0" type="button">Forgot password?</button>
+                            <NavLink to={`/forgotPassword`} className="btn btn-link px-0">Forgot password?</NavLink>
                           </div>
                         </div>
                         </form>

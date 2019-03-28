@@ -14,7 +14,7 @@ class Translation extends Component{
         languageList: [],
         languageData: {},
         editData : {},
-        isLoading:false,
+        isLoading:true,
         englishLable: {}
     }
 
@@ -35,7 +35,7 @@ class Translation extends Component{
         }));
 
         let englishLable = !_.isEmpty(languageData['en_US']) ? (languageData['en_US'].lbl ? languageData['en_US'].lbl : {}) : {};
-        this.setState({uuid:uuid,languageList:languageListObj, languageData,englishLable, editData : {}});
+        this.setState({isLoading:false,uuid:uuid,languageList:languageListObj, languageData,englishLable, editData : {}});
     }
     
     renderLanguageData = (label) => {
@@ -121,7 +121,8 @@ class Translation extends Component{
     render(){
         var that = this;
         return (
-        <div>
+        <div className="card">
+            <div class="card-body">
             <Loader isLoading={this.state.isLoading}/>
             <div className="row">
                 <div className="col-sm input-group mb-3">
@@ -132,7 +133,7 @@ class Translation extends Component{
                 </div>               
             </div>           
             <table className="table table-bordered translationTable">
-                <thead className="thead-dark">
+                <thead className="thead-light">
                     <tr> 
                         <th width="200px" scope="col">Label</th>            
                             {
@@ -162,6 +163,7 @@ class Translation extends Component{
                 } 
                 </tbody>
             </table>
+            </div>
         </div>
         )
     }

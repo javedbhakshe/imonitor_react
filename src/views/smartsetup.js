@@ -2,10 +2,10 @@ import React,{Component} from 'react';
 import CommunitySetUp from './forms/communitysetup';
 import AppConfig from './forms/appconfig';
 import GetKnowlegeable from './forms/getknowlegeable';
+import SurveyService from './forms/SurveyService';
 import Services from './forms/Services';
 /*import SmartMap from './forms/smartmap';*/
 import Nearme from './forms/nearme';
-import Translation from './forms/Translation';
 import Finish from './forms/finish';
 import classnames from 'classnames';
 import {connect} from 'react-redux';
@@ -54,7 +54,7 @@ class SmartSetup extends Component{
 						    		aria-selected="false"
 						    		onClick={() => { this.toggle('appconfig-tab')}}
 						    	>
-						    	Dashboard Config
+						    	Dashboard Configuration
 						    	</a>
 						  		<div className="nav-arrow"></div>
 						  	</li>
@@ -66,7 +66,7 @@ class SmartSetup extends Component{
 							    	aria-controls="home" 
 							    	aria-selected="true"
 						    	 	onClick={() => { this.toggle('home-tab') }}>
-							    	Community SetUp
+							    	Community Setup
 							    </a>
 					  		 	<div className="nav-arrow"></div>
 						  	</li>						  	
@@ -80,7 +80,7 @@ class SmartSetup extends Component{
 							    	aria-controls="getknowlegeable" 
 							    	aria-selected="false"
 							    	onClick={() => { this.toggle('getknowlegeable-tab')}}>
-							    	Get Knowlegeable
+							    	Information Setup
 						    	</a>
 						    	<div className="nav-arrow"></div>
 						  	</li>
@@ -93,23 +93,11 @@ class SmartSetup extends Component{
 						    		aria-selected="false"
 						    		onClick={() => { this.toggle('service-tab')}}
 						    	>
-						    	Get Involved
+						    	 Service/Survey Setup
 						    	</a>
 						  		<div className="nav-arrow"></div>
 						  	</li>
-							<li className={`nav-item ${classnames({ active: this.state.activeTab === 'survey-tab' })}`}>
-						     	<div className="nav-wedge"></div>
-							    <a className="nav-link ssup" 
-						    		id="survey-tab" data-toggle="tab" 
-						    		href="#survey" role="tab" 
-						    		aria-controls="survey" 
-						    		aria-selected="false"
-						    		onClick={() => { this.toggle('survey-tab')}}
-						    	>
-						    	Survey
-						    	</a>
-						  		<div className="nav-arrow"></div>
-						  	</li>
+							
 						  	<li className={`nav-item ${classnames({ active: this.state.activeTab === 'nearme-tab' })}`}>
 						    	<div className="nav-wedge"></div>
 						    	<a className="nav-link ssup" 
@@ -123,21 +111,7 @@ class SmartSetup extends Component{
 							    	Nearme
 						    	</a>
 						    	<div className="nav-arrow"></div>
-						  	</li>
-							<li className={`nav-item ${classnames({ active: this.state.activeTab === 'translation-tab' })}`}>
-						    	<div className="nav-wedge"></div>
-						    	<a className="nav-link ssup" 
-							    	id="translation-tab" 
-							    	data-toggle="tab" 
-							    	href="#translation" 
-							    	role="tab" 
-							    	aria-controls="translation" 
-							    	aria-selected="false"
-							    	onClick={() => { this.toggle('translation-tab')}}>
-							    	Translation
-						    	</a>
-						    	<div className="nav-arrow"></div>
-						  	</li>
+						  	</li>							
 						  	<li className={`nav-item ${classnames({ active: this.state.activeTab === 'finish-tab' })}`}>
 						     	<div className="nav-wedge"></div>
 							    <a className="nav-link ssup" 
@@ -147,7 +121,7 @@ class SmartSetup extends Component{
 						    		aria-selected="false"
 						    		onClick={() => { this.toggle('finish-tab')}}
 						    	>
-						    	Finish
+						    	Publish
 						    	</a>
 						  		<div className="nav-arrow"></div>
 						  	</li>
@@ -163,17 +137,12 @@ class SmartSetup extends Component{
 						  		<GetKnowlegeable configTab={this.toggleActive} />
 						  	</div>
 							<div className="tab-pane fade" id="service" role="tabpanel" aria-labelledby="service-tab">
-							  <Services configTab={this.toggleActive} serviceType='Service' />
+							  <SurveyService configTab={this.toggleActive} />
 						  	</div>
-							<div className="tab-pane fade" id="survey" role="tabpanel" aria-labelledby="survey-tab">
-							  <Services configTab={this.toggleActive} serviceType='Survey' />
-						  	</div>
+							
 						  	<div className="tab-pane fade" id="nearme" role="tabpanel" aria-labelledby="nearme-tab">
 						  		<Nearme configTab={this.toggleActive} />
-						  	</div>
-							<div className="tab-pane fade" id="translation" role="tabpanel" aria-labelledby="translation-tab">
-						  		<Translation />
-						  	</div>
+						  	</div>							
 						  	<div className="tab-pane fade" id="finish" role="tabpanel" aria-labelledby="finish-tab">
 						  		<Finish />
 						  	</div>

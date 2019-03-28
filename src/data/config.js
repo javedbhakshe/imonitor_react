@@ -382,9 +382,11 @@ const aCommCountries = [
 const aCommunitySections = [
 	{value:"Dashboard",label:"Dashboard"},
 	{value:"Inbox",label:"Inbox"},
-	{value:"Maps",label:"Maps"},
+	{value:"Maps",label:"Maps"},	
 	{value:"Analytics",label:"Analytics"},
-	{value:"Charts",label:"Charts"}
+	{value:"Charts",label:"Charts"},
+	{value:"Users",label:"Users"},
+	{value:"Translation",label:"Translation"}
 ];
 
 const aServiceType = [
@@ -429,6 +431,12 @@ const aUserType = [
 	{value:"VOLUNTEER", label:"VOLUNTEER"}	
 ];
 
+const dashboardUserType = [
+	{value:"ADMIN", label:"ADMIN"},	
+	{value:"COMMUNITY-RESPONDER", label:"COMMUNITY RESPONDER"},
+	{value:"COMMUNITY-PROFILER", label:"COMMUNITY PROFILER"}
+];
+
 const aMobileSections = [
 	{value:"Information",label:"Information"},
 	{value:"Services",label:"Services"},
@@ -447,6 +455,7 @@ export {
 	nearmeType,
 	aQuestionType,
   	aUserType,
-  	aMobileSections
+	aMobileSections,
+	dashboardUserType
 };
 
