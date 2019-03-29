@@ -80,7 +80,7 @@ class SmartSetup extends Component{
 							    	aria-controls="getknowlegeable" 
 							    	aria-selected="false"
 							    	onClick={() => { this.toggle('getknowlegeable-tab')}}>
-							    	Information Setup
+							    	Get Information
 						    	</a>
 						    	<div className="nav-arrow"></div>
 						  	</li>
@@ -93,7 +93,7 @@ class SmartSetup extends Component{
 						    		aria-selected="false"
 						    		onClick={() => { this.toggle('service-tab')}}
 						    	>
-						    	 Service/Survey Setup
+						    	 Get Involved
 						    	</a>
 						  		<div className="nav-arrow"></div>
 						  	</li>

@@ -489,12 +489,12 @@ class Services extends Component{
 
 	formSubmit = () => {
 		var that = this;  
-		if(this.state.oWholeData.length > 0){
-			this.setState({isLoading : true});   
-			let communityBO = JSON.parse(localStorage.getItem('community'));
+		let communityBO = JSON.parse(localStorage.getItem('community'));
 			let typeValue = this.props.serviceType;
 			let commuityReferenceBO = typeValue == 'Service' ? communityBO.communityPreferenceBOs : communityBO.communitySurveyBOs;
 			let uuid = communityBO.community.uuid;
+		if(this.state.oWholeData.length > 0 || commuityReferenceBO.length > 0){
+			this.setState({isLoading : true});  
 			let requestOptions = {};
 			let dataObj = {
 				'services':this.state.services,

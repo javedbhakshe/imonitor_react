@@ -446,6 +446,13 @@ const aMobileSections = [
 	{value:"Peer chat",label:"Peer chat"}
 ];
 
+
+const templateType = [
+	{value:"List",label:"List"},
+	{value:"Card",label:"Card"},
+	{value:"sidebar",label:"sidebar"}		
+];
+
 export {
   	aCommunityType,
   	aCommunityLanguages,
@@ -456,6 +463,7 @@ export {
 	aQuestionType,
   	aUserType,
 	aMobileSections,
-	dashboardUserType
+	dashboardUserType,
+	templateType
 };
 

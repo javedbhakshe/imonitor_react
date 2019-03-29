@@ -23,6 +23,7 @@ export const apiServices = {
     loadApplicants,
     addDashboardUsers,
     addApplicants,
+    whiteLabelEmail,
     verificationCode
 };
 
@@ -125,7 +126,6 @@ function createCommunity(requestObject) {
         // login successful if there's a jwt token in the response
         if (data.status === 'SUCCESS') {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('community', JSON.stringify(data));
             let communityBO = JSON.parse(localStorage.getItem('community'));
             communityBO.community = data.community;
             communityBO.uuidLocales = data.uuidLocales;
@@ -330,6 +330,26 @@ function addApplicants(requestObject){
     };
    
     return fetch(`${apiUrl}/imonitor/applicants/save.json`, requestOptions)
+    .then(handleResponse)
+    .then(data => {
+        // login successful if there's a jwt token in the response
+        if (data.status === 'SUCCESS') {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            console.log('Updated ');
+        }
+
+        return data;
+    });
+}
+
+function whiteLabelEmail(requestObject){
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(requestObject)
+    };
+   
+    return fetch(`${apiUrl}/imonitor/communities/sendSimpleEmail.json`, requestOptions)
     .then(handleResponse)
     .then(data => {
         // login successful if there's a jwt token in the response

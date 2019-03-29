@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { apiServices } from '../../services/apiServices';
 import Loader from '../../components/loaders/loader';
 import { community } from '../../actions';
-import {aCommunityType, aCommunityLanguages, aCommCountries, aCommunitySections, aMobileSections}  from '../../data/config';
+import {aCommunityType, aCommunityLanguages, aCommCountries, aCommunitySections}  from '../../data/config';
 import _ from 'lodash';
 import swal from 'sweetalert';
 
@@ -22,14 +22,13 @@ class CommunitySetUp extends Component{
 			aLangs = [],sView = community.defaultMapView? community.defaultMapView: '',
 			oView = {value:sView , label:sView === '' ? 'World' : sView},
 			oComType = community.type ? {value:community.type,label:community.type} : null,
-			aComSects = [],aMobilesects = [];
+			aComSects = [];
 
 		/*  sections */
 
 		if(community.key_value_pairs){
 			let oDisplaysects = JSON.parse(community.key_value_pairs);
 			aComSects = oDisplaysects.dashboard;
-			aMobilesects = oDisplaysects.mobile;
 		}		
 		/*   */
 
@@ -60,8 +59,7 @@ class CommunitySetUp extends Component{
 			comType:oComType,
 			comLang:aLangs,		         
 			comView:oView,
-			comSections:aComSects,
-			mobileSections:aMobilesects
+			comSections:aComSects			
 	  	}
 
 	}
@@ -93,25 +91,30 @@ class CommunitySetUp extends Component{
         console.log(this.state);
         this.setState({isLoading : true});          
         if(this.state.name && this.state.emaill){
-			let communityBO = JSON.parse(localStorage.getItem('community')),
-				oKeyVal = {dashboard:this.state.comSections,mobile:this.state.mobileSections},
-				requestOptions =  {
-	    			community:{
-						uuid:this.state.uuid,
-						name: this.state.name,
-						emaill: this.state.emaill,
-						active:this.state.active,
-						type: this.state.comType ? this.state.comType.value : null,
-						project: this.state.project,
-						summary: this.state.summary,
-						helpDeskNo: this.state.helpDeskNo,
-						defaultLocale: this.state.defaultLocale,
-						defaultMapView: this.state.comView ? this.state.comView.value : null,
-						logo: this.state.logo,
-						featuredImage: this.state.featuredImage,	
-						key_value_pairs:JSON.stringify(oKeyVal)
-	    			}
-				};
+			let communityBO = JSON.parse(localStorage.getItem('community'));
+			let community = communityBO.community;	
+			let oKeyVal = {}
+			if(community.key_value_pairs){
+				oKeyVal = JSON.parse(community.key_value_pairs);
+			}
+			oKeyVal['dashboard'] = this.state.comSections;				
+			let requestOptions =  {
+				community:{
+					uuid:this.state.uuid,
+					name: this.state.name,
+					emaill: this.state.emaill,
+					active:this.state.active,
+					type: this.state.comType ? this.state.comType.value : null,
+					project: this.state.project,
+					summary: this.state.summary,
+					helpDeskNo: this.state.helpDeskNo,
+					defaultLocale: this.state.defaultLocale,
+					defaultMapView: this.state.comView ? this.state.comView.value : null,
+					logo: this.state.logo,
+					featuredImage: this.state.featuredImage,	
+					key_value_pairs:JSON.stringify(oKeyVal)
+				}
+			};
           apiServices.createCommunity(requestOptions).then(function(response){
 			that.setState({isLoading: false});
             if(response.errors){
@@ -318,19 +321,7 @@ class CommunitySetUp extends Component{
 					      	/>
 						</div>
 					</div>
-					<div className="col-lg-6 col-md-6 col-sm-12">
-					    <div className="form-group">
-							<label className="control-label">Choose mobile sections</label>
-							<Select
-						        name="mobileSections"
-						        placeholder="Please select mobile sections"
-						        onChange={this.handleChange}
-						        value={this.state.mobileSections}
-						   		isMulti={true}
-						        options={aMobileSections}
-					      	/>
-						</div>
-					</div>
+				
 					</div>
 				</div>
 				<div className="text-center card-footer">
