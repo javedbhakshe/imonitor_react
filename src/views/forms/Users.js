@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import classnames from 'classnames';
 import DashboardUsers from '../../components/Users/DashboardUsers';
 import MobileUsers from '../../components/Users/MobileUsers';
-import _ from 'lodash';
 
 class Users extends Component{
 

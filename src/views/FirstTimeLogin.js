@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { apiServices } from '../services/apiServices';
 import {NavLink} from 'react-router-dom';
 import Loader from '../components/loaders/loader';
+import Menu from './menu';
 
 class FirstTimeLogin extends Component {
     constructor(props){
@@ -107,6 +108,8 @@ class FirstTimeLogin extends Component {
         errorResp = <div className="alert alert-danger" dangerouslySetInnerHTML={{__html: this.state.responseError}}></div>;
       }
         return(  
+          <div>
+          <Menu />   
           <div className="app flex-row align-items-center">  
             <Loader isLoading={this.state.isLoading}/>
             <div className="container">       
@@ -188,6 +191,7 @@ class FirstTimeLogin extends Component {
                 </div>
               </div>
            </div>
+         </div>
          </div>
         )
     }

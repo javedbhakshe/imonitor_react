@@ -383,7 +383,7 @@ class GetKnowlegeable extends Component{
 				<button className="btn btn-light" type="button" data-toggle="modal" data-target="#myModal" onClick={ e => (this.onChildClickAction(''))} >
 						<span className="fa fa-plus"></span> Add Information
 				</button>
-				<div className="modal fade" id="myModal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div className="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					<div className="modal-dialog modal-lg" role="document">					
 					<div className="modal-content">
 					 	

@@ -86,12 +86,12 @@ class DashboardUserModal extends Component {
                     <form id="dashboardUser" onSubmit={this.handleSubmit}>                        
                         <ModalBody>                       
                             <div className="form-group">
-                                <label class="col-form-label">Email</label>
+                                <label className="col-form-label">Email</label>
                                 <input type="email" name="email" className="form-control" onChange={this.handleUserInput}  placeholder="Enter Email" value={this.state.email} />
                                 <small id="fieldHelp" className="form-text text-muted">Email used by admin to login DashboardUserModal.</small>
                             </div>
                             <div className="form-group">
-                                <label class="col-form-label">Password</label>
+                                <label className="col-form-label">Password</label>
                                 <input type="password" name="password" className="form-control" onChange={this.handleUserInput}  placeholder="Enter Password" value={this.state.password} />
                             </div>   
                             <div className="form-group">

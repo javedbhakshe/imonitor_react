@@ -2385,7 +2385,7 @@ a.btn.disabled,fieldset:disabled a.btn {
 .btn-primary:not(:disabled):not(.disabled):active,.btn-primary:not(:disabled):not(.disabled).active,.show>.btn-primary.dropdown-toggle {
     color: #fff;
     background-color: #1985ac;
-    border-color: #187da0
+    border-color: #2f89fc
 }
 
 .btn-primary:not(:disabled):not(.disabled):active:focus,.btn-primary:not(:disabled):not(.disabled).active:focus,.show>.btn-primary.dropdown-toggle:focus {
@@ -10765,12 +10765,12 @@ button {
 }
 
 .card.bg-primary {
-    border-color: #187da0
+    border-color: #2f89fc
 }
 
 .card.bg-primary .card-header {
     background-color: #1e9ecb;
-    border-color: #187da0
+    border-color: #2f89fc
 }
 
 .card.bg-secondary {

@@ -24,6 +24,7 @@ import 'simple-line-icons/css/simple-line-icons.css';
 import 'react-data-components/css/table-twbs.css';
 
 import './assets/css/style.css';
+import './assets/css/custom.css';
 // import './assets/css/email.css';
 const store = createStore(rootReducer)
 

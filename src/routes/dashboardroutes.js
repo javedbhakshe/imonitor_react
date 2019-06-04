@@ -6,6 +6,7 @@ import SmartSetUp from '../views/smartsetup';
 import Analytics from '../views/analytics';
 import Users from '../views/forms/Users';
 import Translation from '../views/forms/Translation';
+import Pages from '../views/Pages';
 
 const dashboardRoutes = [
 	{
@@ -56,6 +57,12 @@ const dashboardRoutes = [
 	  icon: "fa fa-language",
 	  component: Translation
   	}, 
+	{
+	  path: "/pages",
+	  name: "Pages",
+	  icon: "fa fa-bars",
+	  component: Pages
+	}, 
 	{ 
 		redirect: true, 
 		path: "/", 

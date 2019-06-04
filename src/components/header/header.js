@@ -13,6 +13,14 @@ class Header extends Component {
 		apiServices.logout();		
 	}
 	
+	toggleSideBar = (e) =>{
+		// console.log(e.target);
+		e.preventDefault();
+		e.stopPropagation();
+		this.props.toggleSideBar(e);
+	}
+
+
     render() {
 
 		let community = this.props.community;
@@ -26,7 +34,10 @@ class Header extends Component {
 
         return (
             <header className="app-header navbar">
-			 	<button className="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
+			 	<button className="navbar-toggler sidebar-toggler d-lg-none mr-auto" 
+			 			type="button" data-toggle="sidebar-show"
+			 			onClick = {this.toggleSideBar}
+	 			>
 	    			<span className="navbar-toggler-icon"></span>
 	      		</button>
 		      	<a className="navbar-brand" href="javascript:void(0)">
@@ -35,7 +46,10 @@ class Header extends Component {
 			        <img className="navbar-brand-minimized" src={minimizedlogo} width="30" height="30" alt="CoreUI Logo" />
 	     	 	</a>
 
-		      	<button className="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
+		      	<button className="navbar-toggler sidebar-toggler d-md-down-none" 
+		      			type="button" data-toggle="sidebar-lg-show"
+	      				onClick = {this.toggleSideBar}		
+      			>
 				   <span className="navbar-toggler-icon"></span>
 				</button>
 

@@ -386,7 +386,8 @@ const aCommunitySections = [
 	{value:"Analytics",label:"Analytics"},
 	{value:"Charts",label:"Charts"},
 	{value:"Users",label:"Users"},
-	{value:"Translation",label:"Translation"}
+	{value:"Translation",label:"Translation"},
+	{value:"Pages",label:"Pages"}
 ];
 
 const aServiceType = [
@@ -443,14 +444,14 @@ const aMobileSections = [
 	{value:"Survey",label:"Survey"},
 	{value:"Nearme",label:"Nearme"},
 	{value:"Reminder",label:"Reminder"},
-	{value:"Peer chat",label:"Peer chat"}
+	{value:"Peerchat",label:"Peer chat"}
 ];
 
 
 const templateType = [
 	{value:"List",label:"List"},
 	{value:"Card",label:"Card"},
-	{value:"sidebar",label:"sidebar"}		
+	{value:"Sidebar",label:"Sidebar"}		
 ];
 
 export {

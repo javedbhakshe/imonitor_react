@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Select from 'react-select';
 import {aQuestionType,aUserType}  from '../../data/config';
 import Options from '../options/Options';
-import swal from 'sweetalert'; 
 
 
 class QuestionForm extends Component {
@@ -100,8 +99,10 @@ class QuestionForm extends Component {
             this.props.editQuestionData(this.state.data,oQuestionConfig);
         }else {
             this.props.addQuestionData(this.state.data,oQuestionConfig);
-            swal("Good job!", "You have added question successfully.", "success");
+            // swal("Good job!", "You have added question successfully.", "success");
         }
+
+        console.log(this.state.data);
         this.initializeState(true);
     }
 
@@ -266,7 +267,7 @@ class QuestionForm extends Component {
     }
       
     showForm = ({whole_data,isMandatory,userType,dependantIndex,dependantAnswer}) => {    
-        debugger
+        
         let i,oDependant = null,aDepAnswer = [],aFinalAnswers = [],aRecieved = [];
         if(dependantIndex !== -1){
             /* */

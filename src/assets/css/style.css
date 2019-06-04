@@ -710,3 +710,9 @@ h4.title{
 .hideDiv{
     display: none;
 }
+
+div.cke_dialog_body { z-index: inherit; }
+
+.cke_reset_all * {
+    z-index: inherit;
+}

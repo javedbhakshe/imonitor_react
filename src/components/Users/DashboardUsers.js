@@ -8,7 +8,7 @@ import swal from 'sweetalert';
 class DashboardUsers extends Component {
 
     state = {
-        isLoading:false,
+        isLoading:true,
         authorities:[],
         users:[]
     }
@@ -21,16 +21,16 @@ class DashboardUsers extends Component {
         let communityBO = JSON.parse(localStorage.getItem('community'));
         let uuid = communityBO.community.uuid;
         const usersObj = await apiServices.dashboardUsers(uuid);
-        this.setState({users:usersObj.users, authorities:usersObj.authorities})
+        this.setState({users:usersObj.users, authorities:usersObj.authorities, isLoading:false})
     }
 
    
 
-    onDelete = (users) => {
+    onDelete = (users, enabled) => {
         var that = this;
         swal({
             title: "Are you sure?",
-            text: "Once deleted, you will not be able to recover this user!",
+            text: `you want to ${!users.enabled ? ' active' : ' deactive'} this user!`,
             icon: "warning",
             buttons: true,
             dangerMode: true,
@@ -44,12 +44,16 @@ class DashboardUsers extends Component {
                 let requestOptions = { 
                     email:users.username,                    
                     repEmail:repEmail,                   
-                    activeYN:"N"
+                    enabled:enabled,
+                    action:'edit'
                 }
                 apiServices.addDashboardUsers(requestOptions).then(function(response){
                     that.setState({isLoading : false}); 
                     if(response.status === "SUCCESS"){   
-                        
+                        that.loadData();
+                        swal("Dashboard user deleted successfully!", {
+                            icon: "success",
+                        });
                     }
                 })
               
@@ -67,7 +71,10 @@ class DashboardUsers extends Component {
                         <span className="badge badge-success ml-3"> {users.enabled ? 'Active' : 'DeActive'}</span> 
                     </h5>
                     <small className="text-muted">
-                          <button className="btn btn-sm btn-custom badge-danger" onClick={() => this.onDelete(users)}  ><span className="fa fa-trash" aria-hidden="true"></span> Deactive</button>
+                          <button className={`btn btn-sm btn-custom ${users.enabled ? 'badge-danger' : 'badge-success'}`} onClick={() => this.onDelete(users, !users.enabled)}  >
+                          <span className="fa fa-trash" aria-hidden="true"></span> 
+                            {!users.enabled ? ' Active' : ' Deactive'}
+                          </button>
                     </small>               
                    </div>
                    <p className="mb-1">

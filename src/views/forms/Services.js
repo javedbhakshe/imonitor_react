@@ -177,17 +177,24 @@ class Services extends Component{
 				isMandatory,userType,
 				dependantIndex,dependantAnswer
 			};
-		
+		/*  
+			Addition of dependantIndex,dependantAnswer in oWholeData
+		*/
+
+		let oWholeQuestion = {data: p_data, dependantIndex, dependantAnswer,isMandatory};
+
 		this.setState( prevState =>  {
 			let aPrev = prevState.services,
 				aWholeData = prevState.oWholeData;
 
 			if(bIsCurServiceLinked){
 				aPrev[nCurrentActiveService].linkedServices[nCurrentLinkedService].questions.push(oQuestionObj);
-				aWholeData[nCurrentActiveService].data[nCurrentLinkedService].questions.push(p_data);
+				// aWholeData[nCurrentActiveService].data[nCurrentLinkedService].questions.push(p_data);
+				aWholeData[nCurrentActiveService].data[nCurrentLinkedService].questions.push(oWholeQuestion);
 			}else{
 				aPrev[nCurrentActiveService].questions.push(oQuestionObj);
-				aWholeData[nCurrentActiveService].questions.push(p_data)
+				// aWholeData[nCurrentActiveService].questions.push(p_data)
+				aWholeData[nCurrentActiveService].questions.push(oWholeQuestion)
 			}
 			return {
 				services:aPrev,
@@ -204,18 +211,24 @@ class Services extends Component{
 				isMandatory,userType,
 				dependantIndex,dependantAnswer
 			};
-		
 
+		/*  
+			Addition of dependantIndex,dependantAnswer in oWholeData
+		*/
+		let oWholeQuestion = {data: p_data, dependantIndex, dependantAnswer,isMandatory};
+	
 		this.setState( prevState =>  {
 			let aPrev = prevState.services,
 				aWholeData = prevState.oWholeData;
 
 			if(bIsCurServiceLinked){
 				aPrev[nCurrentActiveService].linkedServices[nCurrentLinkedService].questions[nCurrentActiveQuestion] = oQuestionObj;
-				aWholeData[nCurrentActiveService].data[nCurrentLinkedService].questions[nCurrentActiveQuestion] = p_data;
+				// aWholeData[nCurrentActiveService].data[nCurrentLinkedService].questions[nCurrentActiveQuestion] = p_data;
+				aWholeData[nCurrentActiveService].data[nCurrentLinkedService].questions[nCurrentActiveQuestion] = oWholeQuestion;
 			}else{
 				aPrev[nCurrentActiveService].questions[nCurrentActiveQuestion] = oQuestionObj;
-				aWholeData[nCurrentActiveService].questions[nCurrentActiveQuestion] = p_data;
+				// aWholeData[nCurrentActiveService].questions[nCurrentActiveQuestion] = p_data;
+				aWholeData[nCurrentActiveService].questions[nCurrentActiveQuestion] = oWholeQuestion;
 			}
 			return {
 				services:aPrev,
@@ -540,9 +553,9 @@ class Services extends Component{
 	}
 
 	render(){
-		/*console.clear();
+		console.clear();
 		console.log(this.state.services);
-		console.log(this.state.oWholeData);*/
+		console.log(this.state.oWholeData);
 		const oSelectedList = {
 			linked:this.state.bIsCurServiceLinked,
 			active:this.state.nCurrentActiveService,
@@ -568,7 +581,7 @@ class Services extends Component{
         				<div className="card-body">	
 						<div className="row">
 	        				<div className='col-sm-12 col-md-3 col-lg-3 p-0'>
-			          			<ListGroup name="Services"
+			          			<ListGroup name={this.props.serviceType}
 			          				listItems = {this.state.services}
 			          				onDelete = {this.onListItemDelete}
 			          				onEdit = {this.onListItemEdit}

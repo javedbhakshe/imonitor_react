@@ -1,31 +1,23 @@
 import React,{Component} from 'react';
-import {DataTable} from 'react-data-components';
+import DataTable from '../components/Datatable/DataTable';
 
 class Analytics extends Component{
 
-	
-
 	render(){
-		let aColumns = [
-			{ title: 'Name', prop: 'name'  },
-	 	 	{ title: 'City', prop: 'city' },
-		  	{ title: 'Address', prop: 'address' },
-		  	{ title: 'Phone', prop: 'phone' }
-	  	],
-	  	aData = [
-			{ name: 'name value', city: 'city value', address: 'address value', phone: 'phone value' },	  	
-			{ name: 'name value', city: 'city value', address: 'address value', phone: 'phone value' },	  	
-			{ name: 'name value', city: 'city value', address: 'address value', phone: 'phone value' },	  	
-			{ name: 'name value', city: 'city value', address: 'address value', phone: 'phone value' },	  	
-			{ name: 'name value', city: 'city value', address: 'address value', phone: 'phone value' },	  	
-			{ name: 'name value', city: 'city value', address: 'address value', phone: 'phone value' },	  	
-			{ name: 'name value', city: 'city value', address: 'address value', phone: 'phone value' },	  	
-			{ name: 'name value', city: 'city value', address: 'address value', phone: 'phone value' },	  	
-			{ name: 'name value', city: 'city value', address: 'address value', phone: 'phone value' },	  	
-			{ name: 'name value', city: 'city value', address: 'address value', phone: 'phone value' },	  	
-			{ name: 'name value', city: 'city value', address: 'address value', phone: 'phone value' },	  	
-			{ name: 'name value', city: 'city value', address: 'address value', phone: 'phone value' }	  	
-	  	];
+	
+	  	const aColumns = ["#ID","UserName","Age","Gender"],
+		aRows = [
+			["1","User1","55","M"],
+			["2","User2","40","F"],
+			["3","User3","41","M"],
+			["4","User4","54","M"],
+			["5","User5","30","F"],
+			["6","User6","27","F"],
+			["7","User7","28","M"],
+			["8","User8","29","F"],
+			["9","User9","37","F"],
+			["10","User10","55","F"]
+		];
 
 
 		return(			
@@ -78,11 +70,10 @@ class Analytics extends Component{
 							</div>
 							</div>
 							<main className="inbox">
-						 	 	<DataTable
-							      	columns={aColumns}
-							      	initialData={aData}
-							      	initialPageLength={5}
-							    />
+							    <DataTable 
+									columns={aColumns}
+									rows={aRows}
+								/>
 							</main>
 						</div>
 					</div>

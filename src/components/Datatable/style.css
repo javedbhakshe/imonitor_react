@@ -1,0 +1,25 @@
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+
+th{
+	cursor: pointer;
+	text-align: left !important;
+}
+
+th .sortable-icons .cui-arrow-bottom, .cui-arrow-top{
+    opacity: 0.4;
+}
+
+.sortable-icons{
+	float: right;
+	pointer-events: none;
+}
+
+.sortable-icons .active{
+	opacity: 1 !important;
+} 
+
+.pagination-nav{
+	float: right;
+}

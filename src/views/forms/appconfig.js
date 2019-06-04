@@ -55,8 +55,7 @@ class AppConfig extends Component{
 	}
 
 	handleDeactivate = (e) => {		
-		this.setState({active : "N"});  
-		this.state.active = "N"; 
+		this.setState({active : "N"});
 		if(this.state.name && this.state.emaill){
 			let requestOptions = { community: this.state };
 			apiServices.createCommunity(requestOptions).then(function(response){

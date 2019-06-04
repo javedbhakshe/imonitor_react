@@ -55,6 +55,9 @@ class MobileUsers extends Component {
                     if(response.status === "SUCCESS"){                          
                        that.loadData();
                        that.setState({isLoading : false}); 
+                       swal("Dashboard user deleted successfully!", {
+                        icon: "success",
+                    });
                     }
                 })
               
@@ -68,7 +71,7 @@ class MobileUsers extends Component {
                <li key ={key} className="list-group-item list-group-item-action flex-column align-items-start">
                    <div className="d-flex w-100 justify-content-between">
                    <h5 className="mb-1">{applicant.email}
-                   <span className="badge badge-success ml-3"> {applicant.active == 'Y' ? 'Active' : 'DeActive'}</span> 
+                   <span className="badge badge-success ml-3"> {applicant.active === 'Y' ? 'Active' : 'DeActive'}</span> 
                    </h5>                 
                   
                    <small className="text-muted">

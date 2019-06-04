@@ -1,0 +1,21 @@
+.sidebar.open-sidebar {
+    margin-left:0 !important;
+}
+
+.sidebar.close-sidebar {
+    margin-left:-200px !important;
+}
+
+.main.open-sidebar {
+    margin-left:200px !important;
+}
+
+.main.close-sidebar {
+    margin-left:0px !important;
+}
+
+@media(max-width: 768px) {
+	.main.open-sidebar {
+	    margin-left:0px !important;
+	}
+}

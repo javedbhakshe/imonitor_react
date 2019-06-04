@@ -122,7 +122,7 @@ class Translation extends Component{
         var that = this;
         return (
         <div className="card">
-            <div class="card-body">
+            <div className="card-body">
             <Loader isLoading={this.state.isLoading}/>
             <div className="row">
                 <div className="col-sm input-group mb-3">

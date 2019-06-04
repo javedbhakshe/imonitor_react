@@ -5,7 +5,6 @@ import DashboardRoutes from '../../routes/dashboardroutes';
 import Header from '../../components/header/header';
 
 class DashBoard extends Component{
-
 	constructor(props){
 		super(props);
 
@@ -19,10 +18,26 @@ class DashBoard extends Component{
 		});
 
 
-		this.state = {menus:[]};
+		this.state = {menus:[],sideBarClass:''};
 
 	}
+	/*
 
+	*/
+	toggleSideBar = (e) =>{
+		let sClass = '';
+		if(!this.state.sideBarClass){
+			sClass = window.innerWidth < 992 ? 'open-sidebar' : 'close-sidebar'; 
+		}else{
+			sClass = this.state.sideBarClass === 'open-sidebar' ? 'close-sidebar' : 'open-sidebar'; 
+		}
+		this.setState({
+			sideBarClass:sClass
+		});
+	}
+	/*
+
+	*/
 	componentDidMount(){
 		let communityBO = JSON.parse(localStorage.getItem('community')),
 			community = communityBO.community,oSections,aMenus = ['Setup'];
@@ -34,7 +49,30 @@ class DashBoard extends Component{
 			}
 		}
 		this.computeMenusList(aMenus);
+
+		/* 
+			window resize event 
+		*/
+
+		// window.addEventListener('resize',this.handleWindowResize)
+
 	}
+
+	/* 
+	*/
+	/*componentWillUnmount = () =>{
+		window.removeEventListener('resize',this.handleWindowResize);
+	}*/
+	/* 
+		
+	*/
+	handleWindowResize = (e) =>{
+		console.log(e.target.innerWidth);
+	}
+
+	/*
+
+	*/
 
 	testFunc = (aMenus) => {
 		console.log(aMenus);
@@ -62,10 +100,15 @@ class DashBoard extends Component{
 	render(){
 		return(
 			<div className='app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show'>
-				<Header />
+				<Header 
+					toggleSideBar={this.toggleSideBar}
+				/>
 				<div className='app-body' >
-					<SideBar menus={this.state.menus}/>
-					<main className='main'>
+					<SideBar 
+						menus={this.state.menus}
+						className={this.state.sideBarClass}
+					/>
+					<main className={`main ${this.state.sideBarClass}`}>
 						<Switch>
 							{this.aMenuRoutes}
 						</Switch>

@@ -3,6 +3,7 @@ import { apiServices } from '../services/apiServices';
 import {NavLink} from 'react-router-dom';
 import Loader from '../components/loaders/loader';
 import swal from 'sweetalert';
+import Menu from './menu';
 
 class ForgotPassword extends Component {
     constructor(props){
@@ -114,7 +115,9 @@ class ForgotPassword extends Component {
       if(this.state.responseError){
         errorResp = <div className="alert alert-danger">{this.state.responseError}</div>;
       }
-        return(         
+        return(     
+        <div>
+        <Menu />       
         <div className="app flex-row align-items-center">  
         <Loader isLoading={this.state.isLoading}/>
         <div className="container">   
@@ -226,6 +229,7 @@ class ForgotPassword extends Component {
           </div>
           </div>
         </div>
+         </div>
          </div>
          </div>
         )

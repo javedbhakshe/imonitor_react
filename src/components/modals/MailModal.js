@@ -72,6 +72,7 @@ class MailModal extends Component {
 
     handleClose = () => {
         this.setState({ show: false });
+        this.props.hideModalBox();
       }
     
     handleShow = () => {
@@ -91,15 +92,15 @@ class MailModal extends Component {
 		          	<ModalHeader>Information</ModalHeader>	          		
                     <form id="mobileUser" onSubmit={this.handleSubmit}>                        
                         <ModalBody>                       
-                            <h6>Please provide following information so that sales team contact you.</h6>
+                            <h6>Please provide your email id and phone number so that our sales team can contact you.</h6>
                             <div className="form-group">
                                 <label className="col-form-label">Email</label>
                                 <input type="email" name="email" className="form-control" disabled  placeholder="Enter email" value={this.state.email} />
-                                <small id="fieldHelp" className="form-text text-muted">Email used by user to login mobile.</small>
+                                <small id="fieldHelp" className="form-text text-muted">Email used by the user to create community.</small>
                             </div>
                             <div className="form-group">
-                                <label className="col-form-label">Mobile</label>
-                                <input type="tel" name="mobile" className="form-control" onChange={this.handleUserInput}  placeholder="Enter Mobile" value={this.state.password} />
+                                <label className="col-form-label">Contact Number</label>
+                                <input type="tel" name="mobile" className="form-control" onChange={this.handleUserInput}  placeholder="Enter contact number" value={this.state.password} />
                             </div>           
                         </ModalBody>
                         <ModalFooter  className="text-center card-footer">

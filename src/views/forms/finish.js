@@ -19,7 +19,7 @@ class Finish extends Component{
 		if(community.key_value_pairs){
 			oDisplaysects = JSON.parse(community.key_value_pairs);
 			aTemplateSects = oDisplaysects.template;
-			aMobilesects = oDisplaysects.mobile;
+			aMobilesects = oDisplaysects.mobileSections;
 		}	
 
 		this.state = {
@@ -78,7 +78,7 @@ class Finish extends Component{
 				
 				}  
 				if(response.status === "SUCCESS"){
-					if(that.state.submitType == 'white'){
+					if(that.state.submitType === 'white'){
 						that.setState({modalShow:true});
 					}else{
 						that.setState({modalShow:false});
@@ -206,8 +206,8 @@ class Finish extends Component{
 					</div>
 				</div>
 				<div className="text-center card-footer">
-					<button type="submit" className="mr-3 btn btn-primary btn-sm" onClick={e => this.setSubmit('app')}><i className="fa fa-dot-circle-o"></i> Save and continue with app label </button>
-					<button type="submit" className="btn btn-danger btn-sm" onClick={e => this.setSubmit('white')}><i className="fa fa-ban "></i> Save and continue with white label</button>
+					<button type="submit" className="mr-3 btn btn-primary btn-sm" onClick={e => this.setSubmit('app')}><i className="fa fa-dot-circle-o"></i> Save and publish using generic app </button>
+					<button type="submit" className="btn btn-success btn-sm" onClick={e => this.setSubmit('white')}><i className="fa fa-dot-circle-o"></i> Save and publish using white labeling</button>
 				</div>
 			</form>
 			</div>			

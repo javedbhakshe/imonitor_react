@@ -3,7 +3,6 @@ import CommunitySetUp from './forms/communitysetup';
 import AppConfig from './forms/appconfig';
 import GetKnowlegeable from './forms/getknowlegeable';
 import SurveyService from './forms/SurveyService';
-import Services from './forms/Services';
 /*import SmartMap from './forms/smartmap';*/
 import Nearme from './forms/nearme';
 import Finish from './forms/finish';

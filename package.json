@@ -2,7 +2,7 @@
   "name": "dashboard",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://web.imonitorplus.com/dev_testing",
+  "homepage": "https://web.imonitorplus.com/dev_testing/product/",
   "dependencies": {
     "@coreui/coreui": "^2.1.6",
     "@coreui/coreui-plugin-chartjs-custom-tooltips": "^1.2.0",
@@ -27,6 +27,7 @@
     "react-data-components": "^1.2.0",
     "react-dom": "^16.8.2",
     "react-dropzone": "^10.0.0",
+    "react-export-excel": "^0.5.3",
     "react-leaflet": "^2.2.1",
     "react-redux": "^6.0.1",
     "react-router-dom": "^4.3.1",
